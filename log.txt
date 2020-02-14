@@ -1,0 +1,1 @@
+Error: Couldn't count number of rows in the comments! on line 16 in the file D:\Programy\xampp\htdocs\classes\Comments.php
