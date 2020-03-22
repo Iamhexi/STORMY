@@ -1,7 +1,9 @@
 <?php
 require_once "DatabaseControl.php";
 
-class Comments extends DatabaseControl{
+class Comments{
+    use DatabaseControl;
+    
     private $tableName;
     
     public function __construct(){
@@ -29,6 +31,8 @@ class Comments extends DatabaseControl{
     
     private function countCommentsFromDB(string $articleUrl){
         $tableName = Comments::$commentsTable;
+        $articleUrl = $this->sanitizeInput($articleUrl);
+        
         $query = "SELECT COUNT(1) FROM $this->tableName WHERE ArticleUrl = '$articleUrl'";
       
         if (@!($rowsNumber = $this->performQuery($query, true))) 
@@ -39,7 +43,7 @@ class Comments extends DatabaseControl{
     
     public function countComments(string $articleUrl): ?int{
         try {
-            return $this->countCommentsFromDB($articleUrl);
+            return $this->countCommentsFromDB($this->sanitizeInput($articleUrl));
         } catch (Exception $e){
             $this->reportException($e);
             return null;
@@ -47,6 +51,12 @@ class Comments extends DatabaseControl{
     }
     
     private function addCommentToDB(string $articleUrl, string $author, string $content){
+        
+        $articleUrl = $this->sanitizeInput($articleUrl);
+        $author = $this->sanitizeInput($author);
+        $content = $this->sanitizeInput($content);
+        
+        
         $query = "INSERT INTO $this->tableName (articleUrl, author, content) VALUES ('$articleUrl', '$author', '$content')";
         
         if (@!$this->performQuery($query))
@@ -56,8 +66,10 @@ class Comments extends DatabaseControl{
     public function addComment(string $articleUrl, string $author, string $content): void{
         try {
             $this->addCommentToDB($articleUrl, $author, $content);
+            echo '<div class="prompt success">Komentarz został dodany pomyślnie!</div>';
         } catch (Exception $e){
             $this->reportException($e);
+            echo '<div class="prompt fail">Nie udało się dodać Twojego komentarza, spróbuj ponownie!</div>';
         }
     }
 
@@ -81,7 +93,7 @@ class Comments extends DatabaseControl{
             
             ECHO<<<END
             
-                <div id="comment">
+                <div class="comment">
                     <div class="commentAuthor">$author</div>
                     <div class="commentContent">$content</div>
                     <div class="commentDate">$additionDate</div>
@@ -89,30 +101,44 @@ class Comments extends DatabaseControl{
 END;
     }
     
-    public function renderCommentsForArticle(string $articleUrl){
-    try {
-        $query = "SELECT author, author, content, additionDate FROM $this->tableName WHERE articleUrl = '$articleUrl' ORDER BY additionDate DESC";
-        
-        if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
-            throw new Exception($connection->connect_error);
-        
-        if(@!mysqli_query($connection, "SET CHARSET utf8")) 
-            throw new Exception($connection->connect_error);
-        
-        if(@!$result = $connection->query($query)) 
-            throw new Exception("Couldn't render comments for article with url = $articleUrl");
-        
-        while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
-            $this->displayCommentAsHTML($fetched['author'], $fetched['content'], $fetched['additionDate']);
-        }
+    public function renderComments(string $articleUrl){
+        try {
+            $articleUrl = $this->sanitizeInput($articleUrl);
+            $query = "SELECT author, content, additionDate FROM $this->tableName WHERE articleUrl = '$articleUrl' ORDER BY additionDate DESC";
 
-        
-    } catch (Exception $e){
-        $this->reportException($e);
-        echo $e->getMessage()."<br>";
-        return false;
+            if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
+                throw new Exception($connection->connect_error);
+
+            if(@!mysqli_query($connection, "SET CHARSET utf8")) 
+                throw new Exception($connection->connect_error);
+
+            if(@!$result = $connection->query($query)) 
+                throw new Exception("Couldn't render comments for article with url = $articleUrl");
+
+            while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
+                $this->displayCommentAsHTML($fetched['author'], $fetched['content'], $fetched['additionDate']);
+            }
+
+
+        } catch (Exception $e){
+            $this->reportException($e);
+            echo $e->getMessage()."<br>";
+            return false;
+        }
     }
-}
     
+    public function renderCommentForm(string $url){
+        $url = $this->sanitizeInput($url);
+        $file = basename($_SERVER['PHP_SELF']);
+        
+        echo<<<END
+                <form action="$file?url=$url" method="POST" class="commentForm">
+                    <input type="text" placeholder="Jak się nazywasz?" name="name" required>
+                    <input type="text" placeholder="Treść komentarza..." name="content" required>
+                    <input type="submit" name="commented" value="Skomentuj!">
+                </form>
+        
+END;
+    }
     
 }

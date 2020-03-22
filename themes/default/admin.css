@@ -1,0 +1,40 @@
+/* ADMIN STYLESHEET */
+.loggingPanel {}
+.loggingHeader {}
+.loggingForm {}
+.adminPasswordInput {}
+.adminLoggingButton {}
+.logoutButton {}
+.addingForm {}
+.addingInput {}
+.addingSubmitButton {}
+.errorLog {}
+.errorEntry {}
+.errorLogForm {}
+.errorLogButton {}
+.errorLogHeader {}
+.articleEditor {}
+.articleEditorPhoto {}
+.articleEditorTextarea {}
+.articleEditorInput {}
+.articleEditorButton {}
+.returnButtonLink {}
+.returnButton {}
+.adminArticleGrid {}
+.adminArticleLink {}
+.adminArticlePhoto {
+    width: 60%;
+    height: auto;
+}
+
+.menuEditor {
+    display: block;
+}
+
+.menuEditorElementName {
+    margin: 20px;
+}
+
+.menuEditorButton {
+    
+}

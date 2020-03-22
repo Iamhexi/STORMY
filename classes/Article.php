@@ -1,49 +1,52 @@
 <?php
 
 require_once "DatabaseControl.php";
+require_once "AddingArticle.php";
 
-class Article extends DatabaseControl{ 
+class Article{ 
+    use DatabaseControl;
     
-    private $id;
-    private $title;
-    private $content;
-    private $imageLink;
-    private $friendlyUrl;
-    private $additionDate;
-    private $category;
-    private $additionalCategory;
+    protected $id;
+    protected $title;
+    protected $content;
+    protected $photo;
+    protected $articleUrl;
+    protected $publicationDate;
+    protected $category;
+    protected $additionalCategory;
     
     
-    private function sanitizeInput(string $input): string{
+    protected function sanitizeInput(string $input): string{
         return filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
     
-    public function setUrl(string $url): void{
-        $this->friendlyUrl = $this->sanitizeInput($url);
+    protected function setUrl(string $url): void{
+        $this->articleUrl = $this->sanitizeInput($url);
     }
     
-    public function __construct(string $friendlyUrl){
-        $this->setUrl($friendlyUrl);
-    }
-    
-    public function loadByUrl(): bool{
-        if (empty($this->friendlyUrl)) return false;
+    protected function loadByUrl(): bool{
+        if (empty($this->articleUrl)) return false;
         if (!$this->loadFromDBUsingUrl()) return false;
         return true;
-        
     }
     
-    private function loadFromDBUsingUrl(): bool{
+    
+    public function __construct(string $articleUrl){
+        $this->setUrl($articleUrl);
+        $this->loadByUrl();
+    }
+    
+    protected function loadFromDBUsingUrl(): bool{
         $table = Article::$contentTable;
         
-        $query = "SELECT * FROM $table WHERE friendlyUrl = '$this->friendlyUrl'";
+        $query = "SELECT * FROM $table WHERE articleUrl = '$this->articleUrl'";
         if (!($data = $this->performQuery($query, true))) return false;
         
         $this->id = $data['news_id'];
         $this->title = $data['title'];
         $this->content = $data['content'];
-        $this->imageLink = $data['photo'];
-        $this->additionDate = $data['additionDate'];
+        $this->photo = $data['photo'];
+        $this->publicationDate = $data['publicationDate'];
         $this->category = $data['category'];
         $this->additionalCategory = $data['additionalCategory'];
         
@@ -51,8 +54,9 @@ class Article extends DatabaseControl{
     }
     
     public function renderArticle(){
+        $photoDir = AddingArticle::$photoDirectory;
         echo '<article class="article"><h1 class="articleTitle">'.$this->title.'</h1>';
-        echo '<img src="upload/'.$this->imageLink.'" class="mainArticleImage" alt="Zdjęcie dla artykuły pt. '.$this->title.'">';
+        echo '<img src="'.$photoDir.'/'.$this->photo.'" class="mainArticleImage" alt="Zdjęcie dla artykuły pt. '.$this->title.'">';
         echo '<div class="articleText">'.$this->content.'</div>';
         echo '</article>';
     }

@@ -1,10 +1,29 @@
 <?php
+require_once "classes/Page.php";
 require_once "classes/Article.php";
 require_once "classes/Comments.php";
+require_once "classes/ThumbnailView.php";
+require_once "classes/PageSettings.php";
+require_once "classes/Newsletter.php";
 
-$comments = new Comments();
-echo $comments->countAllComments();
-$comments->renderCommentsForArticle("lol-braum");
+$pageSettings = new PageSettings();
 
-$article = new Article("lol-braum");
-$article->renderArticle();
+@$articleGrid = new ThumbnailView($_GET['category']); /// optional parameter string $category inside
+$page = new Page($pageSettings);
+
+
+$page->renderHead();
+$page->renderMenu();
+
+
+
+
+$articleGrid->renderThumbnails();
+
+
+
+
+
+
+
+$page->renderFooter();

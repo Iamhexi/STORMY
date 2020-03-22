@@ -1,0 +1,153 @@
+/* ADMIN STYLESHEET */
+.loggingPanel {
+    width: calc (100% - 40px);
+    padding: 40px;
+    text-align: center;
+}
+
+.loggingPanel > header {
+}
+
+.loggingHeader {
+    font-size: 24px;
+}
+
+.loggingForm {
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    width: 50%;
+    border: 2px #BDBDBD groove;
+    text-align: center;
+    border-radius: 15px;
+    padding: 15px;
+    font-size: 20px;
+}
+
+.adminPasswordInput, .articleEditorInput, .articleEditorTextarea {
+    vertical-align: middle;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+    font-size: 18px;
+    background-color: #BDBDBD;
+    text-align: center;
+}
+
+form {
+    width: 100%;
+    text-align: center;
+}
+
+.logoutButton {
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.logoutButton, .adminLoggingButton, .addingSubmitButton, .errorLogButton, .returnButton, .articleEditorButton, .menuEditorButton {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+    font-size: 18px;
+    background-color: #C4C4C4;
+    text-align: center;
+}
+
+.adminLoggingButton:hover, .logoutButton:hover, .addingSubmitButton:hover, .errorLogButton:hover, .returnButton:hover, .articleEditorButton:hover, .menuEditorButton:hover {
+    cursor: pointer;
+}
+
+.addingForm {
+    width: 80%;
+    padding: 40px;
+    font-size: 20px;
+    text-align: center;
+    border: 2px solid #BDBDBD;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.addingForm > div {
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.addingInput {
+    vertical-align: middle;
+    font-size: 18px;
+    padding: 10px;
+    margin: 10px;
+    width: 40%;
+    text-align: center;
+    background-color: #BDBDBD;
+    border-radius: 5px;
+}
+
+
+.errorLog {
+    width: calc(80% + 40px);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    border: 2px #BDBDBD solid;
+    border-top-width: 0;
+}
+
+.errorEntry {}
+.errorLogForm {}
+.errorLogHeader {}
+.articleEditor {}
+.articleEditorPhoto {
+    width: 90%;
+    height: auto;
+}
+.articleEditorTextarea {}
+.articleEditorInput {}
+.articleEditorButton {}
+.returnButtonLink {}
+.returnButton {}
+.adminArticleGrid {}
+
+.adminArticleLink {
+    text-decoration: none;
+    color: black;
+}
+
+.adminArticleLink:hover {
+    text-decoration: underline;
+}
+
+.adminArticlePhoto {
+    vertical-align: middle;
+    width: 60%;
+    height: auto;
+}
+
+.articlesWrapper {
+    width: 80%;
+    padding: 40px;
+    font-size: 20px;
+    text-align: center;
+    border: 2px solid #BDBDBD;
+    border-top-width: 0;
+    margin: 0 auto;
+}
+
+.footer {
+    color: gray;
+    opacity: 1;
+}
+ 
+.menuEditor {
+    width: calc(80% + 40px);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    border: 2px #BDBDBD solid;
+}
+
+input[type=text], input[type=number] {
+    margin: 10px;
+}
