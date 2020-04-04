@@ -20,6 +20,8 @@ class PageSettings{
     
     private function loadSettings(string $sourceFile){
         try {
+            $this->sourceFile = $sourceFile;
+            
             if (@!($data = file_get_contents($sourceFile)))
                 throw new Exception("Couldn't open the file $sourceFile to load settings!");
             
@@ -55,14 +57,15 @@ class PageSettings{
     
     public function __set(string $varName, $value): void{
         $this->$varName = $value;
+        $this->settingsObject->$varName = $value;
     }
     
     public function saveSettings(): ?Exception{
         try {
-            if (@!($data = json_encode($settingsObject)))
+            if (@!($data = json_encode($this->settingsObject)))
                 throw new Exception("Couldn't encode JSON object to format of JSON data!");
             
-            if (@!($data = file_put_contents($sourceFile, $data)))
+            if (@!($data = file_put_contents($this->sourceFile, $data)))
                 throw new Exception("Couldn't save the file $sourceFile with settings!");
             
             return null;
@@ -71,4 +74,39 @@ class PageSettings{
         }
 
     }
+    
+
+    public function renderEditor(string $destination): void{
+        echo<<<END
+            <form action="$destination" method="POST" class="settingsEditor">
+                <div><label>Tytuł strony <input type="text" name="title" value="{$this->title}" class="settingsInput" required></label></div>
+                <div><label>Nagłówek strony <input type="text" name="headerText" value="{$this->headerText}" class="settingsInput" required></label></div>
+                <div title="Na przykład: https://mojastrona.pl"><label>Adres URL strony<input type="url" name="url" value="{$this->url}" class="settingsInput" maxlength="54" required></label></div>
+END;
+            
+        $this->renderThemeChoice();
+        echo<<<END
+             <div><label>Hasło administratora <input type="password" name="adminPassword" value="{$this->adminPassword}" class="settingsInput" required></label></div>
+            <div><label>E-mail administratora <input type="email" name="adminEmail" value="{$this->adminEmail}" class="settingsInput" required></label></div>
+            <div><label>E-mail do wysyłania newslettera <input type="email" name="newsletterEmail" value="{$this->newsletterEmail}" class="settingsInput"></label></div>
+            <div title="Słowa kluczowe wpisywane po przecinku"><label>Słowa kluczowe <input type="text" name="keywords" value="{$this->keywords}" class="settingsInput" required></label></div>
+            <div><label>Opis strony <textarea name="description" rows="10" cols="50" maxlength="220" class="settingsInput">{$this->description}</textarea></label></div>
+            <div><input type="submit" name="pageSettingsSavingButton" value="Zapisz ustawienia"></div>
+        </form>
+        
+END;
+    }
+    
+    private function renderThemeChoice(): void{
+        echo '<div><label>Motyw graficzny <select name="theme" class="themeSelectInput">';
+        
+        $themes = scandir("../themes/");
+        foreach ($themes as $theme){
+            if ($theme != "." && $theme != ".." && $theme != $this->theme) echo "<option value=\"$theme\">$theme</option>";
+            else if ($theme === $this->theme) echo "<option value=\"$theme\" selected>$theme</option>";
+        } 
+            
+        echo '</select></label></div>';
+    }
+    
 }

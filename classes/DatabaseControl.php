@@ -10,6 +10,7 @@ trait DatabaseControl {
     public static $commentsTable = "comments";
     public static $pagesTable = "pages";
     public static $menuTable = "menu";
+    public static $categoriesTable = "categories";
     
 protected function reportException(Exception $e): void{
     if ($this->exceptionReporting === true) 

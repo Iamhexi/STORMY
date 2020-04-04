@@ -5,7 +5,7 @@ if (!isset($_GET['url'])) header('location: index.php');
 
 require_once "classes/Article.php";
 require_once "classes/Comments.php";
-require_once "classes/Page.php";
+require_once "classes/Menu.php";
 
 $pageSettings = new PageSettings();
 $page = new Page($pageSettings);

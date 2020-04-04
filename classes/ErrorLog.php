@@ -31,7 +31,7 @@ END;
     }
     
     public function renderErrorLog(string $destination = "processor.php"): void{
-        echo '<div class="errorLog"><header class="errorLogHeader"></header>';
+        echo '<div class="errorLog"><header class="errorLogHeader">Dziennik błędów</header>';
         foreach ($this->errors as $error){
             echo "<div class=\"errorEntry\">$error</div>";
         }

@@ -45,7 +45,7 @@ form {
     margin-right: auto;
 }
 
-.logoutButton, .adminLoggingButton, .addingSubmitButton, .errorLogButton, .returnButton, .articleEditorButton, .menuEditorButton {
+.logoutButton, .adminLoggingButton, .addingSubmitButton, .errorLogButton, .returnButton, .articleEditorButton, .menuEditorButton, .pageSettingsSavingButton, .themeSelectInput {
     padding: 10px;
     border-radius: 5px;
     margin: 10px;
@@ -54,11 +54,11 @@ form {
     text-align: center;
 }
 
-.adminLoggingButton:hover, .logoutButton:hover, .addingSubmitButton:hover, .errorLogButton:hover, .returnButton:hover, .articleEditorButton:hover, .menuEditorButton:hover {
+.adminLoggingButton:hover, .logoutButton:hover, .addingSubmitButton:hover, .errorLogButton:hover, .returnButton:hover, .articleEditorButton:hover, .menuEditorButton:hover, pageSettingsSavingButton:hover, .themeSelectInput:hover {
     cursor: pointer;
 }
 
-.addingForm {
+.addingForm, .settingsEditor, .statisticsPanel {
     width: 80%;
     padding: 40px;
     font-size: 20px;
@@ -68,13 +68,13 @@ form {
     margin-right: auto;
 }
 
-.addingForm > div {
+.addingForm > div, .settingsEditor > div {
     max-width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
 
-.addingInput {
+.addingInput, .settingsInput {
     vertical-align: middle;
     font-size: 18px;
     padding: 10px;
@@ -97,7 +97,11 @@ form {
 
 .errorEntry {}
 .errorLogForm {}
-.errorLogHeader {}
+.errorLogHeader, .statisticsPanelHeader {
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+}
 .articleEditor {}
 .articleEditorPhoto {
     width: 90%;
@@ -146,6 +150,16 @@ form {
     margin-right: auto;
     padding: 20px;
     border: 2px #BDBDBD solid;
+}
+
+.menuEditor > div > label > input {
+    vertical-align: middle;
+    font-size: 18px;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    background-color: #BDBDBD;
+    border-radius: 5px;
 }
 
 input[type=text], input[type=number] {

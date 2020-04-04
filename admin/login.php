@@ -1,6 +1,6 @@
 <?php
 require_once "../classes/AdminAuth.php";
-require_once "../classes/Page.php";
+require_once "../classes/Menu.php";
 require_once "../classes/PageSettings.php";
 
 $adminAuth = new AdminAuth();

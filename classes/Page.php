@@ -38,6 +38,14 @@ END;
         echo '</head><body>';
     }
     
+    public function includeScripts(){
+        $path = $this->theme->path.'/'.Theme::$themeDirectory.'/'.$this->theme->name.'/'.Theme::$scriptSubdirectory;
+        @$filesToAppend = scandir($path);
+
+        foreach($filesToAppend as $jsFile){
+            if ($jsFile != '.' && $jsFile != '..') echo "<script src=\"$jsFile\"></script>";
+        }
+    }
     
     
     public function renderMenu($isForAdmin = false, string $proccessorLocation = null){
@@ -45,7 +53,8 @@ END;
     }
     
     public function renderFooter(){
-        echo '<footer class="footer" title="STORMY to silnik CMS, dzięki któremu stowrzysz stronę swoich marzeń!">Powered by STORMY | <a href="https://github.com/Iamhexi">Igor Sosnowicz</a> @ 2020</footer></body></html>';
+        $this->includeScripts();
+        echo '<footer class="footer" title="STORMY to silnik CMS, dzięki któremu stworzysz stronę swoich marzeń!">Powered by STORMY | <a href="https://github.com/Iamhexi">Igor Sosnowicz</a> @ 2020</footer></body></html>';
     }
     
 

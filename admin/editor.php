@@ -1,8 +1,8 @@
 <?php
-require_once "../classes/Page.php";
 require_once "../classes/PageSettings.php";
 require_once "../classes/AdminAuth.php";
 require_once "../classes/EditingArticle.php";
+require_once "../classes/Menu.php";
 
 @$adminAuth = new AdminAuth($_SESSION['isLogged']);
 $adminAuth->handleloggingOut();

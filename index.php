@@ -1,5 +1,5 @@
 <?php
-require_once "classes/Page.php";
+require_once "classes/Menu.php";
 require_once "classes/Article.php";
 require_once "classes/Comments.php";
 require_once "classes/ThumbnailView.php";

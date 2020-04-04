@@ -4,50 +4,10 @@ require_once "DatabaseControl.php";
 class Comments{
     use DatabaseControl;
     
-    private $tableName;
+    protected $tableName;
     
     public function __construct(){
         $this->tableName = Comments::$commentsTable;
-    }
-    
-    private function countAllCommentsFromDB(){
-        $tableName = Comments::$commentsTable;
-        $query = "SELECT COUNT(1) FROM $this->tableName";
-      
-        if (@!($rowsNumber = $this->performQuery($query, true))) 
-            throw new Exception("Couldn't count number of rows in the comments!");
-        
-        return (int)$rowsNumber[0];
-    }
-    
-    public function countAllComments(): ?int{
-        try {
-            return $this->countAllCommentsFromDB();
-        } catch (Exception $e){
-            $this->reportException($e);
-            return null;
-        }
-    }
-    
-    private function countCommentsFromDB(string $articleUrl){
-        $tableName = Comments::$commentsTable;
-        $articleUrl = $this->sanitizeInput($articleUrl);
-        
-        $query = "SELECT COUNT(1) FROM $this->tableName WHERE ArticleUrl = '$articleUrl'";
-      
-        if (@!($rowsNumber = $this->performQuery($query, true))) 
-            throw new Exception("Couldn't count number of rows in the article with id = $articleUrl!");
-        
-        return (int)$rowsNumber[0];
-    }
-    
-    public function countComments(string $articleUrl): ?int{
-        try {
-            return $this->countCommentsFromDB($this->sanitizeInput($articleUrl));
-        } catch (Exception $e){
-            $this->reportException($e);
-            return null;
-        }
     }
     
     private function addCommentToDB(string $articleUrl, string $author, string $content){

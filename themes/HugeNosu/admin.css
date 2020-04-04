@@ -1,0 +1,532 @@
+@import "https://use.fontawesome.com/releases/v5.8.1/css/all.css";
+@import "https://fonts.googleapis.com/css?family=Roboto|Trirong&display=swap";
+
+:root {
+	--font-small: 1rem;
+	--font-semi-medium: 1.25rem;
+	--font-medium: 1.1rem;
+	--font-large: 1.8rem;
+
+	--primary-dark: rgb(58, 58, 58);
+	--primary-dark-darken: rgb(44, 44, 44);
+	--secondary-light: rgb(218, 218, 218);
+	--contast-light: rgb(63, 63, 63);
+	--input-active: rgb(130, 201, 130);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+	color: var(--secondary-light);
+}
+
+body {
+	background-color: var(--primary-dark);
+	/*overflow-x: hidden;*/
+}
+
+a {
+	text-decoration: none;
+	color: var(--secondary-light);
+}
+
+.articleEditorPhoto {
+	width: 90%;
+	margin: 0 5vw 5vh;
+}
+
+input,
+.articleEditorTextarea {
+	outline: none;
+	background-color: var(--primary-dark);
+	width: 100%;
+}
+
+.articleEditorTextarea {
+	resize: none;
+	border-bottom: 2px solid var(--contast-light);
+	background-color: var(--contast-light);
+	padding: 1vh;
+	margin: 2vh 0;
+}
+
+.articleEditorInput {
+	padding: 2vh;
+	margin: 2vh auto 4vh;
+	width: 100%;
+	font-size: var(--font-medium);
+	background: var(--primary-dark);
+	border-bottom: 2px solid var(--secondary-light);
+}
+
+.actionForm {
+	width: 90vw;
+	display: flex;
+	justify-content: space-around;
+}
+
+.returnButton {
+	order: 1;
+	width: 40vw;
+	height: 40px;
+	background-color: var(--primary-dark-darken);
+	color: var(--secondary-light);
+	border-radius: 5px;
+	padding: 1vh 3vw;
+}
+
+form {
+	width: 90vw;
+	margin: 0 auto;
+}
+
+label {
+	font-size: var(--font-semi-medium);
+}
+
+.articleEditorInput:focus,
+.articleEditorInput:active,
+.articleEditorTextarea:focus,
+.articleEditorTextarea:active {
+	border-bottom: 2px solid var(--input-active);
+}
+
+.articleEditorButton,
+.logoutButton {
+	order: 1;
+	padding: 1vh 3vw;
+	border-radius: 5px;
+	height: 40px;
+	width: 40%;
+	margin-bottom: 5vh;
+	color: var(--primary-dark);
+	text-transform: uppercase;
+	background: var(--secondary-light);
+}
+
+.articleEditorButton {
+	background-color: var(--secondary-light);
+}
+
+div {
+	margin: 5vh 0;
+}
+
+.logoutButton:focus,
+.articleEditorButton:active,
+.articleEditorButton:focus .logoutButton:active {
+	color: var(--secondary-light);
+	background: var(--primary-dark-darken);
+}
+
+.footer {
+	font-size: var(--font-small);
+	text-align: center;
+	padding: 2vh 0;
+	color: var(--secondary-light);
+	background-color: var(--contast-light);
+}
+
+.header {
+	position: sticky;
+	top: 0;
+	height: 10vh;
+	z-index: 100;
+	width: 100vw;
+	padding: 3vh 0;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	margin-bottom: 3vh;
+	background-color: var(--secondary-light);
+}
+
+.headerText {
+	color: var(--primary-dark-darken);
+	font-family: 'Trirong', serif;
+	font-size: var(--font-large);
+}
+
+
+
+@import "https://use.fontawesome.com/releases/v5.8.1/css/all.css";
+@import "https://fonts.googleapis.com/css?family=Roboto|Trirong&display=swap";
+
+:root {
+	--font-small: 1rem;
+	--font-semi-medium: 1.25rem;
+	--font-medium: 1.1rem;
+	--font-large: 1.8rem;
+
+	--primary-dark: rgb(58, 58, 58);
+	--primary-dark-darken: rgb(44, 44, 44);
+	--secondary-light: rgb(218, 218, 218);
+	--contast-light: rgb(63, 63, 63);
+	--input-active: rgb(130, 201, 130);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+	color: var(--secondary-light);
+}
+
+body {
+	max-width: 100vw;
+	height: 100vh;
+	box-sizing: border-box;
+	background-color: var(--primary-dark);
+	/*overflow: hidden;*/
+}
+
+a {
+	text-decoration: none;
+	color: var(--secondary-light);
+}
+
+.loggingHeader {
+	text-align: center;
+	margin: 5vh 0 30vh;
+	font-size: var(--font-large);
+}
+
+.loggingForm {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.adminPasswordInput {
+	padding: 1vh;
+	background-color: var(--primary-dark);
+	outline: none;
+	border-bottom: 2px solid var(--secondary-light);
+}
+
+.adminPasswordInput:focus,
+.adminPasswordInput:active {
+	border-bottom: 2px solid var(--input-active);
+}
+
+.adminLoggingButton {
+	margin-top: 3vh;
+	width: 40vw;
+	border-radius: 5px;
+	padding: 1vh;
+	background-color: var(--secondary-light);
+	color: black;
+}
+
+.adminLoggingButton:focus {
+	background-color: var(--primary-dark-darken);
+	color: var(--secondary-light);
+}
+
+div {
+	margin-bottom: 2vh;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	z-index: 1000;
+	font-size: var(--font-small);
+	text-align: center;
+	padding: 2vh 0;
+	color: var(--secondary-light);
+	background-color: var(--contast-light);
+}
+
+@media only screen and (min-width: 900px) {
+	.footer {
+		font-size: var(--font-medium);
+		padding: 3vh 0;
+		width: 100vw;
+	}
+	.adminLoggingButton {
+		width: 15vw;
+	}
+	.adminPasswordInput {
+		width: 25vw;
+	}
+}
+@media only screen and (min-width: 1800px) {
+	button {
+		width: 15vw;
+	}
+}
+
+
+@import "https://use.fontawesome.com/releases/v5.8.1/css/all.css";
+@import "https://fonts.googleapis.com/css?family=Roboto|Trirong&display=swap";
+
+:root {
+	--font-small: 1rem;
+	--font-semi-medium: 1.25rem;
+	--font-medium: 1.1rem;
+	--font-large: 1.8rem;
+
+	--primary-dark: rgb(58, 58, 58);
+	--primary-dark-darken: rgb(44, 44, 44);
+	--secondary-light: rgb(218, 218, 218);
+	--contast-light: rgb(63, 63, 63);
+	--input-active: rgb(130, 201, 130);
+	--error-color: rgb(236, 55, 55);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+	color: var(--secondary-light);
+}
+
+body {
+	max-width: 100vw;
+	min-height: 100vh;
+	color: var(--secondary-light);
+	background-color: var(--primary-dark);
+	overflow-x: hidden;
+}
+
+a {
+	text-decoration: none;
+}
+
+section {
+	color: var(--secondary-light);
+}
+
+input,
+textarea {
+	color: var(--secondary-light);
+	padding: 8px;
+	outline: none;
+	background-color: var(--primary-dark);
+}
+
+textarea {
+	resize: none;
+}
+
+.addingSubmitButton,
+.errorLogButton {
+	padding: 10px;
+	background-color: var(--primary-dark-darken);
+	color: var(--secondary-light);
+	border-radius: 8px;
+}
+.addingSubmitButton:hover,
+.errorLogButton:hover {
+	cursor: pointer;
+	background-color: var(--secondary-light);
+	color: var(--primary-dark-darken);
+}
+
+.addingInput {
+	border-bottom: 2px solid var(--secondary-light);
+	margin-bottom: 5vh;
+	width: 100%;
+}
+
+.addingInput:active,
+.addingInput:focus {
+	border-bottom: 2px solid var(--input-active);
+}
+
+.errorLogButton {
+	margin-top: 5vh;
+}
+
+.addingForm {
+	width: 90vw;
+	margin: 2vh auto 5vh;
+}
+
+input[type=file] {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.logoutForm {
+	width: 90vw;
+	display: flex;
+	margin-top: 3vh;
+	justify-content: flex-end;
+}
+
+.logoutButton {
+	border: 1.2px solid rgb(154, 231, 154);
+	color: rgb(154, 231, 154);
+	border-radius: 8px;
+}
+
+.logoutButton:hover,
+.logoutButton:active {
+	color: var(--secondary-light);
+	border: 1.2px solid var(--secondary-light);
+}
+
+.errorLog {
+	margin: 0 auto 10vh;
+	width: 90vw;
+}
+
+.errorLogHeader,
+.errorEntry {
+	text-transform: uppercase;
+	color: var(--error-color);
+	line-height: 150%;
+	margin-bottom: 2vh;
+}
+
+.errorLogHeader {
+	font-size: var(--font-large);
+	border-bottom: 1px solid var(--error-color);
+}
+
+.adminArticleGrid {
+	margin: 5vh 0;
+}
+
+.adminArticleGrid a {
+	margin-left: 5vw;
+}
+
+.adminArticlePhoto {
+	width: 90%;
+	margin: calc((100% - 90%) / 2);
+}
+
+.addingInputLabel {
+	display: inline-block;
+	background-color: var(--secondary-light);
+	font-size: var(--font-small);
+	color: var(--primary-dark-darken);
+	border-radius: 8px;
+	padding: 8px;
+	margin-bottom: 8vh;
+}
+
+.addingInputLabel:hover {
+	cursor: pointer;
+	background-color: var(--primary-dark-darken);
+	color: var(--secondary-light);
+	transition: color 0.4s, background 0.4s;
+}
+
+.footer {
+	width: 100vw;
+	background-color: var(--contast-light);
+	padding: 2vh 0;
+	color: var(--secondary-light);
+	font-size: var(--font-small);
+	text-align: center;
+}
+
+.footer a {
+	color: white;
+}
+
+@media only screen and (min-width: 900px) {
+	.addingForm {
+		width: 45vw;
+		background-color: var(--primary-dark-darken);
+		padding: 3vw;
+		-webkit-box-shadow: 3px -3px 16px 0px rgba(0, 0, 0, 0.75);
+		-moz-box-shadow: 3px -3px 16px 0px rgba(0, 0, 0, 0.75);
+		box-shadow: 3px -3px 16px 0px rgba(0, 0, 0, 0.75);
+	}
+
+	.errorLog {
+		margin: 0 auto 10vh;
+		width: 45vw;
+	}
+
+	.addingInput {
+		background-color: var(--primary-dark-darken);
+	}
+
+	.articlesWrapper {
+		display: flex;
+		justify-content: space-evenly;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	.adminArticleGrid {
+		width: 30vw;
+	}
+
+	.errorLogForm {
+		width: 45vw;
+		display: flex;
+		margin: 0 auto;
+		justify-content: flex-end;
+	}
+}
+
+/* @media only screen and (min-width: 1800px) {
+
+} */
+
+
+
+
+
+
+@media only screen and (min-width: 900px) {
+	form {
+		width: 70vw;
+	}
+	.footer {
+		font-size: var(--font-medium);
+		padding: 3vh 0;
+	}
+	.returnButton,
+	.articleEditorButton {
+		width: 20vw;
+	}
+	.logoutButton {
+		width: 20vw;
+	}
+	.actionForm {
+		width: 60vw;
+	}
+	.articleEditorPhoto {
+		width: 60%;
+		margin: 0 15vw 5vh;
+	}
+}
+@media only screen and (min-width: 1800px) {
+	.returnButton,
+	.articleEditorButton {
+		width: 15vw;
+	}
+	.logoutButton {
+		width: 15vw;
+	}
+	.actionForm {
+		width: 45vw;
+	}
+	.articleEditorPhoto {
+		width: 50%;
+		margin: 0 20vw 5vh;
+	}
+}

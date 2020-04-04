@@ -4,6 +4,7 @@ class Theme {
     
     protected $name;
     protected static $themeDirectory = 'themes';
+    protected static $scriptSubdirectory = 'js';
     protected $main = 'main.css';
     protected $admin = 'admin.css';
     
@@ -29,4 +30,5 @@ class Theme {
          echo '<link rel="stylesheet" href="'.$this->mainStylesheet.'">';
          echo '<link rel="stylesheet" href="'.$this->adminStylesheet.'">';
     }
+    
 }
