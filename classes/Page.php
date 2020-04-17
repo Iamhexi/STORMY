@@ -4,6 +4,7 @@ require_once "Theme.php";
 require_once "PageSettings.php";
 require_once "DatabaseControl.php";
 require_once "Menu.php";
+require_once "Statistics.php";
 
 class Page extends Theme{
     use DatabaseControl;
@@ -18,7 +19,13 @@ class Page extends Theme{
         $this->exceptionReporting = $exceptionReporting;
     }
     
+    private function attachTracking(): void{
+        $stats = new Statistics();
+        if (strpos($_SERVER['REQUEST_URI'], 'admin') === false) $stats->addRecord(); // ignore admins' visits
+    }
+    
     public function renderHead(): void{
+        $this->attachTracking();
         echo<<<END
         <!DOCTYPE html>
         <html lang="pl">

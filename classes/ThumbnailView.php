@@ -4,8 +4,10 @@ require_once "DatabaseControl.php";
 class ThumbnailView{
     use DatabaseControl;
     private string $tableName;
+    private ?string $category;
+    private int $postsNumber = 9;
     
-    public function __construct(string $category = null){
+    public function __construct(){
         $this->tableName = ThumbnailView::$contentTable;
     }
     
@@ -36,26 +38,22 @@ END;
 END;
     }
     
-    
-    private function renderPageCounter(){
-        $howManyArticle;
-        $articlesPerPage;
-        
-        echo '<nav class="pageCounter"></nav>';
+    private function prepareQuery(bool $adminView){
+        if ($adminView)
+            return "SELECT articleUrl, title, photo FROM $this->tableName ORDER BY publicationDate DESC LIMIT $this->postsNumber";
+            
+        else if ($this->category === null && $adminView === false)
+            return "SELECT articleUrl, title, photo FROM $this->tableName WHERE publicationDate BETWEEN '00/00/0000 00:00:00.00' AND CURRENT_TIMESTAMP ORDER BY publicationDate DESC LIMIT $this->postsNumber";
+
+        else 
+            return "SELECT articleUrl, title, photo FROM $this->tableName WHERE (category = '$this->category' OR additionalCategory = '$this->category') AND publicationDate BETWEEN '00/00/0000 00:00:00.00' AND CURRENT_TIMESTAMP ORDER BY publicationDate DESC LIMIT $this->postsNumber";
     }
     
     
-    public function renderThumbnails(string $category = null, bool $adminView = false){
+    public function renderThumbnails(?string $category = null, bool $adminView = false){
         try {
-            if ($adminView)
-                 $query = "SELECT articleUrl, title, photo FROM $this->tableName ORDER BY publicationDate DESC";
-            
-            else if ($category === null && $adminView === false)
-                $query = "SELECT articleUrl, title, photo FROM $this->tableName WHERE publicationDate BETWEEN '00/00/0000 00:00:00.00' AND CURRENT_TIMESTAMP ORDER BY publicationDate DESC";
-            
-            else 
-                $query = "SELECT articleUrl, title, photo FROM $this->tableName WHERE (category = '$category' OR additionalCategory = '$category') AND publicationDate BETWEEN '00/00/0000 00:00:00.00' AND CURRENT_TIMESTAMP ORDER BY publicationDate DESC";
-            
+            $this->category = ($category === null) ? null : $this->sanitizeInput($category);
+            $query = $this->prepareQuery($adminView);
 
             if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
                 throw new Exception($connection->connect_error);

@@ -8,7 +8,7 @@ require_once "classes/Newsletter.php";
 
 $pageSettings = new PageSettings();
 
-@$articleGrid = new ThumbnailView($_GET['category']); /// optional parameter string $category inside
+$articleGrid = new ThumbnailView();
 $page = new Page($pageSettings);
 
 
@@ -18,7 +18,7 @@ $page->renderMenu();
 
 
 
-$articleGrid->renderThumbnails();
+@$articleGrid->renderThumbnails($_GET['category']);
 
 
 

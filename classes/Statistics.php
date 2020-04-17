@@ -15,7 +15,7 @@ class Statistics {
         $browserObject = get_browser();
         $browser = $browserObject->browser;
         $system = $browserObject->platform;
-        $visitedUrl = $_SERVER['PHP_SELF'];
+        $visitedUrl = $_SERVER['REQUEST_URI'];
         
         return "INSERT INTO $this->table (ip, browser, system, visitDatetime, visitedUrl) VALUES ('$ip', '$browser', '$system', NOW(), '$visitedUrl')";
     }
