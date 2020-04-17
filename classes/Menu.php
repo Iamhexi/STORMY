@@ -101,8 +101,9 @@ class Menu {
         $arrayOfSubpages = $pageManager->getArrayOfSubpages();
         
         echo '<div><label>Dokąd prowadzi <select name="menuElementDestination">';
-        
+    
         echo '<option selected disabled>Wybierz lokalizację</option>';
+        echo '<option value="'.$pageSettings->__get("url").'">Strona główna</option>';
         foreach ($arrayOfCategories as $category)
             echo "<option value=\"read.php?url={$category['categoryUrl']}\">KATEGORIA: {$category['categoryTitle']}</option>";
         

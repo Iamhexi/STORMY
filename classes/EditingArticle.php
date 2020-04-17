@@ -7,20 +7,6 @@ require_once "Article.php";
 class EditingArticle extends Article{
     use DatabaseControl;
     
-    private function renderCategorySelector(string $defaultValue, string $htmlAttributeName){
-        $categories = new Categories();
-        $categoryList = $categories->getCategoriesArray();
-        
-        echo '<div><label>Kategoria <select name="'.$htmlAttributeName.'" class="articleEditorInput" required>';
-        
-        foreach($categoryList as $c){
-            if ($c['categoryTitle'] == $defaultValue) echo "<option selected value=\"{$c['categoryTitle']}\">{$c['categoryTitle']}</option>";
-            else echo "<option value=\"{$c['categoryTitle']}\">{$c['categoryTitle']}</option>";
-        }
-        
-        echo '</select></label></div>';
-    } 
-    
     public function renderEditor(string $destination = "processor.php"): void{
         $photoDir = '../'.AddingArticle::$photoDirectory;
         echo<<<END
@@ -29,8 +15,8 @@ class EditingArticle extends Article{
                 <div><img class="articleEditorPhoto" src="$photoDir$this->photo" alt="Zdjęcie do artykułu pt. {$this->title}"></div>
                 <div><label>Treść <textarea rows="4" cols="50" name="content" value="{$this->content}" class="articleEditorTextarea" required>{$this->content}</textarea></label></div>
 END;
-        $this->renderCategorySelector($this->category, "category");
-        $this->renderCategorySelector($this->additionalCategory, "additionalCategory");
+        DatabaseControl::renderCategorySelector($this->category, "category");
+        DatabaseControl::renderCategorySelector($this->additionalCategory, "additionalCategory");
         echo<<<END
                 <div><label>Data publikacji: <input type="text" value="{$this->publicationDate}" name="publicationDate" class="articleEditorInput" required></label></div>
                 <div><input type="submit" value="Zapisz" name="savingArticle" class="articleEditorButton" required></div>

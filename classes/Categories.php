@@ -109,4 +109,65 @@ class Categories {
         }
     }
     
+    private function removeCategoryWithUrl(string $url){
+        $query = "DELETE FROM $this->table WHERE categoryUrl = '$url'";
+        
+        if (@!($this->performQuery($query)))
+            throw new Exception("Couldn't delete cateogry with url = $url from database!");
+    }
+    
+    public function removeWithUrl(string $url){
+        try {
+            $this->removeCategoryWithUrl($url);
+            return true;
+        } catch (Exception $e){
+            $this->reportException($e);
+            return false;
+        }
+    }
+    
+    private function removeCategoryWithTitle(string $title){
+        $query = "DELETE FROM $this->table WHERE categoryTitle = '$title'";
+        
+        if (@!($this->performQuery($query)))
+            throw new Exception("Couldn't delete cateogry with title = $title from database!");
+    }
+    
+    public function removeWithTitle(string $title){
+        try {
+            $this->removeCategoryWithTitle($title);
+            return true;
+        } catch (Exception $e){
+            $this->reportException($e);
+            return false;
+        }
+    }
+    
+    
+    
+    public static function renderRemovalForm(string $destination){
+        echo<<<END
+         <form action="$destination" method="POST" class="removingCategoryForm">
+            <header class="header">Usuwanie kategorii</header>
+END;
+        DatabaseControl::renderCategorySelector(" ", "categoryTitle");
+        
+        echo<<<END
+            <div><input type="submit" value="Usuń kategorię" name="removingCategory"></div>
+        </form>
+END;
+    }
+    
+    
+    public static function renderAddingForm(string $destination){
+        echo<<<END
+            <form action="$destination" method="POST" class="addingCategoryForm">
+                <header class="header">Dodawanie kategorii</header>
+                <div><label>Nazwa kategorii <input type="text" name="categoryName" required></label></div>
+                <div title="Bez polskich znaków, spacji, tabulatorów"><label>URL kategorii <input type="text" name="categoryUrl" required></label></div>
+                <div><input type="submit" name="addingCategory" value="Dodaj kategorię"></div>
+            </form>
+END;
+    }
+    
 }

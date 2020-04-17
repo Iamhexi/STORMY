@@ -51,7 +51,7 @@ class AdminAuth {
     public function renderLoggingForm(){
         echo<<<END
             <div class="loggingPanel">
-                <header><h1 class="loggingHeader">Panel administratora - Logowanie</h1></header>
+                <header><h1 class="loggingHeader header">Panel administratora - Logowanie</h1></header>
                 <form class="loggingForm" action="$this->loggingUrl" method="POST">
                     <div><label title="Insert a password to log in to the admin panel.">Password: <input type="password" name="adminPassword" class="adminPasswordInput" autofocus required><label></div>
                     <div><input type="submit" value="Log in" class="adminLoggingButton"></div>

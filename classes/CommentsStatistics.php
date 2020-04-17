@@ -61,7 +61,7 @@ class CommentsStatistics extends Comments {
         
         echo<<<END
             <div class="statisticsPanel"> 
-                <header class="statisticsPanelHeader">Statystyki komentarzy</header>
+                <header class="header">Statystyki komentarzy</header>
                 <form action="$destination" id="statisticsForm" method="POST">
                 <label for="startingDatePicker">Okres wyświetlania statystyk</label>
                 <select id="startingDatePicker" name="startingDatePicker" onselect="submitStatsSelection()">

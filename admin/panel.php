@@ -7,6 +7,7 @@ require_once "../classes/Menu.php";
 require_once "../classes/PageSettings.php";
 require_once "../classes/CommentsStatistics.php";
 require_once "../classes/Categories.php";
+require_once "../classes/SubpageEditor.php";
 
 $processorLocation = "processor.php";
 
@@ -37,6 +38,11 @@ $settings->renderEditor($processorLocation);
 $commStats = new CommentsStatistics;
 @$commStats->renderPanel($processorLocation, $_GET['from'], null, $_GET['score']);
 
+$subpageEditor = new SubpageEditor;
+$subpageEditor->renderListOfSubpages();
+
+Categories::renderAddingForm($processorLocation);
+Categories::renderRemovalForm($processorLocation);
 
 $page->renderFooter();
 

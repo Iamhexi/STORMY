@@ -1,15 +1,15 @@
 /* ADMIN STYLESHEET */
+
+.header {
+    font-size: 30px;
+    font-weight: 700;
+    text-align: center;
+}
+
 .loggingPanel {
     width: calc (100% - 40px);
     padding: 40px;
     text-align: center;
-}
-
-.loggingPanel > header {
-}
-
-.loggingHeader {
-    font-size: 24px;
 }
 
 .loggingForm {
@@ -24,7 +24,7 @@
     font-size: 20px;
 }
 
-.adminPasswordInput, .articleEditorInput, .articleEditorTextarea {
+.adminPasswordInput, .articleEditorInput, .articleEditorTextarea, .subpageEditorTextarea {
     vertical-align: middle;
     padding: 10px;
     border-radius: 5px;
@@ -45,7 +45,7 @@ form {
     margin-right: auto;
 }
 
-.logoutButton, .adminLoggingButton, .addingSubmitButton, .errorLogButton, .returnButton, .articleEditorButton, .menuEditorButton, .pageSettingsSavingButton, .themeSelectInput {
+.logoutButton, .adminLoggingButton, .addingSubmitButton, .errorLogButton, .returnButton, .articleEditorButton, .menuEditorButton, .pageSettingsSavingButton, .themeSelectInput, .subpageEditorButton {
     padding: 10px;
     border-radius: 5px;
     margin: 10px;
@@ -54,7 +54,7 @@ form {
     text-align: center;
 }
 
-.adminLoggingButton:hover, .logoutButton:hover, .addingSubmitButton:hover, .errorLogButton:hover, .returnButton:hover, .articleEditorButton:hover, .menuEditorButton:hover, pageSettingsSavingButton:hover, .themeSelectInput:hover {
+.adminLoggingButton:hover, .logoutButton:hover, .addingSubmitButton:hover, .errorLogButton:hover, .returnButton:hover, .articleEditorButton:hover, .menuEditorButton:hover, pageSettingsSavingButton:hover, .themeSelectInput:hover, .subpageEditorButton:hover {
     cursor: pointer;
 }
 
@@ -97,11 +97,6 @@ form {
 
 .errorEntry {}
 .errorLogForm {}
-.errorLogHeader, .statisticsPanelHeader {
-    font-size: 30px;
-    font-weight: 700;
-    text-align: center;
-}
 .articleEditor {}
 .articleEditorPhoto {
     width: 90%;
@@ -144,7 +139,7 @@ form {
     opacity: 1;
 }
  
-.menuEditor {
+.menuEditor, .subpageList {
     width: calc(80% + 40px);
     margin-left: auto;
     margin-right: auto;
@@ -164,4 +159,17 @@ form {
 
 input[type=text], input[type=number] {
     margin: 10px;
+}
+
+.subpageList {
+    text-align: center;
+}
+
+.subpageList > a {
+    text-decoration: none;
+    color: black;
+}
+
+.subpageList > a:hover {
+    text-decoration: underline;
 }

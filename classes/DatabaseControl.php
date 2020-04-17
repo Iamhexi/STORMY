@@ -11,6 +11,7 @@ trait DatabaseControl {
     public static $pagesTable = "pages";
     public static $menuTable = "menu";
     public static $categoriesTable = "categories";
+    public static $statisticsTable = "statistics";
     
 protected function reportException(Exception $e): void{
     if ($this->exceptionReporting === true) 
@@ -48,6 +49,20 @@ protected function performQuery(string $query, bool $needResponce = false, bool 
 protected function sanitizeInput(string $input): string{
     return filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
+    
+public static function renderCategorySelector(string $defaultValue, string $htmlAttributeName){
+        $categories = new Categories();
+        $categoryList = $categories->getCategoriesArray();
+        
+        echo '<div><label>Kategoria <select name="'.$htmlAttributeName.'" class="articleEditorInput" required>';
+        
+        foreach($categoryList as $c){
+            if ($c['categoryTitle'] == $defaultValue) echo "<option selected value=\"{$c['categoryTitle']}\">{$c['categoryTitle']}</option>";
+            else echo "<option value=\"{$c['categoryTitle']}\">{$c['categoryTitle']}</option>";
+        }
+        
+        echo '</select></label></div>';
+    } 
     
     
 }

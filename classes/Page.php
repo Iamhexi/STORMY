@@ -42,8 +42,10 @@ END;
         $path = $this->theme->path.'/'.Theme::$themeDirectory.'/'.$this->theme->name.'/'.Theme::$scriptSubdirectory;
         @$filesToAppend = scandir($path);
 
-        foreach($filesToAppend as $jsFile){
-            if ($jsFile != '.' && $jsFile != '..') echo "<script src=\"$jsFile\"></script>";
+        if (!empty($filesToAppend)){
+            foreach($filesToAppend as $jsFile){
+                if ($jsFile != '.' && $jsFile != '..') echo "<script src=\"$jsFile\"></script>";
+            }
         }
     }
     

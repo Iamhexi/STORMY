@@ -1,5 +1,11 @@
 <?php
 
+require_once "../classes/ErrorLog.php";
+require_once "../classes/EditingArticle.php";
+require_once "../classes/Menu.php";
+require_once "../classes/PageSettings.php";
+require_once "../classes/CommentsStatistics.php";
+require_once "../classes/SubpageEditor.php";
 require_once "../classes/Processor.php";
 $processor = new Processor;
 
@@ -49,6 +55,25 @@ else if (isset($_POST['startingDatePicker'])){
     
     header("location: panel.php?score=$s#statisticsForm");
     exit();
+}
+
+
+else if (isset($_POST['savingSubpage'])){ // saving changes on subpage
+    $subpageEditor = new SubpageEditor();
+    $subpageEditor->editSubpageWithId($_POST['id'], $_POST['title'], $_POST['content']);
+}
+
+
+else if (isset($_POST['addingCategory'])){
+    $categories = new Categories();
+    if (isset($_POST['categoryName']) && isset($_POST['categoryUrl']))
+        $categories->add($_POST['categoryName'], $_POST['categoryUrl']);
+}
+
+else if (isset($_POST['removingCategory'])){
+    $categories = new Categories();
+    if (isset($_POST['categoryTitle']))
+        $categories->removeWithTitle($_POST['categoryTitle']);
 }
 
 header('location: panel.php');

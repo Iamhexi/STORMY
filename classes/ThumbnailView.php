@@ -3,9 +3,9 @@ require_once "DatabaseControl.php";
 
 class ThumbnailView{
     use DatabaseControl;
-    private $tableName;
+    private string $tableName;
     
-    public function __construct(){
+    public function __construct(string $category = null){
         $this->tableName = ThumbnailView::$contentTable;
     }
     
@@ -36,6 +36,15 @@ END;
 END;
     }
     
+    
+    private function renderPageCounter(){
+        $howManyArticle;
+        $articlesPerPage;
+        
+        echo '<nav class="pageCounter"></nav>';
+    }
+    
+    
     public function renderThumbnails(string $category = null, bool $adminView = false){
         try {
             if ($adminView)
@@ -59,20 +68,21 @@ END;
             
             echo '<article class="articlesWrapper">';
             
-            while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
-                if ($adminView === false) 
-                    $this->renderThumbnailAsHTML($fetched['articleUrl'], $fetched['title'], $fetched['photo']);
-                else 
+            if ($adminView === false) 
+                while ($fetched = $result->fetch_array(MYSQLI_BOTH))
+                      $this->renderThumbnailAsHTML($fetched['articleUrl'], $fetched['title'], $fetched['photo']);
+                  
+            else
+                while ($fetched = $result->fetch_array(MYSQLI_BOTH))
                     $this->renderThumbnailForAdmin($fetched['articleUrl'], $fetched['title'], $fetched['photo']);
                     
-            }
+            
             
             echo '</article>';
 
 
         } catch (Exception $e){
             $this->reportException($e);
-            echo $e->getMessage()."<br>";
             return false;
         }
     }

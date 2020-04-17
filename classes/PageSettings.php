@@ -79,6 +79,7 @@ class PageSettings{
     public function renderEditor(string $destination): void{
         echo<<<END
             <form action="$destination" method="POST" class="settingsEditor">
+                <header class="header">Ustawienia strony</header>
                 <div><label>Tytuł strony <input type="text" name="title" value="{$this->title}" class="settingsInput" required></label></div>
                 <div><label>Nagłówek strony <input type="text" name="headerText" value="{$this->headerText}" class="settingsInput" required></label></div>
                 <div title="Na przykład: https://mojastrona.pl"><label>Adres URL strony<input type="url" name="url" value="{$this->url}" class="settingsInput" maxlength="54" required></label></div>

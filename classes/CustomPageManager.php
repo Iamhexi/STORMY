@@ -36,6 +36,34 @@ class CustomPageManager{
         }  
     }
     
+    private function saveCurrentSubpage(){
+        if (empty($this->currentSubpage->url)) 
+            throw new Exception("Incorrect subpage url, please enter correct url!");
+        
+        $id = $this->currentSubpage->id;
+        $t = $this->currentSubpage->title;
+        $c = $this->currentSubpage->content;
+
+        $query = "UPDATE $this->table SET title = '$t', content = '$c' WHERE id = 'id'";
+
+        if (@!$this->performQuery($query))
+            throw new Exception("Couldn't save a subpage with the id = '$this->id' to the database!");
+    }
+    
+    public function updateSubpage(string $content, $title = null): bool{
+        try {
+            $this->currentSubpage->__set("content", $content);
+            if ($title !== null)
+                $this->currentSubpage->__set("title", $content);
+            
+            $this->saveCurrentSubpage();
+            return true;
+        } catch (Exception $e){
+            $this->reportException($e);
+            return false;
+        }  
+    }
+    
    public function renderLoadedPage(): void{
        $this->currentSubpage->renderPage();
    }
@@ -69,8 +97,10 @@ class CustomPageManager{
     }
     
     public function getArrayOfSubpages(): array{
-        if ($this->loadListOfSubpages())
+        if ($this->loadListOfSubpages() && $this->subpages !== null)
             return $this->subpages;
+        else 
+            return array();
     }
     
     
