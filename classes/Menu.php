@@ -105,7 +105,7 @@ class Menu {
         echo '<option selected disabled>Wybierz lokalizację</option>';
         echo '<option value="'.$pageSettings->__get("url").'">Strona główna</option>';
         foreach ($arrayOfCategories as $category)
-            echo "<option value=\"read.php?url={$category['categoryUrl']}\">KATEGORIA: {$category['categoryTitle']}</option>";
+            echo "<option value=\"index.php?category={$category['categoryUrl']}\">KATEGORIA: {$category['categoryTitle']}</option>";
         
         foreach ($arrayOfSubpages as $subpage)
             echo "<option value=\"page.php?purl={$subpage['url']}\">PODSTRONA: {$subpage['title']}</option>";
