@@ -90,7 +90,7 @@ END;
     
     public function handleFirstTimeLogging(bool $isFirstTime): void{
         if ($isFirstTime)
-            echo "<div style=\"font-size: 26px; text-align: center; color: red;\"><h2>Instalacja powiodła się. Aby ją dokończyć...</h2><br>1. Koniecznie usuń cały folder 'install'. To ważne, ponieważ inaczej dowolna osoba będzie mogła włamać się na Twoją stronę!
+            echo "<div style=\"font-size: 26px; text-align: center; color: red;\"><h2>Ważne!</h2><br>1. Koniecznie usuń cały folder 'install'. To ważne, ponieważ inaczej dowolna osoba będzie mogła włamać się na Twoją stronę!
             <br>2. Domyślnym hasłem jest: <b>admin</b>. <u>Zmień to hasło od razu po zalogowaniu!</u></div>";
     }
     
