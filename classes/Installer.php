@@ -36,6 +36,8 @@ class Installer {
             throw new Exception("Could create a new database! Admit higher privileges to the given account to solve this problem.");
         if (!($this->importData()))
             throw new Exception("Couldn't import SQL data to database. Check whether the file exits. ");
+        if (!($this->createDatabaseConnectionFile()))
+            throw new Exception("Coldn't create the database configuration file! Try again using another database name.");
         
         
         return null;
@@ -128,6 +130,22 @@ END;
     
     protected function sanitizeInput(string $input): ?string{
         return filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+    
+    private function createDatabaseConnectionFile(): bool{
+        $content = <<<END
+        <?php
+          define("DB_HOST", "{$this->dbServerAddress}");
+          define("DB_LOGIN", "{$this->dbUsername}");
+          define("DB_PASSWORD", "{$this->dbPassword}");
+          define("DB_NAME", "{$this->dbName}");
+END;
+
+        $fileLocation = '../settings/connection.php';
+        if (file_put_contents($fileLocation, $content))
+            return true;
+        else 
+            return false;
     }
 }
 
