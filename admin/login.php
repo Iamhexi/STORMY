@@ -12,6 +12,9 @@ $page = new Page($settings, "..");
 
 $page->renderHead();
 
+if (isset($_GET['firstTime']))
+   $adminAuth->handleFirstTimeLogging($_GET['firstTime']);
+
 $adminAuth->renderPrompt();
 $adminAuth->renderLoggingForm();
 

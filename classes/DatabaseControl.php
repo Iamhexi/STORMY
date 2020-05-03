@@ -5,7 +5,7 @@
 
 trait DatabaseControl {
 
-    private $exceptionReporting = true; /// TURN OFF BEFORE REALSING APP
+    private $exceptionReporting = false; /// TURN OFF BEFORE REALSING APP
     public static $contentTable = "news";
     public static $commentsTable = "comments";
     public static $pagesTable = "pages";
@@ -41,7 +41,6 @@ protected function performQuery(string $query, bool $needResponce = false, bool 
         
     } catch (Exception $e){
         $this->reportException($e);
-        echo $e->getMessage()."<br>";
         return false;
     }
 }

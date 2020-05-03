@@ -53,8 +53,8 @@ class AdminAuth {
             <div class="loggingPanel">
                 <header><h1 class="loggingHeader header">Panel administratora - Logowanie</h1></header>
                 <form class="loggingForm" action="$this->loggingUrl" method="POST">
-                    <div><label title="Insert a password to log in to the admin panel.">Password: <input type="password" name="adminPassword" class="adminPasswordInput" autofocus required><label></div>
-                    <div><input type="submit" value="Log in" class="adminLoggingButton"></div>
+                    <div><label title="Insert a password to log in to the admin panel.">Hasło: <input type="password" name="adminPassword" class="adminPasswordInput" autofocus required><label></div>
+                    <div><input type="submit" value="Zaloguj się" class="adminLoggingButton"></div>
                 </form>
             </div>
 END;
@@ -88,6 +88,10 @@ END;
         echo '<a class="returnButtonLink" href="panel.php"><button class="returnButton">Wróć</button></a>';
     }
     
-    
+    public function handleFirstTimeLogging(bool $isFirstTime): void{
+        if ($isFirstTime)
+            echo "<div style=\"font-size: 26px; text-align: center; color: red;\"><h2>Ważne!</h2><br>1. Koniecznie usuń cały folder 'install'. To ważne, ponieważ inaczej dowolna osoba będzie mogła włamać się na Twoją stronę!
+            <br>2. Domyślnym hasłem jest: <b>admin</b>. <u>Zmień to hasło od razu po zalogowaniu!</u></div>";
+    }
     
 }
