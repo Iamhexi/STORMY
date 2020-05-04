@@ -38,7 +38,7 @@ class SubpageEditor implements SubpageManagement{
     }
     
     private function createNewSubpage(string $url, string $title): ?Exception{
-        $content = '<h1>Nowa podstrona</h1><p>Właśnie utworzyłeś nową podstronę. Teraz możesz edytować ją z poziomu panelu admnistratora. Dodaj tutaj, co tylko chcesz. Nie zapomnij tylko podpiąć tej podstrony do menu.    Miłego tworzenia!</p>';
+        $content = '<h1>Nowa podstrona</h1><p>Właśnie utworzyłeś nową podstronę. Teraz możesz edytować ją z poziomu panelu administratora. Dodaj tutaj, co tylko chcesz. Nie zapomnij tylko podpiąć tej podstrony do menu.    Miłego tworzenia!</p>';
         $query = "INSERT INTO $this->table (url, title, content) VALUES ('$url', '$title', '$content')";
         
         if (@!($this->performQuery($query)))
@@ -55,6 +55,19 @@ class SubpageEditor implements SubpageManagement{
             $this->reportException($e);
             return false;
         }
+    }
+    
+    public static function renderSubpageCreator(string $destination): void{
+        echo<<<END
+        <div class="subpageCreatorWrapper">
+            <header class="header">Tworzenie nowej podstrony</header>
+            <form clas="subpageCreator" method="POST" action="$destination">
+                <div><label>Nazwa podstrony <input type="text" class="subpageCreatorInput" name="title" required></label></div>
+                <div title="Bez polskich znaków, spacji ani kropek."><label>URL podstrony <input type="text" class="subpageCreatorInput" name="url" required></label></div>
+                <div><input type="submit" name="addingSubpage" value="Stwórz podstronę!"></div>
+            </form>
+        </div>
+END;
     }
     
     private function selectRemovingQuery($url = null, $id = null){
@@ -171,6 +184,10 @@ class SubpageEditor implements SubpageManagement{
             <div><label>Tytuł strony <input class="addingInput" type="text" name="title" value="{$currentSubpage->title}"></label></div>
             <div><label>Zawartość HTML <textarea class="subpageEditorTextarea" cols="70" rows="25" name="content">{$currentSubpage->content}</textarea></label></div>
             <div><input type="submit" class="subpageEditorButton" name="savingSubpage" value="Zapisz"></div>
+        </form>
+        <form action="$destination" method="POST" class="subpageDeletion">
+            <input style="display:none;" type="number" name="id" value="{$currentSubpage->id}">
+            <div title="Tego procesu nie można cofnąć!"><input type="submit" name="removingSubpage" value="Usuń podstronę"></div>
         </form>
 END;
     }

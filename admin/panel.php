@@ -38,6 +38,8 @@ $settings->renderEditor($processorLocation);
 $commStats = new CommentsStatistics;
 @$commStats->renderPanel($processorLocation, $_GET['from'], null, $_GET['score']);
 
+SubpageEditor::renderSubpageCreator($processorLocation);
+
 $subpageEditor = new SubpageEditor;
 $subpageEditor->renderListOfSubpages();
 

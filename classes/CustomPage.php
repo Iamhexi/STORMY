@@ -7,7 +7,7 @@ class CustomPage extends Page {
     use DatabaseControl;
     
     private $id;
-    private $title;
+    protected $title;
     private $url;
     private $content;
     

@@ -64,7 +64,12 @@ class CustomPageManager{
         }  
     }
     
+   private function updateDisplayedTitle(): void{
+       $this->currentSubpage->setTitle($this->currentSubpage->title);
+   }
+    
    public function renderLoadedPage(): void{
+       $this->updateDisplayedTitle();
        $this->currentSubpage->renderPage();
    }
     

@@ -173,3 +173,9 @@ input[type=text], input[type=number] {
 .subpageList > a:hover {
     text-decoration: underline;
 }
+
+.subpageDeletion {
+    width: auto;
+    text-align: left;
+    margin: 10px;
+}

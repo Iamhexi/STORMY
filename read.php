@@ -13,10 +13,12 @@ $page = new Page($pageSettings);
 $comments = new Comments();
 if (isset($_POST['commented'])) $comments->addComment($_GET['url'], $_POST['name'], $_POST['content']);
 
+@$article = new Article($_GET['url']);
+$page->setTitle($article->getTitle());
+
 $page->renderHead();
 $page->renderMenu();
 
-@$article = new Article($_GET['url']);
 $article->renderArticle();
 
 $comments->renderCommentForm($_GET['url']);

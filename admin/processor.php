@@ -63,6 +63,11 @@ else if (isset($_POST['savingSubpage'])){ // saving changes on subpage
     $subpageEditor->editSubpageWithId($_POST['id'], $_POST['title'], $_POST['content']);
 }
 
+else if (isset($_POST['addingSubpage'])){
+    $subpageEditor = new SubpageEditor();
+    $subpageEditor->createSubpage($_POST['url'], $_POST['title']);
+}
+
 
 else if (isset($_POST['addingCategory'])){
     $categories = new Categories();

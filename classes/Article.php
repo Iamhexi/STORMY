@@ -15,6 +15,9 @@ class Article{
     protected $category;
     protected $additionalCategory;
     
+    public function getTitle(): string{
+        return $this->title;
+    }
     
     protected function sanitizeInput(string $input): string{
         return filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);

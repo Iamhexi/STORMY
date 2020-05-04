@@ -45,7 +45,7 @@ END;
         echo '</head><body>';
     }
     
-    public function includeScripts(){
+    public function includeScripts(): void{
         $path = $this->theme->path.'/'.Theme::$themeDirectory.'/'.$this->theme->name.'/'.Theme::$scriptSubdirectory;
         @$filesToAppend = scandir($path);
 
@@ -57,13 +57,17 @@ END;
     }
     
     
-    public function renderMenu($isForAdmin = false, string $proccessorLocation = null){
+    public function renderMenu($isForAdmin = false, string $proccessorLocation = null): void{
         $menu = new Menu($isForAdmin, $proccessorLocation);
     }
     
-    public function renderFooter(){
+    public function renderFooter(): void{
         $this->includeScripts();
         echo '<footer class="footer" title="STORMY to silnik CMS, dzięki któremu stworzysz stronę swoich marzeń!">Powered by STORMY | <a href="https://github.com/Iamhexi">Igor Sosnowicz</a> @ 2020</footer></body></html>';
+    }
+    
+    public function setTitle(string $newTitle): void{
+        $this->settings->title = $newTitle;
     }
     
 
