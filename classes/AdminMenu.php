@@ -22,8 +22,8 @@ class AdminMenu {
         
         <li><a href="#">Statystyki</a>
             <ul>
-                <li><a href="$p?action=commentStats">Statystyki komentarzy</a></li>
                 <li><a href="$p?action=normalStats">Statystyki odwiedzin</a></li>
+                <li><a href="$p?action=commentStats">Statystyki komentarzy</a></li>
             </ul>
         </li>
         

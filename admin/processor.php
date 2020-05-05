@@ -53,7 +53,7 @@ else if (isset($_POST['startingDatePicker'])){
     $commStats = new CommentsStatistics();
     $s = $commStats->countAll($_POST['startingDatePicker'], $_POST['endingDate']);
     
-    header("location: panel.php?score=$s#statisticsForm");
+    header("location: panel.php?action=commentStats&score=$s");
     exit();
 }
 

@@ -54,6 +54,11 @@ class AdminPanel {
         $this->settings->renderEditor($this->processorLocation);
     }
     
+    private function renderVisitsStatistics(): void{
+        $stats = new Statistics();
+        $stats->renderTable();
+    }
+    
     private function renderCommentsStatictics(){
         $commStats = new CommentsStatistics;
         @$commStats->renderPanel($this->processorLocation, $_GET['from'], null, $_GET['score']);
@@ -91,7 +96,7 @@ class AdminPanel {
             break;
             
             case "normalStats":
-                echo 'NIE ZAIMPLEMENTOWANY TAKIEJ OPCJI.';
+                $this->renderVisitsStatistics();
             break;
             
             case "addSubpage":
