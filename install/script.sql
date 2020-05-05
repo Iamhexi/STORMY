@@ -128,7 +128,64 @@ ALTER TABLE `pages`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+CREATE TABLE `news` (
+  `news_id` int(255) NOT NULL,
+  `title` mediumtext NOT NULL,
+  `photo` text NOT NULL,
+  `content` longtext NOT NULL,
+  `articleUrl` varchar(90) NOT NULL,
+  `publicationDate` timestamp NOT NULL DEFAULT current_timestamp(),
+  `category` varchar(999) NOT NULL,
+  `additionalCategory` varchar(900) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `statistics`
+--
+
+CREATE TABLE `statistics` (
+  `recordId` int(11) NOT NULL,
+  `ip` varchar(45) COLLATE utf8_bin NOT NULL,
+  `browser` varchar(250) COLLATE utf8_bin NOT NULL,
+  `system` int(250) NOT NULL,
+  `visitDatetime` datetime NOT NULL,
+  `visitedUrl` varchar(100) COLLATE utf8_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Indeksy dla zrzutów tabel
+--
+
+--
+-- Indeksy dla tabeli `news`
+--
+ALTER TABLE `news`
+  ADD PRIMARY KEY (`news_id`),
+  ADD UNIQUE KEY `articleUrl` (`articleUrl`);
+
+--
+-- Indeksy dla tabeli `statistics`
+--
+ALTER TABLE `statistics`
+  ADD PRIMARY KEY (`recordId`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT dla tabeli `news`
+--
+ALTER TABLE `news`
+  MODIFY `news_id` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT dla tabeli `statistics`
+--
+ALTER TABLE `statistics`
+  MODIFY `recordId` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT dla tabeli `categories`
 --
