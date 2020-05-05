@@ -8,7 +8,7 @@ class ThumbnailView{
     private int $postsNumber = 9;
     
     public function __construct(){
-        $this->tableName = ThumbnailView::$contentTable;
+        $this->tableName = DatabaseControl::$contentTable;
     }
     
     

@@ -66,6 +66,7 @@ form {
     border: 2px solid #BDBDBD;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 5%;
 }
 
 .addingForm > div, .settingsEditor > div {
@@ -179,3 +180,98 @@ input[type=text], input[type=number] {
     text-align: left;
     margin: 10px;
 }
+
+
+/* ADMIN MENU */
+
+        .mainMenu {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+        
+        .mainMenu a {
+            font-size: 1.4rem;
+        }
+        
+        .main {
+            width: 70%;
+            box-sizing: border-box;
+        }
+        
+        .footer {
+            clear: both;
+        }
+
+        ul {
+             list-style: none;
+             /*float: left;*/
+        }
+
+        ul > li {
+             margin: 0;
+             padding: 0;
+             float: left; 
+             position: relative;
+             height: 30px;
+        }
+
+        ul > li > a {
+             padding: 10px; 
+             color: #000;
+             text-decoration: none;
+        }
+
+        ul > li > a:hover, 
+        ul > li:hover > a {
+             color: #de5f44;
+        }
+
+        ul > li ul {
+             padding: 0;
+             position: absolute; 
+             display: none; 
+             left: 0px; 
+             top: 30px; 
+             width: 200px; 
+             text-align: left;
+             background-color: #fcfcfc;
+             border: 1px solid #ccc;
+        }
+
+        ul li:hover > ul {
+             display: block;
+        }
+
+        ul > li ul ul {
+             left: 200px; 
+             top: -1px;
+        }
+
+        ul > li ul li {
+             margin: 0; 
+             padding: 0;
+             position: relative; 
+             float: none; 
+             height: auto;
+        }
+
+        ul > li ul li a {
+             padding: 10px 20px; 
+             color: #505050; 
+             text-decoration: none;
+             display: block;
+        }
+
+        ul > li ul li a:hover,
+        ul > li ul li:hover > a {
+             text-decoration: none;
+             color: #fff;
+             background-color: #f26c4f;
+        }
+        
+        .logoutButton {
+            float: right;
+        }
