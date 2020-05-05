@@ -51,6 +51,10 @@ class PageSettings{
         
     }
     
+    public function getAdminPassword(): string {
+        return $this->adminPassword;
+    }
+    
     public function __get(string $variable): ?string{
         return $this->$variable;
     }

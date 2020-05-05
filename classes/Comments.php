@@ -5,6 +5,7 @@ class Comments{
     use DatabaseControl;
     
     protected $tableName;
+    private $maxLineLength = 140;
     
     public function __construct(){
         $this->tableName = Comments::$commentsTable;
@@ -48,14 +49,26 @@ class Comments{
         }
     }
     
+    private function breakLongLines(string $old){
+        $new = "";
+        $oldLength = strlen($old);
+        
+        for ($i=0;$i<round($oldLength/$this->maxLineLength);$i++){
+            $new .= (substr($old, $i*$this->maxLineLength, $this->maxLineLength).'<br>');
+        }
+        
+        return $new;
+    }
+    
     private function displayCommentAsHTML(string $author, string $content, string $ad){
             $additionDate = $ad[8].$ad[9]."-".$ad[5].$ad[6]."-".$ad[0].$ad[1].$ad[2].$ad[3]; // formating date
+            $content = $this->breakLongLines($content);
             
             ECHO<<<END
             
                 <div class="comment">
                     <div class="commentAuthor">$author</div>
-                    <div class="commentContent">$content</div>
+                    <div class="commentContent"><p>$content</p></div>
                     <div class="commentDate">$additionDate</div>
                 </div>
 END;

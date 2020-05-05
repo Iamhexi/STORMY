@@ -12,8 +12,8 @@ class Statistics {
     
     private function prepareAddingQuery(): string{
         $ip = $_SERVER['REMOTE_ADDR'];
-        $browserObject = get_browser();
-        $browser = $browserObject->browser;
+        @$browserObject = get_browser();
+        @$browser = $browserObject->browser;
         $system = $browserObject->platform;
         $visitedUrl = $_SERVER['REQUEST_URI'];
         
@@ -96,7 +96,7 @@ class Statistics {
             "Styczeń" => (int) $dataToRender[1],
             "Luty" => (int) $dataToRender[2],
             "Marzec" => (int) $dataToRender[3],
-            "Kwiecieć" => (int) $dataToRender[4],
+            "Kwiecień" => (int) $dataToRender[4],
             "Maj" => (int) $dataToRender[5],
             "Czewiec" => (int) $dataToRender[6],
             "Lipiec" => (int) $dataToRender[7],

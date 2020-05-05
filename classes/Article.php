@@ -15,7 +15,7 @@ class Article{
     protected $category;
     protected $additionalCategory;
     
-    public function getTitle(): string{
+    public function getTitle(): ?string{
         return $this->title;
     }
     
@@ -36,7 +36,8 @@ class Article{
     
     public function __construct(string $articleUrl){
         $this->setUrl($articleUrl);
-        $this->loadByUrl();
+        if (!$this->loadByUrl()) // if page doesn't exist, redirects to home page
+            header('location: index.php');
     }
     
     protected function loadFromDBUsingUrl(): bool{

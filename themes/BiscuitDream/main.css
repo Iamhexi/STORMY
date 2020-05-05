@@ -85,7 +85,7 @@ body {
 .commentForm > input[type=submit] {
     padding: 7px;
     color: black;
-    font-size: 20px;
+    font-size: 1.1rem;
     border-radius: 7px; 
     text-align: center;
     margin: 15px;
@@ -99,13 +99,16 @@ body {
     border: 2px solid #828282;
     background-color: white;
     padding: 10px;
-    font-size: 15px;
+    font-size: 1rem;
     border-radius: 5px;
 }
 
 .commentContent {
     text-align: justify;
-    padding: 5px;
+    padding: 10px;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+    width: 90%;
 }
 
 .commentAuthor {

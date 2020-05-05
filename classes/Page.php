@@ -66,8 +66,8 @@ END;
         echo '<footer class="footer" title="STORMY to silnik CMS, dzięki któremu stworzysz stronę swoich marzeń!">Powered by STORMY | <a href="https://github.com/Iamhexi">Igor Sosnowicz</a> @ 2020</footer></body></html>';
     }
     
-    public function setTitle(string $newTitle): void{
-        $this->settings->title = $newTitle;
+    public function setTitle($newTitle): void{
+        if ($newTitle != null) $this->settings->title = $newTitle;
     }
     
 

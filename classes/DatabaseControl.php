@@ -5,7 +5,7 @@
 
 trait DatabaseControl {
 
-    private $exceptionReporting = false; /// TURN OFF BEFORE REALSING APP
+    private $exceptionReporting = true; /// TURN OFF BEFORE REALSING APP
     public static $contentTable = "news";
     public static $commentsTable = "comments";
     public static $pagesTable = "pages";
@@ -56,8 +56,8 @@ public static function renderCategorySelector(string $defaultValue, string $html
         echo '<div><label>Kategoria <select name="'.$htmlAttributeName.'" class="articleEditorInput" required>';
         
         foreach($categoryList as $c){
-            if ($c['categoryTitle'] == $defaultValue) echo "<option selected value=\"{$c['categoryTitle']}\">{$c['categoryTitle']}</option>";
-            else echo "<option value=\"{$c['categoryTitle']}\">{$c['categoryTitle']}</option>";
+            if ($c['categoryTitle'] == $defaultValue) echo "<option selected value=\"{$c['categoryUrl']}\">{$c['categoryTitle']}</option>";
+            else echo "<option value=\"{$c['categoryUrl']}\">{$c['categoryTitle']}</option>";
         }
         
         echo '</select></label></div>';

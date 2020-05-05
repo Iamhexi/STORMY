@@ -32,8 +32,8 @@ class Installer {
     private function runInstallation(): ?Exception{
         if (!($this->canConnect()))
             throw new Exception("Cannot connect with given database credentials! Change access information to the database and try again.");
-        if (!($this->createDatabase()))
-            throw new Exception("Could create a new database! Admit higher privileges to the given account to solve this problem.");
+        //if (!($this->createDatabase())) // USER HAS TO CREATE DATABASE BEFOREHAND
+            //throw new Exception("Couldn't create a new database! Admit higher privileges to the given account to solve this problem.");
         if (!($this->importData()))
             throw new Exception("Couldn't import SQL data to database. Check whether the file exits. ");
         if (!($this->createDatabaseConnectionFile()))

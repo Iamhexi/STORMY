@@ -1,7 +1,10 @@
 <?php
 session_start();
 
-define("ADMIN_PASSWORD", "admin");
+require_once "PageSettings.php";
+
+$settings = new PageSettings("../settings/default.json");
+define("ADMIN_PASSWORD", $settings->getAdminPassword());
 
 class AdminAuth {
     private $isLogged;
