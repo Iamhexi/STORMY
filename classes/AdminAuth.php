@@ -76,6 +76,7 @@ END;
     public function renderLoggingOutForm(){
         echo '<form action="panel.php" method="POST">
               <input type="submit" class="logoutButton" name="logout" value="Wyloguj">
+              <div style="clear: both;"></div>
               </form>';
     }
     

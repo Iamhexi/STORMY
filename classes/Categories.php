@@ -42,6 +42,23 @@ class Categories {
         }
     }
     
+    private function getCategoryNameByUrl(string $searchedUrl): ?string{
+        $this->loadCategoriesFromDb();
+        foreach ($this->categories as $category){
+            if ($category['categoryUrl'] === $searchedUrl)
+                return $category['categoryTitle'];
+        }
+        
+        return null;
+    }
+    
+    public function getCategoryName(string $searchedUrl){
+        $output = $this->getCategoryNameByUrl($searchedUrl);
+        if ($output === null)
+            return 'Nieznana kategoria';
+        else return $output;
+    }
+    
     public function renderAll(): void{
         var_dump($this->categories);
     }

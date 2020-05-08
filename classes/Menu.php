@@ -116,11 +116,11 @@ class Menu {
     public static function renderAddingElementForm(string $destination): void{ 
         echo<<<END
             <form action="$destination" method="POST">
-                <div><label>Nazwa opcji <input type="text" name="menuElementName"></label></div>
+                <div><label>Nazwa opcji <input type="text" name="menuElementName" class="addingInput"></label></div>
 END;
         Menu::renderDestinationSelector();
         echo<<<END
-                <div><label><input type="submit" value="Dodaj opcję do menu" name="addNewMenuElement"></label></div>
+                <div><label><input type="submit" value="Dodaj opcję do menu" name="addNewMenuElement" class="addingMenuElementButton"></label></div>
             </form>
 END;
     }

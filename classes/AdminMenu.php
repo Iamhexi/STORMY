@@ -43,6 +43,7 @@ class AdminMenu {
         <li><a href="$p?action=settings">Ustawienia</a></li>
         <li><a href="$p?action=errorLog">Dziennik Błędów</a></li>
         <!--<li class="logoutButton"><a href="logout.php">Wyloguj</a></li>-->
+        <li></li>
     </ul>
 </nav> 
 END;

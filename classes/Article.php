@@ -2,6 +2,7 @@
 
 require_once "DatabaseControl.php";
 require_once "AddingArticle.php";
+require_once "Categories.php";
 
 class Article{ 
     use DatabaseControl;
@@ -58,8 +59,13 @@ class Article{
     }
     
     public function renderArticle(){
+        $categories = new Categories;
+        $category = $categories->getCategoryName($this->category);
         $photoDir = AddingArticle::$photoDirectory;
+        $publicationDate = substr($this->publicationDate, 0, 16);
+        
         echo '<article class="article"><h1 class="articleTitle">'.$this->title.'</h1>';
+        echo '<div class="articleInfo">Opublikowano: '.$publicationDate.' | '.$category.'</div>';
         echo '<img src="'.$photoDir.$this->photo.'" class="mainArticleImage" alt="Zdjęcie dla artykuły pt. '.$this->title.'">';
         echo '<div class="articleText">'.$this->content.'</div>';
         echo '</article>';

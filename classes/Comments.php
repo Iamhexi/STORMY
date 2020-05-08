@@ -49,13 +49,16 @@ class Comments{
         }
     }
     
-    private function breakLongLines(string $old){
+    private function breakLongLines(string $old): string{
         $new = "";
         $oldLength = strlen($old);
         
-        for ($i=0;$i<round($oldLength/$this->maxLineLength);$i++){
+        if ($oldLength <= $this->maxLineLength)
+            return $old;
+        
+        for ($i=0;$i<round($oldLength/$this->maxLineLength);$i++)
             $new .= (substr($old, $i*$this->maxLineLength, $this->maxLineLength).'<br>');
-        }
+        
         
         return $new;
     }
