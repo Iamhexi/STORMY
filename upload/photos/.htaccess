@@ -1,4 +1,0 @@
-<FilesMatch "\.(?:jpg|bmp|gif|png)$">
-Order allow,deny
-Deny from all
-</FilesMatch>
