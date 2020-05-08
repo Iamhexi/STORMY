@@ -36,7 +36,7 @@ class Article{
     
     public function __construct(string $articleUrl){
         $this->setUrl($articleUrl);
-        if (!$this->loadByUrl()) // if page doesn't exist, redirects to home page
+        if (!$this->loadByUrl()) // if a page doesn't exist, a user is being redirected to the home page
             header('location: index.php');
     }
     

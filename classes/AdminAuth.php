@@ -2,6 +2,7 @@
 session_start();
 
 require_once "PageSettings.php";
+require_once "Installer.php";
 
 $settings = new PageSettings("../settings/default.json");
 define("ADMIN_PASSWORD", $settings->getAdminPassword());
@@ -92,9 +93,11 @@ END;
     }
     
     public function handleFirstTimeLogging(bool $isFirstTime): void{
-        if ($isFirstTime)
-            echo "<div style=\"font-size: 26px; text-align: center; color: red;\"><h2>Instalacja powiodła się. Aby ją dokończyć...</h2><br>1. Koniecznie usuń cały folder 'install'. To ważne, ponieważ inaczej dowolna osoba będzie mogła włamać się na Twoją stronę!
-            <br>2. Domyślnym hasłem jest: <b>admin</b>. <u>Zmień to hasło od razu po zalogowaniu!</u></div>";
+        if ($isFirstTime){
+        echo "<div style=\"font-size: 26px; text-align: center; color: red;\"><h2>Instalacja powiodła się. Aby ją dokończyć...</h2></div><div style=\"font-size: 26px; text-align: center; color: red;\"><br>1. Zaloguj się domyślnym hasłem: <b>admin</b>. <u>Zmień to hasło od razu po zalogowaniu!</u></div>";
+        if (Installer::removeInstallDirectory() === false)
+            echo '<div style=\"font-size: 26px; text-align: center; color: red;\"><br>2. Koniecznie usuń cały folder \'install\'. To ważne, ponieważ inaczej dowolna osoba będzie mogła włamać się na Twoją stronę!</div>';
+        }
     }
     
 }

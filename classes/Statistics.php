@@ -14,7 +14,7 @@ class Statistics {
         $ip = $_SERVER['REMOTE_ADDR'];
         @$browserObject = get_browser();
         @$browser = $browserObject->browser;
-        $system = $browserObject->platform;
+        @$system = $browserObject->platform;
         $visitedUrl = $_SERVER['REQUEST_URI'];
         
         return "INSERT INTO $this->table (ip, browser, system, visitDatetime, visitedUrl) VALUES ('$ip', '$browser', '$system', NOW(), '$visitedUrl')";

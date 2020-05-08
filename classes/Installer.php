@@ -16,8 +16,6 @@ class Installer {
             
             $this->runInstallation();
             
-            // successful installation
-            
             header('location: ../admin/login.php?firstTime=1');
             
             
@@ -32,8 +30,8 @@ class Installer {
     private function runInstallation(): ?Exception{
         if (!($this->canConnect()))
             throw new Exception("Cannot connect with given database credentials! Change access information to the database and try again.");
-        //if (!($this->createDatabase())) // USER HAS TO CREATE DATABASE BEFOREHAND
-            //throw new Exception("Couldn't create a new database! Admit higher privileges to the given account to solve this problem.");
+        if (@!($this->createDatabaseIfNotExists()))
+            throw new Exception("Couldn't create a new database! Admit higher privileges to the given account to solve this problem.");
         if (!($this->importData()))
             throw new Exception("Couldn't import SQL data to database. Check whether the file exits. ");
         if (!($this->createDatabaseConnectionFile()))
@@ -84,9 +82,10 @@ class Installer {
             return false;
     }
     
-    private function createDatabase(): bool{
+    
+    private function createDatabaseIfNotExists(): bool{
         $n = $this->dbName;
-        $query = "CREATE DATABASE $n";
+        $query = "CREATE DATABASE IF NOT EXISTS $n";
         
         if ($this->performQuery($query, false, false, true))
             return true;
@@ -146,6 +145,31 @@ END;
             return true;
         else 
             return false;
+    }
+    
+    private static function removeDirectory(string $dir): bool{
+        if (!file_exists($dir))
+            return true;
+        
+        if (!is_dir($dir))
+            return unlink($dir);
+        
+        foreach (scandir($dir) as $item) {
+            if ($item != '.' && $item != '..'){
+                if (filetype($dir.'/'.$item) == 'dir') 
+                    @rmdir($dir.'/'.$item);
+                else 
+                    @unlink($dir.'/'.$item);
+            }
+        }
+
+        return rmdir($dir);
+    }
+    
+    public static function removeInstallDirectory(): bool{
+        $installDirectory = '../install';
+        if (self::removeDirectory($installDirectory)) return true;
+        else return false;
     }
 }
 
