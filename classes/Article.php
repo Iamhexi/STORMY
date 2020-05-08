@@ -60,7 +60,7 @@ class Article{
     public function renderArticle(){
         $photoDir = AddingArticle::$photoDirectory;
         echo '<article class="article"><h1 class="articleTitle">'.$this->title.'</h1>';
-        echo '<img src="'.$photoDir.'/'.$this->photo.'" class="mainArticleImage" alt="Zdjęcie dla artykuły pt. '.$this->title.'">';
+        echo '<img src="'.$photoDir.$this->photo.'" class="mainArticleImage" alt="Zdjęcie dla artykuły pt. '.$this->title.'">';
         echo '<div class="articleText">'.$this->content.'</div>';
         echo '</article>';
     }
