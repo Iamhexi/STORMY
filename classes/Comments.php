@@ -63,11 +63,11 @@ class Comments{
         return $new;
     }
     
-    private function displayCommentAsHTML(string $author, string $content, string $ad){
+    protected function displayCommentAsHTML(string $author, string $content, string $ad){
             $additionDate = $ad[8].$ad[9]."-".$ad[5].$ad[6]."-".$ad[0].$ad[1].$ad[2].$ad[3]; // formating date
             $content = $this->breakLongLines($content);
             
-            ECHO<<<END
+            echo<<<END
             
                 <div class="comment">
                     <div class="commentAuthor">$author</div>

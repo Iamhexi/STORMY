@@ -109,6 +109,66 @@ END;
         return (int) $fetched['numberOfComments'];
     }
     
+    public function prepareQueryForRetrievingComments(int $howMany){
+        return "SELECT articleUrl, author, content, additionDate FROM $this->tableName ORDER BY additionDate DESC LIMIT $howMany";   
+    }
+    
+    private function findArticleTitleInDb(string $articleUrl){
+        $table = DatabaseControl::$contentTable;
+        $query = "SELECT title FROM $table WHERE articleUrl = '$articleUrl'";
+        
+        if (@!($fetched = $this->performQuery($query, true)))
+            throw new Exception("The article, which the comment was added for, does not exist! Missing article: url = '$articleUrl' ");
+        if ($fetched['title'] === null)
+            throw Exception("Couldn't find corresponding the article for the comment!");        
+    
+        return $fetched['title'];
+    }
+    
+    private function findArticleTitle(?string $articleUrl): string{
+        try {
+            $title = $this->findArticleTitleInDb($articleUrl);
+            return $title;
+        } catch (Exception $e){
+            $this->reportException($e);
+            return "Ten komentarz dodano do już nieistniejącego artykułu!";
+        }
+    }
+    
+    private function renderComment(string $articleTitle, string $articleUrl, string $author, string $content, string $additionDate): void{
+        echo<<<END
+            <div class="commentPreview">
+                <div class="commentPreviewWhereFrom"><b>Komentarz do artykułu:</b> <a target="_blank" href="../read.php?url=$articleUrl">$articleTitle</a></div>
+                <div class="commentPreviewAuthor"><b>Autor:</b> $author</div>
+                <div class="commentPreviewContent"><b>Treść:</b><p> $content</p></div>
+                <div class="commentPreviewDate"><b>Data dodania:</b> $additionDate</div>
+            </div>
+END;
+    }
+    
+    private function renderCommentsFromDb(int $howMany): ?Exception{
+        $query = $this->prepareQueryForRetrievingComments($howMany);
+        
+        $result = $this->performQuery($query, false, true);
+        
+        while ($retrieved = $result->fetch_array(MYSQLI_BOTH)){
+            $articleTitle = $this->findArticleTitle($retrieved['articleUrl']);
+            $this->renderComment($articleTitle, $retrieved['articleUrl'], $retrieved['author'], $retrieved['content'], $retrieved['additionDate']);
+        }
+
+        
+        return null;
+    }
+    
+    public function renderCommentsPreview(int $howMany = 10): void{
+        try {
+            echo '<div class="commentsPreviewWrapper"><header class="header">10 ostatnich komentarzy</header>';
+            $this->renderCommentsFromDb($howMany);
+            echo '</div>';
+        } catch (Exception $e){
+            $this->reportException($e);
+        }
+    }
     
     
 }

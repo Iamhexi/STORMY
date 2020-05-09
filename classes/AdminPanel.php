@@ -62,6 +62,7 @@ class AdminPanel {
     private function renderCommentsStatictics(){
         $commStats = new CommentsStatistics;
         @$commStats->renderPanel($this->processorLocation, $_GET['from'], null, $_GET['score']);
+        $commStats->renderCommentsPreview();
     }
     
     private function renderAddingSupageForm(): void{

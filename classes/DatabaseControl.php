@@ -27,7 +27,7 @@ protected function performQuery(string $query, bool $needResponce = false, bool 
     try {
         if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) throw new Exception($connection->connect_error);
         
-        if(@!mysqli_query($connection, "SET CHARSET utf8")) throw new Exception($connection->connect_error);
+        if(@!$connection->query("SET CHARSET utf8")) throw new Exception($connection->connect_error);
         if(@!$result = $connection->query($query)) throw new Exception($connection->connect_error);
         
         if ($needResponce === true){
