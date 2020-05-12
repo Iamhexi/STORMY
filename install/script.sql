@@ -57,6 +57,9 @@ CREATE TABLE `comments` (
 
 -- --------------------------------------------------------
 
+ALTER TABLE `comments` ADD `isPublished` BOOLEAN NOT NULL AFTER `articleUrl`; 
+
+
 --
 -- Struktura tabeli dla tabeli `menu`
 --

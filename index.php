@@ -6,24 +6,21 @@ require_once "classes/ThumbnailView.php";
 require_once "classes/PageSettings.php";
 require_once "classes/Newsletter.php";
 
-$pageSettings = new PageSettings();
+    
+    $pageSettings = new PageSettings();
 
-$articleGrid = new ThumbnailView();
-$page = new Page($pageSettings);
-
-
-$page->renderHead();
-$page->renderMenu();
+    $articleGrid = new ThumbnailView();
+    $page = new Page($pageSettings);
 
 
-
-
-@$articleGrid->renderThumbnails($_GET['category']);
+    $page->renderHead();
+    $page->renderMenu();
 
 
 
 
+    @$articleGrid->renderThumbnails($_GET['category']);
 
 
-
-$page->renderFooter();
+   
+    $page->renderFooter();

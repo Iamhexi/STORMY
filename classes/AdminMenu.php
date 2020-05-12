@@ -20,12 +20,15 @@ class AdminMenu {
             </ul>
         </li>
         
-        <li><a href="#">Statystyki</a>
+        <li><a href="#">Komentarze</a>
             <ul>
-                <li><a href="$p?action=normalStats">Statystyki odwiedzin</a></li>
+                <li><a href="$p?action=10lastComments">10 ostatnich komentarzy</a></li>
+                <li><a href="$p?action=commentsReviewPanel">Moderuj komentarze</a></li>
                 <li><a href="$p?action=commentStats">Statystyki komentarzy</a></li>
             </ul>
         </li>
+        
+        <li><a href="$p?action=normalStats">Statystyki</a></li>
         
         <li><a href="#">Podstrony</a>
             <ul>
@@ -41,7 +44,7 @@ class AdminMenu {
             </ul>
         </li>
         <li><a href="$p?action=settings">Ustawienia</a></li>
-        <li><a href="$p?action=errorLog">Dziennik Błędów</a></li>
+        <!--<li><a href="$p?action=errorLog">Dziennik Błędów</a></li>-->
         <!--<li class="logoutButton"><a href="logout.php">Wyloguj</a></li>-->
         <li></li>
     </ul>

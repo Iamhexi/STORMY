@@ -1,14 +1,20 @@
 <?php
 require_once "DatabaseControl.php";
+require_once "PageSettings.php";
 
 class Comments{
     use DatabaseControl;
     
     protected $tableName;
+    private $commentDefaultStatus;
     private $maxLineLength = 140;
     
-    public function __construct(){
+    public function __construct(string $settingsLocation = "settings/default.json"){
         $this->tableName = Comments::$commentsTable;
+        
+        $settings = new PageSettings($settingsLocation);
+        $this->commentDefaultStatus = ($settings->__get('commentsPolicy') === 'safetyPolicy') ? 0 : 1;  
+        // safetyPolicy, freedomPolicy
     }
     
     private function addCommentToDB(string $articleUrl, string $author, string $content){
@@ -18,7 +24,7 @@ class Comments{
         $content = $this->sanitizeInput($content);
         
         
-        $query = "INSERT INTO $this->tableName (articleUrl, author, content) VALUES ('$articleUrl', '$author', '$content')";
+        $query = "INSERT INTO $this->tableName (articleUrl, author, content, isPublished) VALUES ('$articleUrl', '$author', '$content', '$this->commentDefaultStatus')";
         
         if (@!$this->performQuery($query))
             throw new Exception("Couldn't add a new comment!");
@@ -31,6 +37,16 @@ class Comments{
         } catch (Exception $e){
             $this->reportException($e);
             echo '<div class="prompt fail">Nie udało się dodać Twojego komentarza, spróbuj ponownie!</div>';
+        }
+    }
+    
+    public function addCommentThroughAPI(string $articleUrl, string $author, string $content): bool{
+        try {
+            $this->addCommentToDB($articleUrl, $author, $content);
+            return true;
+        } catch (Exception $e){
+            $this->reportException($e);
+            return false;
         }
     }
 
@@ -63,6 +79,38 @@ class Comments{
         return $new;
     }
     
+    private function removeCommentWithId(int $id){
+        $query = "DELETE FROM $this->tableName WHERE id = '$id'";
+        if (@!$this->performQuery($query, false, true))
+            throw new Exception("Couldn't remove comment with id = $id!");
+    }
+    
+    public function removeComment(int $id): bool{
+        try {
+            $this->removeCommentWithId($id);
+            return true;
+        } catch(Exception $e){
+            $this->reportException($e);
+            return false;
+        }
+    }
+    
+    private function acceptCommentWithId(int $id){
+        $query = "UPDATE $this->tableName SET isPublished = 1 WHERE id = '$id'";
+        if (@!$this->performQuery($query, false, true))
+            throw new Exception("Couldn't accept comment with id = $id!");
+    }
+    
+    public function acceptComment(int $id): bool{
+        try {
+            $this->acceptCommentWithId($id);
+            return true;
+        } catch(Exception $e){
+            $this->reportException($e);
+            return false;
+        }
+    }
+    
     protected function displayCommentAsHTML(string $author, string $content, string $ad){
             $additionDate = $ad[8].$ad[9]."-".$ad[5].$ad[6]."-".$ad[0].$ad[1].$ad[2].$ad[3]; // formating date
             $content = $this->breakLongLines($content);
@@ -77,10 +125,26 @@ class Comments{
 END;
     }
     
+    protected function displayCommentToReviewAsHTML(string $destination, string $author, string $content, string $ad, int $commentId){
+            $additionDate = $ad[8].$ad[9]."-".$ad[5].$ad[6]."-".$ad[0].$ad[1].$ad[2].$ad[3]; // formating date
+            $content = $this->breakLongLines($content);
+            
+            echo<<<END
+            
+                <div class="comment">
+                    <div class="commentAuthor">$author</div>
+                    <div class="commentContent"><p>$content</p></div>
+                    <div class="commentDate">$additionDate</div>
+                    <form method="POST" action="$destination"><input style="display:none;" type="number" name="commentId" value="$commentId"><input name="acceptComment" type="submit" value="&#10004;"></form>
+                    <form method="POST" action="$destination"><input style="display:none;" type="number" name="commentId" value="$commentId"><input name="refuseComment" type="submit" value="&#10007;"></form>
+                </div>
+END;
+    }
+    
     public function renderComments(string $articleUrl){
         try {
             $articleUrl = $this->sanitizeInput($articleUrl);
-            $query = "SELECT author, content, additionDate FROM $this->tableName WHERE articleUrl = '$articleUrl' ORDER BY additionDate DESC";
+            $query = "SELECT author, content, additionDate FROM $this->tableName WHERE articleUrl = '$articleUrl' AND isPublished = 1 ORDER BY additionDate DESC";
 
             if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
                 throw new Exception($connection->connect_error);
@@ -93,6 +157,31 @@ END;
 
             while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
                 $this->displayCommentAsHTML($fetched['author'], $fetched['content'], $fetched['additionDate']);
+            }
+
+
+        } catch (Exception $e){
+            $this->reportException($e);
+            echo $e->getMessage()."<br>";
+            return false;
+        }
+    }
+    
+    public function renderCommentsReviewPanel(string $destination){
+        try {
+            $query = "SELECT id, author, content, additionDate FROM $this->tableName WHERE isPublished = 0 ORDER BY additionDate DESC";
+
+            if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
+                throw new Exception($connection->connect_error);
+
+            if(@!mysqli_query($connection, "SET CHARSET utf8")) 
+                throw new Exception($connection->connect_error);
+
+            if(@!$result = $connection->query($query)) 
+                throw new Exception("Couldn't render comments for the review panel!");
+
+            while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
+                $this->displayCommentToReviewAsHTML($destination, $fetched['author'], $fetched['content'], $fetched['additionDate'], $fetched['id']);
             }
 
 

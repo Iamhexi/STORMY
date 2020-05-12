@@ -14,7 +14,7 @@ require_once "../classes/SubpageEditor.php";
 class AdminPanel {
     
     private $processorLocation = "processor.php";
-    private $settigs;
+    private $settings;
     private $page;
     private $adminAuth;
     
@@ -60,9 +60,18 @@ class AdminPanel {
     }
     
     private function renderCommentsStatictics(){
-        $commStats = new CommentsStatistics;
+        $commStats = new CommentsStatistics($this->settings->__get("sourceFile"));
         @$commStats->renderPanel($this->processorLocation, $_GET['from'], null, $_GET['score']);
+    }
+    
+    private function renderCommentsPreview(){
+        $commStats = new CommentsStatistics($this->settings->__get("sourceFile"));
         $commStats->renderCommentsPreview();
+    }
+    
+    private function renderCommentsReviewPanel(){
+        $comments = new Comments($this->settings->__get("sourceFile"));
+        $comments->renderCommentsReviewPanel($this->processorLocation);
     }
     
     private function renderAddingSupageForm(): void{
@@ -81,6 +90,8 @@ class AdminPanel {
     private function renderRemovingCategoryfForm(){
         Categories::renderRemovalForm($this->processorLocation);
     }
+    
+    
     
     private function handleAction($action){
         switch ($action){
@@ -122,6 +133,14 @@ class AdminPanel {
             
             case "errorLog":
                 $this->renderErrorLog();
+            break;
+                
+            case "10lastComments":
+                $this->renderCommentsPreview();
+            break;
+                
+            case "commentsReviewPanel":
+                $this->renderCommentsReviewPanel();
             break;
                 
             default:

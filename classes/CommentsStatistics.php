@@ -4,6 +4,7 @@ require_once "Comments.php";
 require_once "DatabaseControl.php";
 
 class CommentsStatistics extends Comments {
+
     
     private function getNumberOfCommentsFromDB(){
         $query = "SELECT COUNT(*) AS numberOfComments FROM $this->tableName";

@@ -17,6 +17,7 @@ class PageSettings{
     private $headerText;
     private $url;
     private $theme;
+    private $commentsPolicy;
     
     private function loadSettings(string $sourceFile){
         try {
@@ -48,6 +49,7 @@ class PageSettings{
         $this->headerText = $this->settingsObject->headerText;
         $this->url = $this->settingsObject->url;
         $this->theme = $this->settingsObject->theme;
+        $this->commentsPolicy = $this->settingsObject->commentsPolicy;
         
     }
     
@@ -96,6 +98,9 @@ END;
             <div><label>E-mail do wysyłania newslettera <input type="email" name="newsletterEmail" value="{$this->newsletterEmail}" class="settingsInput"></label></div>
             <div title="Słowa kluczowe wpisywane po przecinku"><label>Słowa kluczowe <input type="text" name="keywords" value="{$this->keywords}" class="settingsInput" required></label></div>
             <div><label>Opis strony <textarea name="description" rows="10" cols="50" maxlength="220" class="settingsInput">{$this->description}</textarea></label></div>
+END;
+        $this->renderCommentPolicySelector();
+        echo<<<END
             <div><input type="submit" name="pageSettingsSavingButton" value="Zapisz ustawienia"></div>
         </form>
         
@@ -112,6 +117,23 @@ END;
         } 
             
         echo '</select></label></div>';
+    }
+    
+    private function renderCommentPolicySelector(){
+        if ($this->settingsObject->commentsPolicy === 'safetyPolicy') $s1 = 'selected';
+        else $s2 = 'selected';
+        echo<<<END
+            <div>
+                <label>Polityka komentarzy:
+                    <select name="commentsPolicy" class="settingsInput">
+                        <option value="safetyPolicy" $s1>Najpierw zaakceptuj, potem publikuj</option>
+                        <option value="freedomPolicy" $s2>Od razu publikuj wszystkie</option>
+                    </select>
+                </label>
+            </div>
+            
+        
+END;
     }
     
 }
