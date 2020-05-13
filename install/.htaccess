@@ -1,1 +1,4 @@
-FallbackResource /index.php
+<FilesMatch "\.(?:sql)$">
+Order allow,deny
+Deny from all
+</FilesMatch>
