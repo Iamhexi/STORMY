@@ -11,7 +11,7 @@ $processor = new Processor;
 
 if (isset($_POST['addingArticle'])){
     $action = 'addEntry';
-    $processor->addArticle($_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['url'], $_POST['category'], $_POST['additionalCategory'], $_POST['publicationDateOnly'], $_POST['publicationTimeOnly']);
+    $processor->addArticle($_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category'], $_POST['additionalCategory'], $_POST['publicationDateOnly'], $_POST['publicationTimeOnly']);
 }
  
 else if (isset($_POST['eraseErrorLog'])){ // ERASING ERROR LOG
@@ -88,9 +88,9 @@ else if (isset($_POST['addingCategory'])){ // adding a new category
 
 else if (isset($_POST['removingCategory'])){ // removing the category
     $categories = new Categories();
-    if (isset($_POST['categoryTitle']))
-        $categories->removeWithTitle($_POST['categoryTitle']);
-    $action = "listCategories";
+    if (isset($_POST['categoryUrl']))
+        $categories->removeWithUrl($_POST['categoryUrl']);
+    $action = "removeCategory";
 }
 
 else if (isset($_POST['acceptComment'])){ // accepting the reviewed comment

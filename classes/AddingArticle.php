@@ -11,19 +11,24 @@ class AddingArticle {
     private $content;
     private $publicationDate;
     private $articleUrl;
+    private $author;
     private $category;
     private $additionalCategory;
     
     private function prepareQuery(): string{
         $table = DatabaseControl::$contentTable;
-        return "INSERT INTO $table (title, photo, content, articleUrl, publicationDate, category, additionalCategory) VALUES ('{$this->title}', '{$this->photo}', '{$this->content}', '{$this->articleUrl}', '{$this->publicationDate}', '{$this->category}', '{$this->additionalCategory}')";
+        $p = (strlen($this->publicationDate) === 16) ? "'{$this->publicationDate}'," : '';
+        $p2 = (strlen($this->publicationDate) === 16) ? "publicationDate," : '';
+        
+        return "INSERT INTO $table (title, photo, content, articleUrl, author, $p2 category, additionalCategory) VALUES ('{$this->title}', '{$this->photo}', '{$this->content}', '{$this->articleUrl}', '{$this->author}', $p '{$this->category}', '{$this->additionalCategory}')";
     }
     
-    public function __construct(string $title, string $photo, string $content, string $articleUrl, string $category, string $additionalCategory = null, string $publicationDate = null){
+    public function __construct(string $title, string $photo, string $content, string $articleUrl, string $author, string $category, string $additionalCategory = null, string $publicationDate = null){
         $this->title = $title;
         $this->photo = $photo;
         $this->content = $content;
         $this->articleUrl = $articleUrl;
+        $this->author = $author;
         $this->category = $category;
         $this->publicationDate = $publicationDate;
         
@@ -64,6 +69,7 @@ END;
             <div><label>Tytuł <input type="text" class="addingInput" name="title" size="70" required></label></div>
             <div><label>Zdjęcie <input type="file" name="photo" class="addingInput"></label></div>
             <div><label>URL <input type="text" name="url" placeholder="przyjazny-link-123" class="addingInput" required></label></div>
+            <div><label>Autor <input type="text" name="author" class="addingInput" required></label></div>
 END;
             DatabaseControl::renderCategorySelector("", "category");
             DatabaseControl::renderCategorySelector("", "additionalCategory");

@@ -26,12 +26,12 @@ class Processor {
         return $photoFile['name'];
     }
     
-    public function addArticle(string $title, array $photoFile, string $content, string $url, string $category, $additionalCategory = null, $publicationDateOnly = null, $publicationTimeOnly = null){
+    public function addArticle(string $title, array $photoFile, string $content, string $url, string $author, string $category, $additionalCategory = null, $publicationDateOnly = null, $publicationTimeOnly = null){
         
         $publicationDate = $this->preparePublicationDate($publicationDateOnly, $publicationTimeOnly);
         $photoName = $this->handleUploadingPhoto($photoFile);
         
-        $addingArticle = new addingArticle($title, $photoName, $content, $url, $category, $additionalCategory, $publicationDate);
+        $addingArticle = new addingArticle($title, $photoName, $content, $url, $author, $category, $additionalCategory, $publicationDate);
     }
     
     

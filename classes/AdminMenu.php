@@ -16,15 +16,15 @@ class AdminMenu {
         <li><a href="#">Wpisy</a>
             <ul>
                 <li><a href="$p?action=addEntry">Dodaj nowy</a></li>
-                <li><a href="$p?action=entryList">Lista wpisów</a></li>
+                <li><a href="$p?action=entryList">Wszystkie</a></li>
             </ul>
         </li>
         
         <li><a href="#">Komentarze</a>
             <ul>
-                <li><a href="$p?action=10lastComments">10 ostatnich komentarzy</a></li>
-                <li><a href="$p?action=commentsReviewPanel">Moderuj komentarze</a></li>
-                <li><a href="$p?action=commentStats">Statystyki komentarzy</a></li>
+                <li><a href="$p?action=10lastComments">Ostatnio dodane</a></li>
+                <li><a href="$p?action=commentsReviewPanel">Moderuj</a></li>
+                <li><a href="$p?action=commentStats">Statystyki</a></li>
             </ul>
         </li>
         
@@ -33,7 +33,14 @@ class AdminMenu {
         <li><a href="#">Podstrony</a>
             <ul>
                 <li><a href="$p?action=addSubpage">Dodaj nową</a></li>    
-                <li><a href="$p?action=listSubpages">Lista podstron (edycja/usuwanie)</a></li>    
+                <li><a href="$p?action=listSubpages">Wszystkie</a></li>    
+            </ul>
+        </li>
+        
+        <li><a href="#">Kategorie</a>
+            <ul>
+                <li><a href="$p?action=addCategory">Dodaj nową</a></li>    
+                <li><a href="$p?action=removeCategory">Usuń istniejącą</a></li>    
             </ul>
         </li>
         

@@ -183,6 +183,8 @@ ALTER TABLE `statistics`
 --
 ALTER TABLE `news`
   MODIFY `news_id` int(255) NOT NULL AUTO_INCREMENT;
+  
+ALTER TABLE `news` ADD `author` VARCHAR(50) NOT NULL AFTER `articleUrl`; 
 
 --
 -- AUTO_INCREMENT dla tabeli `statistics`

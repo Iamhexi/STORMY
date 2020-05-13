@@ -122,6 +122,14 @@ class AdminPanel {
             case "addOption":
                 $this->renderNewMenuElementForm();
             break; 
+                
+            case "addCategory":
+                $this->renderAddingCategoryForm();
+            break;
+                
+            case "removeCategory":
+                $this->renderRemovingCategoryfForm();
+            break;
             
             case "editOptions":
                 $this->renderListOfMenuOptions();

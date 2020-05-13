@@ -12,6 +12,7 @@ class Article{
     protected $content;
     protected $photo;
     protected $articleUrl;
+    protected $author;
     protected $publicationDate;
     protected $category;
     protected $additionalCategory;
@@ -37,7 +38,7 @@ class Article{
     
     public function __construct(string $articleUrl){
         $this->setUrl($articleUrl);
-        if (!$this->loadByUrl()) // if a page doesn't exist, a user is being redirected to the home page
+        if ($this->loadByUrl() === false) // if a page doesn't exist, a user is being redirected to the home page
             header('location: index.php');
     }
     
@@ -50,6 +51,7 @@ class Article{
         $this->id = $data['news_id'];
         $this->title = $data['title'];
         $this->content = $data['content'];
+        $this->author = $data['author'];
         $this->photo = $data['photo'];
         $this->publicationDate = $data['publicationDate'];
         $this->category = $data['category'];
@@ -65,7 +67,7 @@ class Article{
         $publicationDate = substr($this->publicationDate, 0, 16);
         
         echo '<article class="article"><h1 class="articleTitle">'.$this->title.'</h1>';
-        echo '<div class="articleInfo">Opublikowano: '.$publicationDate.' | '.$category.'</div>';
+        echo '<div class="articleInfo">Opublikowano: '.$publicationDate.' | Kategoria: '.$category.' | Autor: '.$this->author.'</div>';
         echo '<img src="'.$photoDir.$this->photo.'" class="mainArticleImage" alt="Zdjęcie dla artykuły pt. '.$this->title.'">';
         echo '<div class="articleText">'.$this->content.'</div>';
         echo '</article>';

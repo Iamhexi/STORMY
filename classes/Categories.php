@@ -150,7 +150,7 @@ class Categories {
             throw new Exception("Couldn't delete cateogry with title = $title from database!");
     }
     
-    public function removeWithTitle(string $title){
+    private function removeWithTitle(string $title){ // not recommended, can remove multiples categories at once!
         try {
             $this->removeCategoryWithTitle($title);
             return true;
@@ -167,7 +167,7 @@ class Categories {
          <form action="$destination" method="POST" class="removingCategoryForm">
             <header class="header">Usuwanie kategorii</header>
 END;
-        DatabaseControl::renderCategorySelector(" ", "categoryTitle");
+        DatabaseControl::renderCategorySelector(" ", "categoryUrl");
         
         echo<<<END
             <div><input type="submit" value="Usuń kategorię" name="removingCategory"></div>
