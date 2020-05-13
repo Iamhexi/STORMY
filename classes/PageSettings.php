@@ -101,10 +101,17 @@ END;
 END;
         $this->renderCommentPolicySelector();
         echo<<<END
-            <div><input type="submit" name="pageSettingsSavingButton" value="Zapisz ustawienia"></div>
+            <div><input type="submit" name="pageSettingsSavingButton" class="pageSettingsButton" value="Zapisz ustawienia"></div>
         </form>
         
 END;
+    }
+    
+    private function isItThemeDirectory(string $object): bool{
+        if ($object != "." && $object != ".." && $object != $this->theme && $object != 'admin.css')
+            return true;
+        else
+            return false;
     }
     
     private function renderThemeChoice(): void{
@@ -112,8 +119,10 @@ END;
         
         $themes = scandir("../themes/");
         foreach ($themes as $theme){
-            if ($theme != "." && $theme != ".." && $theme != $this->theme) echo "<option value=\"$theme\">$theme</option>";
-            else if ($theme === $this->theme) echo "<option value=\"$theme\" selected>$theme</option>";
+            if ($this->isItThemeDirectory($theme))
+                echo "<option value=\"$theme\">$theme</option>";
+            else if ($theme === $this->theme)
+                echo "<option value=\"$theme\" selected>$theme</option>";
         } 
             
         echo '</select></label></div>';

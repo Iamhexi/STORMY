@@ -42,6 +42,21 @@ class AddingArticle {
         }
     }
     
+    private static function provideEnterSupport(): void{
+        echo<<<END
+        <script>
+        document.getElementById("content")
+            .addEventListener("keyup", function(event) {
+            event.preventDefault();
+        if (event.keyCode === 13) {
+            let x = document.getElementById("content");
+            x.value += "</p><p>";
+        }
+    }); 
+    </script>
+END;
+    }
+    
     public static function renderForm(string $destination = "processor.php"){
         echo<<<END
         <form action="$destination" method="POST" class="addingForm" enctype="multipart/form-data">
@@ -55,12 +70,13 @@ END;
         echo<<<END
             <div><label>Data publikacji <input type="date" name="publicationDateOnly" class="addingInput"></label></div>
             <div><label>Godzina publikacji <input type="time" name="publicationTimeOnly" class="addingInput"></label></div>
-            <div><label>Treść <textarea rows="4" cols="50" name="content" class="addingInput" required></textarea></label></div>    
+            <div><label>Treść <textarea spellcheck="true" id="content" rows="4" cols="50" name="content" class="addingInput" required><p></textarea></label></div>    
 
             
             <div><input type="submit" value="Dodaj wpis!" name="addingArticle" class="addingSubmitButton"></div>
         </form>
 END;
+                self::provideEnterSupport();
     }
     
     

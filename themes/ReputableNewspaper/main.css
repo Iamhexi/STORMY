@@ -1,0 +1,190 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+    width: 100%;
+    background-color: RGBA(45,0,0,0.05);
+    font-family: Verdana;
+}
+
+.menu {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1.3rem;
+    text-align: left;
+    border-bottom: 1.5px solid #031605;
+    background-color: #e0dada;
+}
+
+.menu > a:first-child {
+    margin-left: 50px;
+}
+
+.menu > a {
+    display: inline-block;
+    color: #031605;
+    text-decoration: none;
+    padding: 20px;
+    height: 100%;
+    line-height: 100%;
+}
+
+.menu > a:hover {
+    display: inline-block;
+    color: black;
+    text-decoration: overline underline;
+}
+
+
+.sticky {
+    top: 0;
+    position: sticky;
+    z-index: 900;
+}
+
+.articlesWrapper {
+    margin: 20px auto;
+    text-align: center;
+    width: 90%;
+    box-sizing: border-box;
+    padding: 40px;
+    border-radius: 20px;
+    
+}
+
+.articleThumbnail:first-child {
+     width: 100%;
+}
+
+.articleThumbnail {
+    width: 49%;
+    box-sizing: border-box;
+    margin: 20px auto;
+    background-color: RGBA(45,0,0,0.05);
+    display: inline-block;
+    vertical-align: top;
+    padding: 15px;
+    border-radius: 40px;
+}
+
+.articleThumbnail > a {
+    text-decoration: none;
+    color: #031605;
+}
+
+.articleThumbnail > a:hover {
+    color: black;
+}
+
+.articleThumbnailImage{
+    width: 90%;
+    height: auto;
+    max-height: 50%;
+    border-radius: 25px;
+}
+
+.articleThumbnailTitle {
+    font-size: 1.7rem;
+}
+
+.article {
+    width: 90%;
+    margin: 10px auto;
+}
+
+.mainArticleImage {
+    display: block;
+    margin: 25px auto;
+    max-width: 90%;
+    height: auto;
+    max-height: 50%;
+}
+
+.articleInfo {
+    font-size: 0.7rem;
+    color: gray;
+    opacity: 0.5;
+}
+
+.articleTitle {
+    text-align: center;
+    font-weight: 700;
+}
+
+.articleText {
+    text-indent: 3rem;
+    text-align: justify;
+    font-size: 1.25rem;
+    line-height: 1.875rem;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.commentForm {
+    border: 2px solid #031605;
+    width: 90%;
+    margin: 50px auto;
+    box-sizing: border-box;
+    padding: 30px;
+}
+
+.commentForm > input {
+    font-size: 1.3rem;
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.commentForm > input:focus {
+    box-shadow: 2px 2px 2px 2px;
+}
+
+.comment {
+    margin: 20px auto;
+    width: 50%;
+    box-sizing: border-box;
+    padding: 20px;
+    border: 1.5px solid #031605;
+    border-radius: 10px;
+}
+
+.commentAuthor {
+    font-size: 1.2rem;
+    text-align: right;
+    font-weight: 500;
+}
+
+.commentContent {
+    text-align: justify;
+    max-width: 80%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.commentDate {
+    font-size: 0.8rem;
+}
+
+
+.footer {
+    padding: 20px;
+    min-height: 50px; 
+    background-color: RGBA(45,0,0,0.05);
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.95em;
+    text-align: center;
+    color: #031605;
+}
+
+.footer > a {
+    color: #031605;
+    text-decoration: none;
+}
+
+.footer > a:hover {
+    text-decoration: underline overline;
+    color: black;
+}
+

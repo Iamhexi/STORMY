@@ -40,13 +40,13 @@ END;
     
     private function prepareQuery(bool $adminView){
         if ($adminView)
-            return "SELECT articleUrl, title, photo FROM $this->tableName ORDER BY publicationDate DESC LIMIT $this->postsNumber";
+            return "SELECT articleUrl, title, photo FROM $this->tableName ORDER BY publicationDate ASC LIMIT $this->postsNumber";
             
         else if ($this->category === null && $adminView === false)
-            return "SELECT articleUrl, title, photo FROM $this->tableName WHERE publicationDate BETWEEN '00/00/0000 00:00:00.00' AND CURRENT_TIMESTAMP ORDER BY publicationDate DESC LIMIT $this->postsNumber";
+            return "SELECT articleUrl, title, photo FROM $this->tableName WHERE publicationDate BETWEEN '00/00/0000 00:00:00.00' AND CURRENT_TIMESTAMP ORDER BY publicationDate ASC LIMIT $this->postsNumber";
 
         else 
-            return "SELECT articleUrl, title, photo FROM $this->tableName WHERE (category = '$this->category' OR additionalCategory = '$this->category') AND publicationDate BETWEEN '00/00/0000 00:00:00.00' AND CURRENT_TIMESTAMP ORDER BY publicationDate DESC LIMIT $this->postsNumber";
+            return "SELECT articleUrl, title, photo FROM $this->tableName WHERE (category = '$this->category' OR additionalCategory = '$this->category') AND publicationDate BETWEEN '00/00/0000 00:00:00.00' AND CURRENT_TIMESTAMP ORDER BY publicationDate ASC LIMIT $this->postsNumber";
     }
     
     

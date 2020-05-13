@@ -5,17 +5,16 @@ class Theme {
     protected $name;
     protected static $themeDirectory = 'themes';
     protected static $scriptSubdirectory = 'js';
-    protected $main = 'main.css';
-    protected $admin = 'admin.css';
     
-    protected $mainStylesheet;
-    protected $adminStylesheet;
+    protected $adminStylesheetPath = '../themes/admin.css';
+    protected $mainStylesheetPath;
+    
+    protected $mainStylesheet = 'main.css';
     
     protected $path;
     
     public function loadStylesheets(){
-        $this->mainStylesheet = $this->path.'/'.Theme::$themeDirectory.'/'.$this->name.'/'.$this->main;
-        $this->adminStylesheet = $this->path.'/'.Theme::$themeDirectory.'/'.$this->name.'/'.$this->admin;
+        $this->mainStylesheetPath = $this->path.'/'.Theme::$themeDirectory.'/'.$this->name.'/'.$this->mainStylesheet;
     }
     
     public function __construct(string $name, string $path = null){
@@ -26,9 +25,16 @@ class Theme {
        
     }
     
+    private function isThisAdminSite(): bool{
+        if (strpos($_SERVER['REQUEST_URI'], 'admin') === false) return false;
+        else return true;
+    }
+    
     public function renderStyles(){ //
-         echo '<link rel="stylesheet" href="'.$this->mainStylesheet.'">';
-         echo '<link rel="stylesheet" href="'.$this->adminStylesheet.'">';
+        if ($this->isThisAdminSite())
+            echo '<link rel="stylesheet" href="'.$this->adminStylesheetPath.'">';
+        else
+            echo '<link rel="stylesheet" href="'.$this->mainStylesheetPath.'">';
     }
     
 }
