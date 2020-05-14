@@ -1,4 +1,1 @@
-<FilesMatch "\.(?:sql)$">
-Order allow,deny
-Deny from all
-</FilesMatch>
+FallbackResource /install/index.php

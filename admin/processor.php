@@ -81,7 +81,7 @@ else if (isset($_POST['addingSubpage'])){ // adding a new subpage
 
 else if (isset($_POST['addingCategory'])){ // adding a new category
     $categories = new Categories();
-    if (isset($_POST['categoryName']) && isset($_POST['categoryUrl']))
+    if (isset($_POST['categoryName'], $_POST['categoryUrl']))
         $categories->add($_POST['categoryName'], $_POST['categoryUrl']);
     $action = "addCategory";
 }

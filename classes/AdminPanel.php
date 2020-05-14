@@ -163,7 +163,6 @@ class AdminPanel {
         $adminMenu = new AdminMenu();
         $adminMenu->renderMenu();
         
-        $this->adminAuth->renderLoggingOutForm();
         
         $this->handleAction($action);
         

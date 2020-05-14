@@ -14,6 +14,7 @@ html, body {
     text-align: left;
     border-bottom: 1.5px solid #031605;
     background-color: #e0dada;
+    max-height: 100px;
 }
 
 .menu > a:first-child {
@@ -166,6 +167,23 @@ html, body {
     font-size: 0.8rem;
 }
 
+.prompt {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+    font: 1.3rem;
+}
+
+.fail {
+    color: #D8000C;
+    background-color: #FFD2D2;
+}
+
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
 
 .footer {
     padding: 20px;

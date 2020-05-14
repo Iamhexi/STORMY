@@ -116,7 +116,7 @@ class Statistics {
         echo '<header class="header">Statystyki odwiedzin - rok '.date("Y").'</header>';
         echo '<table class="statisticsTable">';
         
-        echo '<tr><td class="leftColumn"><b>Miesiąc</b></td><td class="rightColumn"><b>Ilość odwiedzin</b></td></tr>';
+        echo '<tr><td class="leftColumn"><b>Miesiąc</b></td><td class="rightColumn"><b>Unikalnych odwiedzin</b></td></tr>';
         foreach ($d as $month => $visits)
             echo "<tr><td class=\"leftColumn\">$month</td><td class=\"rightColumn\">$visits</td></tr>";
         echo '</table>';

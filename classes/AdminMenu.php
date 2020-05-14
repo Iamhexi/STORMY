@@ -1,5 +1,7 @@
 <?php
 
+require_once "AdminAuth.php";
+
 class AdminMenu {
     
     private $panelLocation;
@@ -9,6 +11,7 @@ class AdminMenu {
     }
     
     public function renderMenu(): void{
+        $a = new AdminAuth();
         $p = $this->panelLocation;
         echo<<<END
 <nav>
@@ -51,9 +54,15 @@ class AdminMenu {
             </ul>
         </li>
         <li><a href="$p?action=settings">Ustawienia</a></li>
+        
         <!--<li><a href="$p?action=errorLog">Dziennik Błędów</a></li>-->
         <!--<li class="logoutButton"><a href="logout.php">Wyloguj</a></li>-->
-        <li></li>
+        <li>
+END;
+        $a->renderLoggingOutForm();
+        
+        echo<<<END
+        </li>
     </ul>
 </nav> 
 END;

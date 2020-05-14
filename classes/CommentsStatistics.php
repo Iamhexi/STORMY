@@ -15,7 +15,7 @@ class CommentsStatistics extends Comments {
         return (int) $fetched['numberOfComments'];
     }
     
-    public function countAll(int $startingDate = null, int $endingDate = null): int{ // returns -1 if error occurs
+    public function countAll(?int $startingDate = null, ?int $endingDate = null): int{ // returns -1 if error occurs
         try {
             if ($startingDate !== null || $endingDate !== null)
                 $number = $this->countDuringPeroid($startingDate, $endingDate);

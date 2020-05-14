@@ -169,6 +169,8 @@ END;
     
     public function renderCommentsReviewPanel(string $destination){
         try {
+            $noComments = true;
+            
             $query = "SELECT id, author, content, additionDate FROM $this->tableName WHERE isPublished = 0 ORDER BY additionDate DESC";
 
             if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
@@ -179,10 +181,18 @@ END;
 
             if(@!$result = $connection->query($query)) 
                 throw new Exception("Couldn't render comments for the review panel!");
-
+            
+            echo '<div class="commentsWrapper"><header class="header">Zarządzanie komentarzami</header>';
+            
             while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
                 $this->displayCommentToReviewAsHTML($destination, $fetched['author'], $fetched['content'], $fetched['additionDate'], $fetched['id']);
+                $noComments = false;
             }
+            
+            if ($noComments)
+                echo '<p>Żaden komentarz nie czeka na akceptację. Jeśli chcesz, aby każdy komentarz najpierw musiał przejść ręczną akceptację w ustawieniach ustaw opcję "Polityka komentarz" na "Najpierw zaakceptuj, potem publikuj".</p>';
+            
+            echo '</div>';
 
 
         } catch (Exception $e){
