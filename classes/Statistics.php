@@ -2,7 +2,12 @@
 
 require_once "DatabaseControl.php";
 
-class Statistics {
+interface iStatistics {
+    function addRecord(): bool;
+    function renderTable(): void;
+}
+
+class Statistics implements iStatistics {
     use DatabaseControl;
     private $table;
     
@@ -110,7 +115,7 @@ class Statistics {
         return $values;
     }
     
-    public function renderTable(){
+    public function renderTable(): void{
         $d = $this->prepareArrayWithMonthlyVisits();
         
         echo '<header class="header">Statystyki odwiedzin - rok '.date("Y").'</header>';

@@ -3,11 +3,21 @@
 require_once "DatabaseControl.php";
 require_once "PageSettings.php";
 
+interface iNewsletter {
+    function renderEmails(): void;
+    function getMailingListAsString(): ?string;
+    function sendMail(string $subject, string $message);
+    function addEmail(string $email): bool;
+    function removeEmail(string $email): bool;
+    function renderFrom(string $destinationFile): void;
+}
+
+
 $settingsForMail = new PageSettings();
 define("NEWSLETTER_EMAIL", $settingsForMail->__get("newsletterEmail"));
 define("TITLE", $settingsForMail->__get("title"));
 
-class Newsletter {
+class Newsletter implements iNewsletter{
     use DatabaseControl;
     
     private $emailsFile = 'mailing.txt';
@@ -34,7 +44,7 @@ class Newsletter {
         return null;
     }
     
-    public function showEmails(){
+    public function renderEmails(): void{
         if (!empty($this->mailingList)){
             echo '<ol class="emailList">';
             foreach ($this->mailingList as $email)
@@ -64,14 +74,20 @@ class Newsletter {
         else return true;
     }
     
-    public function addEmail(string $email){ // subscribe to newsletter
+    private function addEmailToFile(): void{
+        if (@!($this->verifyEmail($email)))
+            throw new Exception("E-mail given by user incorrect!");
+        if (@!(file_put_contents($this->emailsFile, $email."\n", FILE_APPEND | LOCK_EX)))
+            throw new Exception("Couldn't save a new e-mail from user in the mailing file!");
+    }
+    
+    public function addEmail(string $email): bool{ // subscribe to newsletter
         try {
-            if (@!($this->verifyEmail($email)))
-                throw new Exception("E-mail given by user incorrect!");
-            if (@!(file_put_contents($this->emailsFile, $email."\n", FILE_APPEND | LOCK_EX)))
-                throw new Exception("Couldn't save a new e-mail from user in the mailing file!");
+            $this->addEmailToFile();
+            return true;
         } catch (Exception $e){
             $this->reportException($e);
+            return false;
         }
     }
     
@@ -102,12 +118,14 @@ class Newsletter {
         return false;
     }
     
-    public function removeEmail(string $email){ // unsubscribe from newsletter
+    public function removeEmail(string $email): bool{ // unsubscribe from newsletter
         try {
             if ($this->removeEmailFromMailingList($email) === false) 
                 throw new Exception("Couldn't remove the email requested by user from the mailing list. Given e-mail doesn't exist or was removed before.");
+            return true;
         } catch (Exception $e){
             $this->reportException($e);
+            return false;
         }
     }
     

@@ -2,7 +2,11 @@
 
 require_once "AdminAuth.php";
 
-class AdminMenu {
+interface AdministratorMenu {
+    function renderMenu(): void;
+}
+
+class AdminMenu implements AdministratorMenu {
     
     private $panelLocation;
     
@@ -62,7 +66,7 @@ END;
         $a->renderLoggingOutForm();
         
         echo<<<END
-        </li>
+        </li> 
     </ul>
 </nav> 
 END;

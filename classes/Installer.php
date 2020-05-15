@@ -1,6 +1,11 @@
 <?php
 
-class Installer {
+interface iInstaller {
+    static function renderInstallationForm(string $destination): void;
+    static function removeInstallDirectory(): bool;
+}
+
+class Installer implements iInstaller{
     private $dbUsername;
     private $dbPassword;
     private $dbName;

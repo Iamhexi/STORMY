@@ -2,7 +2,15 @@
 
 require_once "DatabaseControl.php";
 
-class PageSettings{
+interface Settings {
+    function getAdminPassword(): string;
+    function __get(string $variable): ?string; // this needs to be removed soon
+    function __set(string $varName, $value): void; //this needs to be removed soon
+    function saveSettings(): bool;
+    function renderEditor(string $destination): void;
+}
+
+class PageSettings implements Settings{
     use DatabaseControl;
     
     private $sourceFile;
@@ -66,17 +74,21 @@ class PageSettings{
         $this->settingsObject->$varName = $value;
     }
     
-    public function saveSettings(): ?Exception{
+    private function saveSettingsToFileAsJSON(): void{
+        if (@!($data = json_encode($this->settingsObject)))
+            throw new Exception("Couldn't encode JSON object to format of JSON data!");
+
+        if (@!($data = file_put_contents($this->sourceFile, $data)))
+            throw new Exception("Couldn't save the file $sourceFile with settings!");
+    }
+    
+    public function saveSettings(): bool{
         try {
-            if (@!($data = json_encode($this->settingsObject)))
-                throw new Exception("Couldn't encode JSON object to format of JSON data!");
-            
-            if (@!($data = file_put_contents($this->sourceFile, $data)))
-                throw new Exception("Couldn't save the file $sourceFile with settings!");
-            
-            return null;
+            $this->saveSettingsToFileAsJSON();
+            return true;
         } catch (Exception $e){
             $this->reportException($e);
+            return false;
         }
 
     }

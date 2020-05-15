@@ -2,18 +2,22 @@
 
 require_once "DatabaseControl.php";
 
-class AddingArticle {
+interface iAddingArticle {
+    static function renderForm(string $destination = "processor.php");
+}
+
+class AddingArticle implements iAddingArticle{
     use DatabaseControl;
     
-    private $title;
-    public static $photoDirectory = "upload/photos/"; /// All uploaded photo will be store here
-    private $photo;
-    private $content;
-    private $publicationDate;
-    private $articleUrl;
-    private $author;
-    private $category;
-    private $additionalCategory;
+    private string $title;
+    public static string $photoDirectory = "upload/photos/"; /// All uploaded photo will be store here
+    private string $photo;
+    private string $content;
+    private ?string $publicationDate;
+    private string $articleUrl;
+    private string $author;
+    private string $category;
+    private ?string $additionalCategory;
     
     private function prepareQuery(): string{
         $table = DatabaseControl::$contentTable;

@@ -8,7 +8,11 @@ require_once "../classes/Menu.php";
 require_once "../classes/PageSettings.php";
 require_once "../classes/CommentsStatistics.php";
 
-class Processor {
+interface CommandsProcessor(){
+    function addArticle(string $title, array $photoFile, string $content, string $url, string $author, string $category, $additionalCategory = null, $publicationDateOnly = null, $publicationTimeOnly = null): void;
+}
+
+class Processor implements {
 
     private function preparePublicationDate($publicationDateOnly = null, $publicationTimeOnly = null): ?string{
         if ($publicationDateOnly === null){
@@ -26,7 +30,7 @@ class Processor {
         return $photoFile['name'];
     }
     
-    public function addArticle(string $title, array $photoFile, string $content, string $url, string $author, string $category, $additionalCategory = null, $publicationDateOnly = null, $publicationTimeOnly = null){
+    public function addArticle(string $title, array $photoFile, string $content, string $url, string $author, string $category, $additionalCategory = null, $publicationDateOnly = null, $publicationTimeOnly = null): void{
         
         $publicationDate = $this->preparePublicationDate($publicationDateOnly, $publicationTimeOnly);
         $photoName = $this->handleUploadingPhoto($photoFile);

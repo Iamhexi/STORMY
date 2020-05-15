@@ -2,7 +2,18 @@
 require_once "DatabaseControl.php";
 require_once "PageSettings.php";
 
-class Comments{
+interface CommentsManager {
+    function addComment(string $articleUrl, string $author, string $content): void;
+    function addCommentThroughAPI(string $articleUrl, string $author, string $content): bool;
+    function removeAllComments(): bool;
+    function removeComment(int $id): bool;
+    function acceptComment(int $id): bool;
+    function renderComments(string $articleUrl): bool;
+    function renderCommentsReviewPanel(string $destination): bool;
+    function renderCommentForm(string $url): void;
+}
+
+class Comments implements CommentsManager {
     use DatabaseControl;
     
     protected $tableName;
@@ -57,11 +68,13 @@ class Comments{
             throw new Exception("Couldn't remove all comments!");
     }
     
-    public function removeAllComments(){
+    public function removeAllComments(): bool{
         try {
             $this->removeAllCommentsFromDB();
+            return true;
         } catch (Exception $e){
             $this->reportException($e);
+            return false;
         }
     }
     
@@ -141,48 +154,65 @@ END;
 END;
     }
     
-    public function renderComments(string $articleUrl){
+    private function prepareResultForRenderingComments(string $query): mysqli_result {
+        if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
+            throw new Exception($connection->connect_error);
+
+        if(@!mysqli_query($connection, "SET CHARSET utf8")) 
+            throw new Exception($connection->connect_error);
+
+        if(@!$result = $connection->query($query)) 
+            throw new Exception("Couldn't render comments for article with url = $articleUrl");
+        return $result;
+    }
+    
+    private function prepareQueryForRenderingComments(string $articleUrl): string{
+        $articleUrl = $this->sanitizeInput($articleUrl);
+        return "SELECT author, content, additionDate FROM $this->tableName WHERE articleUrl = '$articleUrl' AND isPublished = 1 ORDER BY additionDate DESC";
+    }
+    
+    private function executeRenderingComments(mysqli_result $result): void{
+        while ($fetched = $result->fetch_array(MYSQLI_BOTH))
+            $this->displayCommentAsHTML($fetched['author'], $fetched['content'], $fetched['additionDate']);
+    }
+    
+    public function renderComments(string $articleUrl): bool{
         try {
-            $articleUrl = $this->sanitizeInput($articleUrl);
-            $query = "SELECT author, content, additionDate FROM $this->tableName WHERE articleUrl = '$articleUrl' AND isPublished = 1 ORDER BY additionDate DESC";
-
-            if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
-                throw new Exception($connection->connect_error);
-
-            if(@!mysqli_query($connection, "SET CHARSET utf8")) 
-                throw new Exception($connection->connect_error);
-
-            if(@!$result = $connection->query($query)) 
-                throw new Exception("Couldn't render comments for article with url = $articleUrl");
-
-            while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
-                $this->displayCommentAsHTML($fetched['author'], $fetched['content'], $fetched['additionDate']);
-            }
-
-
+            $query = $this->prepareQueryForRenderingComments();
+            $result = $this->prepareResultForRenderingComments($query);
+            $this->executeRenderingComments($result);
+            return true;
         } catch (Exception $e){
             $this->reportException($e);
-            echo $e->getMessage()."<br>";
             return false;
         }
     }
     
-    public function renderCommentsReviewPanel(string $destination){
+    private function prepareQueryForReviewPanel(): string{
+         return "SELECT id, author, content, additionDate FROM $this->tableName WHERE isPublished = 0 ORDER BY additionDate DESC";
+    }
+    
+    private function renderCommentsForReviewPanel(): mysqli_result{
+        $query = $this->prepareQueryForReviewPanel();
+        
+        if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
+            throw new Exception($connection->connect_error);
+
+        if(@!mysqli_query($connection, "SET CHARSET utf8")) 
+            throw new Exception($connection->connect_error);
+
+        if(@!$result = $connection->query($query)) 
+            throw new Exception("Couldn't render comments for the review panel!");
+        
+        return $result;
+    }
+    
+    public function renderCommentsReviewPanel(string $destination): bool{
         try {
             $noComments = true;
-            
-            $query = "SELECT id, author, content, additionDate FROM $this->tableName WHERE isPublished = 0 ORDER BY additionDate DESC";
-
-            if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
-                throw new Exception($connection->connect_error);
-
-            if(@!mysqli_query($connection, "SET CHARSET utf8")) 
-                throw new Exception($connection->connect_error);
-
-            if(@!$result = $connection->query($query)) 
-                throw new Exception("Couldn't render comments for the review panel!");
-            
             echo '<div class="commentsWrapper"><header class="header">Zarządzanie komentarzami</header>';
+
+            $result = $this->renderCommentsForReviewPanel();
             
             while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
                 $this->displayCommentToReviewAsHTML($destination, $fetched['author'], $fetched['content'], $fetched['additionDate'], $fetched['id']);
@@ -190,19 +220,18 @@ END;
             }
             
             if ($noComments)
-                echo '<p>Żaden komentarz nie czeka na akceptację. Jeśli chcesz, aby każdy komentarz najpierw musiał przejść ręczną akceptację w ustawieniach ustaw opcję "Polityka komentarz" na "Najpierw zaakceptuj, potem publikuj".</p>';
+                echo '<p>Żaden komentarz nie czeka na akceptację. Jeśli chcesz, aby każdy komentarz najpierw musiał przejść ręczną akceptację, w ustawieniach ustaw opcję "Polityka komentarzy" na "Najpierw zaakceptuj, potem publikuj".</p>';
             
             echo '</div>';
-
+            return true;
 
         } catch (Exception $e){
             $this->reportException($e);
-            echo $e->getMessage()."<br>";
             return false;
         }
     }
     
-    public function renderCommentForm(string $url){
+    public function renderCommentForm(string $url): void{
         $url = $this->sanitizeInput($url);
         $file = basename($_SERVER['PHP_SELF']);
         

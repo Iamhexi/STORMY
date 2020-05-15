@@ -3,6 +3,13 @@
 require_once "DatabaseControl.php";
 require_once "CustomPage.php";
 
+interface PagesManager {
+    function loadByUrl(string $url);
+    function updateSubpage(string $content, $title = null): bool;
+    function renderLoadedPage(): void;
+    function getArrayOfSubpages(): array;
+}
+
 class CustomPageManager{
     use DatabaseControl;
     

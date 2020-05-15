@@ -4,10 +4,21 @@ session_start();
 require_once "PageSettings.php";
 require_once "Installer.php";
 
+interface AdministratorAuthentication {
+    function controlAccess(string $givenPassword = null);
+    function renderLoggingForm(): void;
+    function handleloggingOut(): void;
+    function renderLoggingOutForm(): void;
+    function renderPrompt(): void;
+    static function renderHomeButton(): void;
+    function handleFirstTimeLogging(bool $isFirstTime): void;
+}
+
+
 $settings = new PageSettings("../settings/default.json");
 define("ADMIN_PASSWORD", $settings->getAdminPassword());
 
-class AdminAuth {
+class AdminAuth implements AdministratorAuthentication{
     private $isLogged;
     private $loggingUrl;
     private $adminPanelUrl;
@@ -52,7 +63,7 @@ class AdminAuth {
         
     }
     
-    public function renderLoggingForm(){
+    public function renderLoggingForm(): void{
         echo<<<END
             <div class="loggingPanel">
                 <header><h1 class="loggingHeader header">Panel administratora - Logowanie</h1></header>
@@ -64,7 +75,7 @@ class AdminAuth {
 END;
     }
     
-    public function handleloggingOut(){
+    public function handleloggingOut(): void{
         if (@$_POST['logout']){
             $_SESSION = array();
             session_destroy();
@@ -73,14 +84,14 @@ END;
 
     }
     
-    public function renderLoggingOutForm(){
+    public function renderLoggingOutForm(): void{
         echo '<form action="panel.php" method="POST" class="logout">
               <input type="submit" class="logoutButton" name="logout" value="Wyloguj">
               <div style="clear: both;"></div>
               </form>';
     }
     
-    public function renderPrompt(){
+    public function renderPrompt(): void{
         if (isset($this->prompt)) echo '<div class="prompt fail">'.$this->prompt.'</div>';
     }
     
@@ -89,7 +100,7 @@ END;
         $_SESSION['prompt'] = $this->prompt;
     }
     
-    public static function renderHomeButton():void{
+    public static function renderHomeButton(): void{
         echo '<a class="returnButtonLink" href="panel.php"><button class="returnButton">Wróć</button></a>';
     }
     

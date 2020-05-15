@@ -2,9 +2,13 @@
 
 require_once "AddingArticle.php";
 
+interface iFileUploader {
+    public function uploadFile(array $fileArray): bool;
+}
+
 define("UPLOAD_DIRECTORY", '../'.AddingArticle::$photoDirectory);
 
-class FileUploader {
+class FileUploader implements iFileUploader{
     
     public $uploadDirectory = "upload/storage/";
     

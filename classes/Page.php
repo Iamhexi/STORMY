@@ -6,7 +6,16 @@ require_once "DatabaseControl.php";
 require_once "Menu.php";
 require_once "Statistics.php";
 
-class Page extends Theme{
+interface iPage {
+    function attachTracking(): void;
+    function renderHead(): void;
+    function includeScripts(): void;
+    function renderMenu($isForAdmin = false, string $proccessorLocation = null): void;
+    function renderFooter(): void;
+    function setTitle($newTitle): void;
+}
+
+class Page extends Theme implements iTheme{
     use DatabaseControl;
 
     private $settings;

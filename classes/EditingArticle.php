@@ -4,7 +4,12 @@ require_once "Categories.php";
 require_once "DatabaseControl.php";
 require_once "Article.php";
 
-class EditingArticle extends Article{
+interface iEditingArticle {
+    function renderEditor(string $destination = "processor.php"): void;
+    function saveChanges(string $title = null, string $content, string $category = null, string $additionalCategory = null, string $publicationDate = null): bool;
+}
+
+class EditingArticle extends Article implements iEditingArticle {
     use DatabaseControl;
     
     public function renderEditor(string $destination = "processor.php"): void{

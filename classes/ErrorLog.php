@@ -2,7 +2,12 @@
 
 require_once "DatabaseControl.php";
 
-class ErrorLog {
+interface iErrorLog {
+    function renderErrorLog(string $destination = "processor.php"): void;
+    function eraseErrors(): void;
+}
+
+class ErrorLog implements iErrorLog{
     use DatabaseControl;
     
     private $errorLogFile;
@@ -48,7 +53,7 @@ END;
         }
     }
     
-    public function eraseErrors(){
+    public function eraseErrors(): void{
         $this->errors = [];
         $this->saveErrorLogFile(" ");
     }

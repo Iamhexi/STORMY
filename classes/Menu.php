@@ -4,7 +4,12 @@ require_once "DatabaseControl.php";
 require_once "CustomPageManager.php";
 require_once "Categories.php";
 
-class Menu {
+interface Navigation {
+    static function renderAddingElementForm(string $destination): void;
+    function deleteElement(int $id): bool;
+}
+
+class Menu implements Navigation{
     use DatabaseControl;
     
     private $isForAdmin;
@@ -145,21 +150,21 @@ END;
         } 
     }
     
-    private function deleteElementFromDB(int $id): ?Exception{
+    private function deleteElementFromDB(int $id): void{
         $table = DatabaseControl::$menuTable;
         $query = "DELETE FROM $table FROM optionId = '$id'";
         
         if (@!$this->performQuery($query))
             throw new Exception("Couldn't add a new option to menu!");
-        
-        return null;
     }
     
-    public function deleteElement(int $id){
+    public function deleteElement(int $id): bool{
         try {
             $this->deleteElementFromDB($id);
+            return true;
         } catch (Exception $e){
             $this->reportException($e);
+            return false;
         } 
     }
 

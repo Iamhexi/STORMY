@@ -11,6 +11,10 @@ require_once "../classes/CommentsStatistics.php";
 require_once "../classes/Categories.php";
 require_once "../classes/SubpageEditor.php";
 
+interface iAdminPanel {
+    function renderPanel(?string $action): void;
+}
+
 class AdminPanel {
     
     private $processorLocation = "processor.php";
@@ -93,7 +97,7 @@ class AdminPanel {
     
     
     
-    private function handleAction($action){
+    private function handleAction(?string $action){
         switch ($action){
             case "addEntry":
                 $this->renderNewEntryForm();

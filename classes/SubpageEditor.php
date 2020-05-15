@@ -3,16 +3,16 @@
 require_once "DatabaseControl.php";
 
 interface SubpageManagement{
-    public function createSubpage(string $url, string $title): bool;
-    public function removeSubpageWithUrl(string $url): bool;
-    public function removeSubpageWithId(int $id): bool;
-    public function editSubpageWithUrl(string $url, $title, $content): bool;
-    public function editSubpageWithId(int $id, $title, $content): bool;
-    public function renderEditor(string $destination, string $url): void;
-    public function renderListOfSubpages(): void;
+    function createSubpage(string $url, string $title): bool;
+    function removeSubpageWithUrl(string $url): bool;
+    function removeSubpageWithId(int $id): bool;
+    function editSubpageWithUrl(string $url, $title, $content): bool;
+    function editSubpageWithId(int $id, $title, $content): bool;
+    function renderEditor(string $destination, string $url): void;
+    function renderListOfSubpages(): void;
 }
 
-class Subpage {
+class Subpage{
     public $id;
     public $url;
     public $title;

@@ -1,6 +1,11 @@
 <?php
 
-class Theme {
+interface iTheme {
+    function loadStylesheets(): void;
+    function renderStyles(): void;
+}
+
+class Theme implements iTheme{
     
     protected $name;
     protected static $themeDirectory = 'themes';
@@ -13,7 +18,7 @@ class Theme {
     
     protected $path;
     
-    public function loadStylesheets(){
+    public function loadStylesheets(): void{
         $this->mainStylesheetPath = $this->path.'/'.Theme::$themeDirectory.'/'.$this->name.'/'.$this->mainStylesheet;
     }
     
@@ -30,7 +35,7 @@ class Theme {
         else return true;
     }
     
-    public function renderStyles(){ //
+    public function renderStyles(): void{ //
         if ($this->isThisAdminSite())
             echo '<link rel="stylesheet" href="'.$this->adminStylesheetPath.'">';
         else

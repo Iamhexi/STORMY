@@ -3,8 +3,14 @@
 require_once "Comments.php";
 require_once "DatabaseControl.php";
 
-class CommentsStatistics extends Comments {
+interface iCommentsStatistics {
+    function countAll(?int $startingDate = null, ?int $endingDate = null): int;
+    function countForArticle(string $articleUrl): int;
+    function renderPanel(string $destination, $startingDate = null, $endingDate = null, $score = 0): void;
+    function renderCommentsPreview(int $howMany = 10): void;
+}
 
+class CommentsStatistics extends Comments implements iCommentsStatistics {
     
     private function getNumberOfCommentsFromDB(){
         $query = "SELECT COUNT(*) AS numberOfComments FROM $this->tableName";
@@ -51,7 +57,7 @@ class CommentsStatistics extends Comments {
         }
     }
     
-    public function renderPanel(string $destination, $startingDate = null, $endingDate = null, $score = 0){
+    public function renderPanel(string $destination, $startingDate = null, $endingDate = null, $score = 0): void{
         
         if ($score === null) $score = 0;
         
@@ -110,7 +116,7 @@ END;
         return (int) $fetched['numberOfComments'];
     }
     
-    public function prepareQueryForRetrievingComments(int $howMany){
+    private function prepareQueryForRetrievingComments(int $howMany){
         return "SELECT articleUrl, author, content, additionDate FROM $this->tableName ORDER BY additionDate DESC LIMIT $howMany";   
     }
     

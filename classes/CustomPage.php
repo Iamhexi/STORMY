@@ -3,6 +3,14 @@
 require_once "DatabaseControl.php";
 require_once "Page.php";
 
+interface iCustomPage {
+    public function setHTMLContent(string $html): void;
+    public function renderContent(): void;
+    public function renderPage(): void;
+    public function __get(string $variable);
+    public function __set(string $variable, $value): void;
+}
+
 class CustomPage extends Page {
     use DatabaseControl;
     
