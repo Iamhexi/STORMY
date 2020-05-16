@@ -2,8 +2,17 @@
 
 require_once "DatabaseControl.php";
 
+interface iCategories {
+    function getCategoriesArray(): array;
+    function saveAll(): bool;
+    function editCategory(int $givenId, string $givenTitle, $givenUrl = null): void;
+    function add(string $title, string $url): bool;
+    function removeWithUrl(string $url): bool;
+    static function renderRemovalForm(string $destination): void;
+    static function renderAddingForm(string $destination): void;
+}
 
-class Categories {
+class Categories implements iCategories{
     use DatabaseControl;
     
     private $table;
@@ -52,7 +61,7 @@ class Categories {
         return null;
     }
     
-    public function getCategoryName(string $searchedUrl){
+    public function getCategoryName(string $searchedUrl): string{
         $output = $this->getCategoryNameByUrl($searchedUrl);
         if ($output === null)
             return 'Nieznana kategoria';
@@ -67,13 +76,13 @@ class Categories {
         return $this->categories;
     }
     
-    private function saveCategory(int $id, string $title, string $url){
+    private function saveCategory(int $id, string $title, string $url): void{
         $query = "UPDATE $this->table SET categoryTitle = '$title', categoryUrl = '$url' WHERE categoryId = '$id'";
         if (@!($this->performQuery($query)))
             throw new Exception("Couldn't update");
     }
     
-    private function saveCategories(){
+    private function saveCategories(): void{
         foreach($this->categories as $category){
             $id = $category['categoryId'];
             $title = $category['categoryTitle'];
@@ -83,7 +92,7 @@ class Categories {
         }
     }
     
-    public function saveAll(){
+    public function saveAll(): bool{
         try {
             $this->saveCategories();
             return true;
@@ -93,7 +102,7 @@ class Categories {
         }
     }
     
-    public function editCategory(int $givenId, string $givenTitle, $givenUrl = null){ 
+    public function editCategory(int $givenId, string $givenTitle, $givenUrl = null): void{ 
         // all changes are automatically saved to database
         foreach($this->categories as $category){
             $id = $category['categoryId'];
@@ -116,7 +125,7 @@ class Categories {
             throw new Exception("Couldn't update");
     }
     
-    public function add(string $title, string $url){
+    public function add(string $title, string $url): bool{
         try {
             $this->addCategory($title, $url);
             return true;
@@ -126,14 +135,14 @@ class Categories {
         }
     }
     
-    private function removeCategoryWithUrl(string $url){
+    private function removeCategoryWithUrl(string $url): void{
         $query = "DELETE FROM $this->table WHERE categoryUrl = '$url'";
         
         if (@!($this->performQuery($query)))
             throw new Exception("Couldn't delete cateogry with url = $url from database!");
     }
     
-    public function removeWithUrl(string $url){
+    public function removeWithUrl(string $url): bool{
         try {
             $this->removeCategoryWithUrl($url);
             return true;
@@ -162,7 +171,7 @@ class Categories {
     
     
     
-    public static function renderRemovalForm(string $destination){
+    public static function renderRemovalForm(string $destination): void{
         echo<<<END
          <form action="$destination" method="POST" class="removingCategoryForm">
             <header class="header">Usuwanie kategorii</header>
@@ -176,7 +185,7 @@ END;
     }
     
     
-    public static function renderAddingForm(string $destination){
+    public static function renderAddingForm(string $destination): void{
         echo<<<END
             <form action="$destination" method="POST" class="addingCategoryForm">
                 <header class="header">Dodawanie kategorii</header>

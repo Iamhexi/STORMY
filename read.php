@@ -12,6 +12,7 @@ $page = new Page($pageSettings);
 
 @$article = new Article($_GET['url']);
 $page->setTitle($article->getTitle());
+$page->setAuthor($article->getAuthor());
 
 $page->renderHead();
 

@@ -41,16 +41,8 @@ else if (isset($_POST['addNewMenuElement'])){ // ADDING A NEW OPTION TO MENU
 else if (isset($_POST['pageSettingsSavingButton'])){ // SAVING PAGE SETTINGS
     $settings = new PageSettings("../settings/default.json");
     
-    $settings->__set('adminEmail', $_POST['adminEmail']);
-    $settings->__set('adminPassword', $_POST['adminPassword']);
-    $settings->__set('newsletterEmail', $_POST['newsletterEmail']);
-    $settings->__set('description', $_POST['description']);
-    $settings->__set('title', $_POST['title']);
-    $settings->__set('keywords', $_POST['keywords']);
-    $settings->__set('headerText', $_POST['headerText']);
-    $settings->__set('url', $_POST['url']); 
-    $settings->__set('theme', $_POST['theme']);
-    $settings->__set('commentsPolicy', $_POST['commentsPolicy']);
+    foreach($_POST as $name => $value)
+        $settings->__set($name, $value);
     
     $settings->saveSettings();
     $action = 'settings';

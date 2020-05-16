@@ -1,4 +1,10 @@
 <?php
+
+if (!file_exists('settings/connection.php')){ // autorun installer if not installed yet
+    header('location: install/index.php');
+    exit();
+}
+
 require_once "classes/Menu.php";
 require_once "classes/Article.php";
 require_once "classes/Comments.php";
@@ -15,8 +21,7 @@ require_once "classes/Newsletter.php";
 
     $page->renderHead();
     $page->renderMenu();
-
-
+    
 
 
     @$articleGrid->renderThumbnails($_GET['category']);

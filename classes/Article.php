@@ -4,7 +4,13 @@ require_once "DatabaseControl.php";
 require_once "AddingArticle.php";
 require_once "Categories.php";
 
-class Article{ 
+interface iArticle {
+    public function getTitle(): ?string;
+    public function getAuthor(): ?string;
+    public function renderArticle(): void;
+}
+
+class Article implements iArticle{ 
     use DatabaseControl;
     
     protected $id;
@@ -19,6 +25,10 @@ class Article{
     
     public function getTitle(): ?string{
         return $this->title;
+    }
+    
+    public function getAuthor(): ?string{
+        return $this->author;
     }
     
     protected function sanitizeInput(string $input): string{
@@ -60,7 +70,7 @@ class Article{
         return true;
     }
     
-    public function renderArticle(){
+    public function renderArticle(): void{
         $categories = new Categories;
         $category = $categories->getCategoryName($this->category);
         $photoDir = AddingArticle::$photoDirectory;

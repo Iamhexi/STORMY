@@ -21,6 +21,8 @@ class Page extends Theme implements iTheme{
     private $settings;
     private $theme;
     
+    private $authorForMetaTag;
+    
 
     public function __construct(PageSettings $settings, string $pathToMainDirectory = null, bool $exceptionReporting = false){
         $this->settings = $settings;
@@ -33,8 +35,15 @@ class Page extends Theme implements iTheme{
         if (strpos($_SERVER['REQUEST_URI'], 'admin') === false) $stats->addRecord(); // ignore admins' visits
     }
     
+    private function prepareAuthorTagContent(): ?string{
+        $a = $this->authorForMetaTag;
+        return ($a != null) ? $a : $this->settings->author;
+    }
+    
     public function renderHead(): void{
         $this->attachTracking();
+        
+        $author = $this->prepareAuthorTagContent();
         echo<<<END
         <!DOCTYPE html>
         <html lang="pl">
@@ -45,8 +54,8 @@ class Page extends Theme implements iTheme{
             <title>{$this->settings->title}</title>
             <meta name="description" content="{$this->settings->description}">
             <meta name="keywords" content="{$this->settings->keywords}">
-            <meta name="author" content="Igor Sosnowicz">
-            <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+            <meta name="author" content="$author">
+            <link rel="icon" href="themes/favicon.ico" type="image/x-icon">
             <meta http-equiv="X-Ua-Compatible" content="IE=edge">
 END;
         
@@ -75,8 +84,12 @@ END;
         echo '<footer class="footer" title="STORMY to silnik CMS, dzięki któremu stworzysz stronę swoich marzeń!">Powered by STORMY | <a href="https://github.com/Iamhexi">Igor Sosnowicz</a> @ 2020</footer></body></html>';
     }
     
-    public function setTitle($newTitle): void{
+    public function setTitle(?string $newTitle): void{
         if ($newTitle != null) $this->settings->title = $newTitle;
+    }
+    
+    public function setAuthor(?string $newAuthor): void{
+        if ($newAuthor != null) $this->authorForMetaTag = $newAuthor;
     }
     
 

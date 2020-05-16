@@ -178,7 +178,7 @@ END;
     
     public function renderComments(string $articleUrl): bool{
         try {
-            $query = $this->prepareQueryForRenderingComments();
+            $query = $this->prepareQueryForRenderingComments($articleUrl);
             $result = $this->prepareResultForRenderingComments($query);
             $this->executeRenderingComments($result);
             return true;

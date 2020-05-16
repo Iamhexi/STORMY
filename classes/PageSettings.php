@@ -4,6 +4,7 @@ require_once "DatabaseControl.php";
 
 interface Settings {
     function getAdminPassword(): string;
+    function getSettingsFileLocation(): ?string;
     function __get(string $variable): ?string; // this needs to be removed soon
     function __set(string $varName, $value): void; //this needs to be removed soon
     function saveSettings(): bool;
@@ -15,17 +16,6 @@ class PageSettings implements Settings{
     
     private $sourceFile;
     private $settingsObject;
-    
-    private $adminEmail;
-    private $adminPassword;
-    private $newsletterEmail;
-    private $description;
-    private $title;
-    private $keywords;
-    private $headerText;
-    private $url;
-    private $theme;
-    private $commentsPolicy;
     
     private function loadSettings(string $sourceFile){
         try {
@@ -47,30 +37,21 @@ class PageSettings implements Settings{
     
     public function __construct(string $sourceFile = "settings/default.json"){
         $this->loadSettings($sourceFile);
-        
-        $this->adminEmail = $this->settingsObject->adminEmail;
-        $this->adminPassword = $this->settingsObject->adminPassword;
-        $this->newsletterEmail = $this->settingsObject->newsletterEmail;
-        $this->description = $this->settingsObject->description;
-        $this->title = $this->settingsObject->title;
-        $this->keywords = $this->settingsObject->keywords;
-        $this->headerText = $this->settingsObject->headerText;
-        $this->url = $this->settingsObject->url;
-        $this->theme = $this->settingsObject->theme;
-        $this->commentsPolicy = $this->settingsObject->commentsPolicy;
-        
     }
     
     public function getAdminPassword(): string {
-        return $this->adminPassword;
+        return $this->settingsObject->adminPassword;
+    }
+    
+    public function getSettingsFileLocation(): string {
+        return $this->sourceFile;
     }
     
     public function __get(string $variable): ?string{
-        return $this->$variable;
+        return $this->settingsObject->$variable;
     }
     
     public function __set(string $varName, $value): void{
-        $this->$varName = $value;
         $this->settingsObject->$varName = $value;
     }
     
@@ -98,18 +79,19 @@ class PageSettings implements Settings{
         echo<<<END
             <form action="$destination" method="POST" class="settingsEditor">
                 <header class="header">Ustawienia strony</header>
-                <div><label>Tytuł strony <input type="text" name="title" value="{$this->title}" class="settingsInput" required></label></div>
-                <div><label>Nagłówek strony <input type="text" name="headerText" value="{$this->headerText}" class="settingsInput" required></label></div>
-                <div title="Na przykład: https://mojastrona.pl"><label>Adres URL strony<input type="url" name="url" value="{$this->url}" class="settingsInput" maxlength="54" required></label></div>
+                <div><label>Tytuł strony <input type="text" name="title" value="{$this->settingsObject->title}" class="settingsInput" required></label></div>
+                <div><label>Nagłówek strony <input type="text" name="headerText" value="{$this->settingsObject->headerText}" class="settingsInput" required></label></div>
+                <div title="Na przykład: https://mojastrona.pl"><label>Adres URL strony<input type="url" name="url" value="{$this->settingsObject->url}" class="settingsInput" maxlength="54" required></label></div>
 END;
             
         $this->renderThemeChoice();
         echo<<<END
-             <div><label>Hasło administratora <input type="password" name="adminPassword" value="{$this->adminPassword}" class="settingsInput" required></label></div>
-            <div><label>E-mail administratora <input type="email" name="adminEmail" value="{$this->adminEmail}" class="settingsInput" required></label></div>
-            <div><label>E-mail do wysyłania newslettera <input type="email" name="newsletterEmail" value="{$this->newsletterEmail}" class="settingsInput"></label></div>
-            <div title="Słowa kluczowe wpisywane po przecinku"><label>Słowa kluczowe <input type="text" name="keywords" value="{$this->keywords}" class="settingsInput" required></label></div>
-            <div><label>Opis strony <textarea name="description" rows="10" cols="50" maxlength="220" class="settingsInput">{$this->description}</textarea></label></div>
+            <div><label>Hasło administratora <input type="password" name="adminPassword" value="{$this->settingsObject->adminPassword}" class="settingsInput" required></label></div>
+            <div><label>E-mail administratora <input type="email" name="adminEmail" value="{$this->settingsObject->adminEmail}" class="settingsInput" required></label></div>
+            <div><label>E-mail do wysyłania newslettera <input type="email" name="newsletterEmail" value="{$this->settingsObject->newsletterEmail}" class="settingsInput"></label></div>
+            <div title="Słowa kluczowe wpisywane po przecinku"><label>Słowa kluczowe <input type="text" name="keywords" value="{$this->settingsObject->keywords}" class="settingsInput" required></label></div>
+            <div><label>Autor strony <input type="text" name="author" value="{$this->settingsObject->author}" class="settingsInput" required></label></div>
+            <div><label>Opis strony <textarea name="description" rows="10" cols="50" maxlength="220" class="settingsInput">{$this->settingsObject->description}</textarea></label></div>
 END;
         $this->renderCommentPolicySelector();
         echo<<<END
@@ -120,7 +102,7 @@ END;
     }
     
     private function isItThemeDirectory(string $object): bool{
-        if ($object != "." && $object != ".." && $object != $this->theme && $object != 'admin.css')
+        if ($object != '.' && $object != '..' && $object != 'favicon.ico' && $object != $this->theme && $object != 'admin.css')
             return true;
         else
             return false;
@@ -133,7 +115,7 @@ END;
         foreach ($themes as $theme){
             if ($this->isItThemeDirectory($theme))
                 echo "<option value=\"$theme\">$theme</option>";
-            else if ($theme === $this->theme)
+            else if ($theme === $this->settingsObject->theme)
                 echo "<option value=\"$theme\" selected>$theme</option>";
         } 
             

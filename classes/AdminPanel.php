@@ -64,17 +64,17 @@ class AdminPanel {
     }
     
     private function renderCommentsStatictics(){
-        $commStats = new CommentsStatistics($this->settings->__get("sourceFile"));
+        $commStats = new CommentsStatistics($this->settings->getSettingsFileLocation());
         @$commStats->renderPanel($this->processorLocation, $_GET['from'], null, $_GET['score']);
     }
     
     private function renderCommentsPreview(){
-        $commStats = new CommentsStatistics($this->settings->__get("sourceFile"));
+        $commStats = new CommentsStatistics($this->settings->getSettingsFileLocation());
         $commStats->renderCommentsPreview();
     }
     
     private function renderCommentsReviewPanel(){
-        $comments = new Comments($this->settings->__get("sourceFile"));
+        $comments = new Comments($this->settings->getSettingsFileLocation());
         $comments->renderCommentsReviewPanel($this->processorLocation);
     }
     
