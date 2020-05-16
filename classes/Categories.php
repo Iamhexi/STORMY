@@ -189,7 +189,7 @@ END;
         echo<<<END
             <form action="$destination" method="POST" class="addingCategoryForm">
                 <header class="header">Dodawanie kategorii</header>
-                <div><label>Nazwa kategorii <input type="text" name="categoryName" required></label></div>
+                <div><label>Nazwa kategorii <input type="text" name="categoryName" required autofocus></label></div>
                 <div title="Bez polskich znaków, spacji, tabulatorów"><label>URL kategorii <input type="text" name="categoryUrl" required></label></div>
                 <div><input type="submit" name="addingCategory" value="Dodaj kategorię"></div>
             </form>

@@ -77,7 +77,7 @@ class PageSettings implements Settings{
 
     public function renderEditor(string $destination): void{
         echo<<<END
-            <form action="$destination" method="POST" class="settingsEditor">
+            <form action="$destination" method="POST" class="settingsEditor" enctype="multipart/form-data">
                 <header class="header">Ustawienia strony</header>
                 <div><label>Tytuł strony <input type="text" name="title" value="{$this->settingsObject->title}" class="settingsInput" required></label></div>
                 <div><label>Nagłówek strony <input type="text" name="headerText" value="{$this->settingsObject->headerText}" class="settingsInput" required></label></div>

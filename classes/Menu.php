@@ -55,10 +55,10 @@ class Menu implements Navigation{
     
     private function rederElementForAdmin(string $name, string $destination, int $order, int $id): void{
         echo '<div><input type="number" style="display:none;" name="id[]" value="'.$id.'">';
-        echo '<label>Kolejność w menu <input type="number" name="order[]" class="menuEditorElementOrder" value="'.$order.'"></label>';
-        echo '<label>Nazwa odnośnika <input type="text" name="name[]" class="menuEditorElementName" value="'.$name.'"></label>';
-        echo '<label>Do usunięcia? <input type="checkbox" name="remove[]" class="menuEditorCheckbox"></label>';
-        echo '<label>Dokąd prowadzi? <input type="text" name="destination[]" class="menuEditorElementDestination" value="'.$destination.'"></label></div>';
+        echo '<label title="Kolejność odnośnika w menu.">Kolejność w menu <input type="number" name="order[]" class="menuEditorElementOrder" value="'.$order.'"></label>';
+        echo '<label title="Nazwa wyświetlana w menu.">Nazwa odnośnika <input type="text" name="name[]" class="menuEditorElementName" value="'.$name.'"></label>';
+        echo '<label class="switch" title="Jeśli chcesz usunąć odnośnik z menu, zaznacz tę opcję.">Do usunięcia? <input type="checkbox" name="remove[]" class="menuEditorCheckbox"></label>';
+        echo '<label title="Zalecamy nie zmieniać wartości tego pola, o ile to nie jest konieczne. Wskazuje ono, dokąd zostanie przkierowany użytkownik po kliknięciu w odnośnik.">Dokąd prowadzi? <input type="text" name="destination[]" class="menuEditorElementDestination" value="'.$destination.'"></label></div>';
              
     }
     
