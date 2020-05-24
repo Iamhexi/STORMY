@@ -2,4 +2,6 @@
 Order allow,deny
 Deny from all
 </FilesMatch>
+RewriteEngine On
 ErrorDocument 404 /admin/index.php
+RedirectMatch ^/$ /admin/index.php

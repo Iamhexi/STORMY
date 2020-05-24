@@ -86,7 +86,7 @@ END;
             
         $this->renderThemeChoice();
         echo<<<END
-            <div><label>Hasło administratora <input type="password" name="adminPassword" value="{$this->settingsObject->adminPassword}" class="settingsInput" required></label></div>
+            <div><label>Hasło administratora <input type="password" name="adminPassword" placeholder="Wpisz tylko, jeśli chcesz zmienić obecne hasło" class="settingsInput"></label></div>
             <div><label>E-mail administratora <input type="email" name="adminEmail" value="{$this->settingsObject->adminEmail}" class="settingsInput" required></label></div>
             <div><label>E-mail do wysyłania newslettera <input type="email" name="newsletterEmail" value="{$this->settingsObject->newsletterEmail}" class="settingsInput"></label></div>
             <div title="Słowa kluczowe wpisywane po przecinku"><label>Słowa kluczowe <input type="text" name="keywords" value="{$this->settingsObject->keywords}" class="settingsInput" required></label></div>

@@ -41,8 +41,16 @@ else if (isset($_POST['addNewMenuElement'])){ // ADDING A NEW OPTION TO MENU
 else if (isset($_POST['pageSettingsSavingButton'])){ // SAVING PAGE SETTINGS
     $settings = new PageSettings("../settings/default.json");
     
+    
     foreach($_POST as $name => $value)
-        $settings->__set($name, $value);
+        if ($name !== 'adminPassword')
+            $settings->__set($name, $value);
+    
+    if (isset($_POST['adminPassword'])){
+        $options = ['cost' => 12];
+        $password = password_hash($_POST['adminPassword'], PASSWORD_BCRYPT, $options);
+        $settings->__set('adminPassword', $password);
+    }
     
     $settings->saveSettings();
     $action = 'settings';

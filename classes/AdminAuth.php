@@ -16,12 +16,12 @@ interface AdministratorAuthentication {
 
 
 $settings = new PageSettings("../settings/default.json");
-define("ADMIN_PASSWORD", $settings->getAdminPassword());
+define("HASHED_ADMIN_PASSWORD", $settings->getAdminPassword());
 
 class AdminAuth implements AdministratorAuthentication{
-    private $isLogged;
-    private $loggingUrl;
-    private $adminPanelUrl;
+    private bool $isLogged;
+    private string $loggingUrl;
+    private string $adminPanelUrl;
     private $prompt;
     
     public function __construct(bool $isLogged = false){
@@ -32,8 +32,7 @@ class AdminAuth implements AdministratorAuthentication{
     }
     
     private function isPasswordCorrect(string $givenPassword){
-        if (ADMIN_PASSWORD == $givenPassword) return true;
-        else return false;
+        return (password_verify($givenPassword, HASHED_ADMIN_PASSWORD)) ? true : false;
     }
     
     private function redirectUser(){
@@ -68,7 +67,8 @@ class AdminAuth implements AdministratorAuthentication{
             <div class="loggingPanel">
                 <header><h1 class="loggingHeader header">Panel administratora - Logowanie</h1></header>
                 <form class="loggingForm" action="$this->loggingUrl" method="POST">
-                    <div><label title="Insert a password to log in to the admin panel.">Hasło: <input type="password" name="adminPassword" class="adminPasswordInput" autofocus required><label></div>
+                <div class="passwordText">Hasło:</div>
+                    <div><input type="password" name="adminPassword" class="adminPasswordInput" autofocus required><label></div>
                     <div><input type="submit" value="Zaloguj się" class="adminLoggingButton"></div>
                 </form>
             </div>
