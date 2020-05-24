@@ -3,13 +3,13 @@
 ## FAQ
 
 ### What is STORMY?
-Stormy is content management system (CMS) written in PHP, MySQL, HTML and JS.
+STORMY is the content management system (CMS) written in PHP and MySQL.
 
 ### How much does STORMY cost?
-It's completely free.
+It's completely free but you have to follow the license.
 
 ### What may I use STORMY for?
-With STORMY, you are able to build your own website in minutes. No programming skills required - just download, upload and adjust options to your needs.
+With STORMY, you are able to build your own website in minutes, for example, a blog. No programming skills required - just download, upload and adjust options to your needs.
 
 ## How to install STORMY?
 
