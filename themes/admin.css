@@ -1,281 +1,329 @@
-/* ADMIN STYLESHEET */
-
-html, body {
-    font-family: Arial;
+* {
+   box-sizing: border-box;
+    font-size: 1rem;
 }
 
-.header {
-	font-size: 30px;
-	font-weight: 700;
-	text-align: center;
-	padding: 20px;
-	box-sizing: border-box;
-    margin-bottom: 20px;
+body,
+html {
+   margin: 0;
+   padding: 0;
+   border: 0;
+   font-family: Arial;
+   background-color: #FAFAFA;
+    overflow-x: hidden;
 }
 
 .loggingPanel {
-	width: calc (100% - 40px);
-	padding: 40px;
-	text-align: center;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   background-color: beige;
+   flex-direction: column;
+   margin: 10vh auto;
+   width: 30%;
+   padding: 3%;
+   height: 60vh;
+   border-radius: 5px;
 }
 
 .loggingForm {
-	margin-left: auto;
-	margin-right: auto;
-	background-color: white;
-	width: 50%;
-	border: 2px #BDBDBD groove;
-	text-align: center;
-	border-radius: 15px;
-	padding: 15px;
-	font-size: 20px;
+   width: 100%;
 }
 
-.adminPasswordInput, .articleEditorInput, .articleEditorTextarea, .subpageEditorTextarea {
-	vertical-align: middle;
-	padding: 10px;
-	border-radius: 5px;
-	margin: 10px;
-	font-size: 18px;
-	background-color: #BDBDBD;
-	text-align: center;
+.adminPasswordInput {
+   margin-bottom: 10px;
+   padding: 10px;
+   width: 100%;
 }
 
-form {
-	width: 100%;
-	text-align: center;
+.passwordText {
+   text-align: left;
+   font-size: 0.9rem;
 }
 
-input[type=submit]:not(.logoutButton), .returnButton {
-	padding: 10px;
-	border-radius: 5px;
-	margin: 10px;
-	font-size: 18px;
-	background-color: #244999;
-    color: white;
-	text-align: center;
-    border: none;
-    transition: all ease-in-out 0.3s;
+.loggingHeader {
+   font-size: 1.75rem;
 }
 
-input[type=submit]:not(.logoutButton):hover, .returnButton:hover {
-	cursor: pointer;
-    background-color: #3a2499;
-    transform: scale(1.1, 1.1);
+.loggingForm:nth-child(2) {
+   text-align: right;
 }
 
-.logoutButton {
- background: none!important;
-  border: none;
-  padding: 0!important;
-  /*optional*/
-  font-family: arial, sans-serif;
-  /*input has OS specific font-family*/
-  color: #069;
-  text-decoration: underline;
-  cursor: pointer;
-  font-size: 1.4rem;
-    color: #000;
-    text-decoration: none;
-    margin-left: 10px;
+.adminLoggingButton {
+   width: 45%;
+   align-self: center;
+   margin-top: 10px;
+   padding: 7.5px;
+   background-color: beige;
+   color: #244999;
+   border: 1.8px solid #244999;
+   font-size: 1rem;
+   border-radius: 5px;
 }
 
-.logoutButton:hover {
-    text-decoration: none;
-	color: #244999;
+.prompt {
+   text-align: center;
+   margin-top: 2%;
+   padding: 10px;
+   font-weight: 700;
 }
 
-.logout {
-    
+.fail {
+   color: #d8000c;
+   background-color: #ffd2d2;
 }
 
-.addingForm, .settingsEditor, .statisticsPanel {
-	width: 80%;
-	padding: 40px;
-	font-size: 20px;
-	text-align: center;
-	border: 2px solid #244999;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 5%;
+.success {
+   color: #4f8a10;
+   background-color: #dff2bf;
 }
 
-.addingForm > div, .settingsEditor > div {
-	max-width: 80%;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.addingInput, .settingsInput, select, input[type=text], input[type=number] {
-	vertical-align: middle;
-	font-size: 18px;
-	padding: 10px;
-	margin: 10px;
-	width: 40%;
-	text-align: center;
-	background-color: #BDBDBD;
-	border-radius: 5px;
-    transition: all ease-in .5s;
-}
-
-.addingInput:focus, .settingsInput:focus, select:focus, input[type=text]:focus, input[type=number]:focus {
-    color: white;
-    background-color: #244999;
-}
-
-.addingInput:hover, .settingsInput:hover, select:hover, input[type=text]:hover, input[type=number]:hover {
-    box-shadow: 0px 3px 42px -1px rgba(74,67,74,0.75);
-}
-
-
-.errorLog {
-	width: calc(80% + 40px);
-	margin-left: auto;
-	margin-right: auto;
-	padding: 20px;
-	border: 2px #BDBDBD solid;
-	border-top-width: 0;
-}
-
-.errorEntry {
-}
-
-.errorLogForm {
-}
-
-.articleEditor {
-}
-
-.articleEditorPhoto {
-	width: 90%;
-	height: auto;
-}
-
-.articleEditorTextarea {
-}
-
-.articleEditorInput {
-}
-
-.articleEditorButton {
-}
-
-.returnButtonLink {
-}
-
-.returnButton {
-}
-
-.adminArticleGrid {
-    box-sizing: border-box;
-    padding: 15px;
-    margin: 15px auto;
-    display: block;
-    border: 2px solid #244999;
-    border-radius: 10px;
-    transition: all ease-in .25s;
-}
-
-.adminArticleGrid:hover {
-    background-color: #244999;
-    color: white;
-}
-
-.adminArticleLink {
-	text-decoration: none;
-	color: black;
-    display: block;
-}
-
-.adminArticleLink:hover {
-	text-decoration: underline;
-}
-
-.adminArticlePhoto {
-	vertical-align: middle;
-	width: 20%;
-	height: auto;
-}
-
-.articlesWrapper {
-	width: 80%;
-	padding: 40px;
-	font-size: 20px;
-	text-align: center;
-	border: 2px solid #BDBDBD;
-	margin: 0 auto;
+.footer > a {
+   text-decoration: none;
+   color: #bdbdbd;
 }
 
 .footer {
-	color: gray;
-	opacity: 1;
+   padding: 20px;
+   text-align: center;
+   color: #bdbdbd;
+   font-size: 1.25rem;
 }
 
-label {
-    font-size: 1.2rem;
+li {
+    list-style-type: none;
 }
 
-.subpageList > a {
-    font-size: 1.3rem;
+.mainMenu {
+   width: 100vw;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+   flex-direction: row;
+   margin-bottom: 5vh;
+   min-height: 200px;
+    flex-wrap: wrap;
+}
+
+.mainMenu li ul li {
+    display: none;
+}
+
+.mainMenu li {
     display: block;
-    padding: 20px;
-    border: 2px solid #244999;
-    width: 80%;
-    margin: auto;
-    background-color: rgba(36, 73, 153, 0.5);
-    border-radius: 40px;
-    transition: all ease-in .25s;
 }
 
-.subpageList > a:hover {
+.mainMenu li:hover ul li {
+    display: block;  
+}
+
+.mainMenu li:hover {
+    display: block;  
+}
+
+.header {
+    font-weight: 500;
+    font-size: 2rem;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.addingForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     background-color: #244999;
+    max-width: 50%;
+    margin: 10px auto;
     color: white;
 }
 
-.menuEditor, .subpageList {
-	width: calc(80% + 40px);
-	margin-left: auto;
-	margin-right: auto;
-	padding: 20px;
-	border: 2px #BDBDBD solid;
-}
-
-.menuEditor > div > label > input {
-	vertical-align: middle;
-	font-size: 18px;
-	padding: 10px;
-	margin: 10px;
-	text-align: center;
-	background-color: #BDBDBD;
-	border-radius: 5px;
-}
-
-.menuEditor > div > label {
+.addingForm > div > label > span {
     display: block;
+    padding: 3.5px;
 }
 
-.menuEditor > div {
-    display: block;
-    margin: 5% auto;
+.addingForm > div {
+    margin: 15px auto;
 }
 
-.subpageList {
-	text-align: center;
+#photoUploaderInput {
+    display: none;
 }
 
-.subpageList > a {
-	text-decoration: none;
-	color: black;
+.photoUploaderIcon {
+    padding: 15px;
+    border: 2px dashed gray;
+    width: 30vw;
+    background-color: white;
+    text-align: center;
+    font-size: 2.5rem;
+    color: #bdbdbd;
 }
 
-.subpageList > a:hover {
-	text-decoration: underline;
+.photoUploaderIcon:hover {
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 2px black;
 }
 
-.subpageDeletion {
-	width: auto;
-	text-align: left;
-	margin: 10px;
+.addingForm > div > label > input,
+.addingForm > div > label > textarea,
+.addingForm > div > label > select {
+    width: 30vw;
+    padding: 7.5px;
+    line-height: 20px;
+}
+
+.addingForm > div > label > input:focus, 
+.addingForm > div > label > textarea:focus,
+.addingForm > div > label > select:focus
+.photoUploaderIcon:hover {
+    box-shadow: 2px 2px 2px 2px black;
+}
+
+.addingSubmitButton {
+    width: 20vw;
+    padding: 7.5px;
+    line-height: 20px;
+    margin-bottom: 5px;
+    transition: all ease-in .2s;
+    background-color: #ff5a00;
+    border: none;
+    font-weight: 600;
+    text-align: center;
+
+}
+
+.addingSubmitButton:hover {
+    cursor: pointer;
+    background-color: #ff7b33;
+}
+
+.articlesWrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 100%;
+}
+
+.adminArticleGrid {
+    display: inline-block;
+    text-align: center;
+    background-color: #fbfbf0;
+    margin: 25px;
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: -1px -10px 36px -4px rgba(189,189,189,1);
+}
+
+.adminArticlePhoto {
+    width: 300px;
+    height: 150px;
+    border: 1px groove gray;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.adminArticleLink > div {
+    margin-top: 6px;
+    padding: 3.5px;
+    color: black;
+    text-align: right;
+}
+
+.adminArticleLink {
+    text-decoration: none;
+    color: white;
+}
+
+.adminArticleLink:hover {
+    text-decoration: underline;
+}
+
+
+.commentsWrapper, .commentsPreviewWrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.comment, .commentPreview {
+    width: 75%;
+    padding: 15px;
+    color: #fff;
+    box-shadow: 0px -1px 19px -6px rgba(0,0,0,0.34);
+    color: black;
+    margin: 30px 0;
+}
+
+.commentPreview > div {
+    margin: 5px;
+}
+
+.commentPreviewWhereFrom > a {
+    color: black;
+    text-decoration: none;
+}
+
+.commentPreviewWhereFrom > a:hover{
+    text-decoration: underline;
+}
+
+.commentContent > p, .commentPreviewContent > p {
+    margin: 25px 0;
+    text-align: justify;
+}
+
+.commentDate, .commentPreviewDate {
+    text-align: right;
+}
+
+.acceptForm, 
+.refuseForm {
+    display: inline-block;
+    margin: 15px 5px;
+}
+
+.acceptForm > input {
+    color: #4f8a10;
+}
+
+.refuseForm > input {
+    color: #d8000c;
+}
+
+.acceptForm > input, .refuseForm > input {
+    border: 0;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 3.5px;
+    min-width: 5vw;
+    font-size: 1.3rem;
+}
+
+.acceptForm > input:hover, .refuseForm > input:hover {
+    cursor: pointer;
+    box-shadow: 0px -3px 20px -12px rgba(0,0,0,0.34);
+}
+
+.statisticsPanel, .subpageCreatorWrapper {
+    width: 40%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid gray;
+    border-radius: 3.5px;
+}
+
+#statisticsForm {
+    margin-top: 60px;
+}
+
+#startingDatePicker {
+    padding: 5px;
+    margin: 0 0 0 10px;
 }
 
 .statisticsTable td {
@@ -284,10 +332,6 @@ label {
     transition: all ease-in 0.25s;
 }
 
-.statisticsTable td:hover {
-    background-color: #244999;
-    color: white;
-}
 
 .statisticsTable tr:nth-child(1) {
 	border-bottom-width: 2px;
@@ -316,212 +360,115 @@ label {
 }
 
 
-
-
-
-/* ADMIN MENU */
-
-
-
-        .mainMenu {
-	position: sticky;
-	top: 0;
-	width: 100%;
-	box-sizing: border-box;
-	padding: 10px;
-    margin-bottom: 75px;
+@media only screen and (max-width: 600px) {
+   .loggingPanel {
+      width: 70vw;
+   }
+   .loggingHeader {
+      font-size: 1.3rem;
+   }
+   .footer {
+      font-size: 1rem;
+   }
+    
+    .addingForm {
+       max-width: 100%;
+    }
+    
+    .addingForm > div > label > input,
+    .addingForm > div > label > textarea,
+    .addingForm > div > label > select {
+        width: 80vw;
+    }
 }
 
-.mainMenu a {
-	font-size: 1.4rem;
+@media only screen and (max-width: 1000px) {
+   .loggingPanel {
+      width: 40vw;
+   }
+   .loggingHeader {
+      font-size: 1.4rem;
+   }
+   .footer {
+      font-size: 1rem;
+   }
+    
+    .addingForm {
+       max-width: 80%;
+    }
+    
+    .addingForm > div > label > input,
+    .addingForm > div > label > textarea,
+    .addingForm > div > label > select {
+        width: 60vw;
+    }
+
 }
 
-.main {
-	width: 70%;
-	box-sizing: border-box;
+@media only screen and (max-width: 1300px) {
+   .loggingPanel {
+      width: 30vw;
+   }
+   .loggingHeader {
+      font-size: 1.3rem;
+   }
+   .footer {
+      font-size: 1.2rem;
+   }
+    
+    .addingForm {
+       max-width: 70%;
+    }
+    
+    .addingForm > div > label > input,
+    .addingForm > div > label > textarea,
+    .addingForm > div > label > select {
+        width: 50vw;
+    }
+    
 }
 
-.footer {
-	clear: both;
+@media only screen and (max-width: 1600px) {
+   .loggingPanel {
+      width: 25vw;
+   }
+   .loggingHeader {
+      font-size: 1.7rem;
+   }
+   .footer {
+      font-size: 1.2rem;
+   }
+   .prompt {
+      font-size: 1.5rem;
+   }
+   .adminPasswordInput {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      width: 100%;
+   }
 }
 
-ul {
-	list-style: none;
-/*float: left;*/
-	<COMMENTFIX>
-}
-
-ul > li {
-	margin: 0;
-	padding: 0;
-	float: left;
-	position: relative;
-	height: 30px;
-}
-
-ul > li > a {
-	padding: 10px;
-	color: #000;
-	text-decoration: none;
-}
-
-ul > li > a:hover, 
-        ul > li:hover > a {
-	color: #244999;
-}
-
-ul > li ul {
-	padding: 0;
-	position: absolute;
-	display: none;
-	left: 0px;
-	top: 30px;
-	width: 200px;
-	text-align: left;
-	background-color: #fcfcfc;
-	border: 1px solid #ccc;
-}
-
-ul li:hover > ul {
-	display: block;
-}
-
-ul > li ul ul {
-	left: 200px;
-	top: -1px;
-}
-
-ul > li ul li {
-	margin: 0;
-	padding: 0;
-	position: relative;
-	float: none;
-	height: auto;
-}
-
-ul > li ul li a {
-	padding: 10px 20px;
-	color: #505050;
-	text-decoration: none;
-	display: block;
-}
-
-ul > li ul li a:hover,
-        ul > li ul li:hover > a {
-	text-decoration: none;
-	color: #fff;
-	background-color: #3a2499;
-}
-
-
-.commentsWrapper {
-    min-height: 300px;
-    text-align: center;
-}
-
-.commentsPreviewWrapper {
-	margin-top: 20px;
-}
-
-.commentPreview {
-	width: 50%;
-	margin: 10px auto;
-	border: 2px solid #244999;
-	background-color: white;
-	padding: 20px;
-	font-size: 1rem;
-	border-radius: 5px;
-	overflow: hidden;
-}
-
-.commentPreviewWhereFrom > a {
-	text-decoration: none;
-	color: black;
-}
-
-.commentPreviewWhereFrom > a:hover {
-	cursor: pointer;
-	text-decoration: underline;
-}
-
-
-.comment {
-    width: 50%;
-    margin: 10px auto;
-    border: 2px solid #828282;
-    background-color: white;
-    padding: 10px;
-    font-size: 1rem;
-    border-radius: 5px;
-}
-
-.commentContent {
-    text-align: justify;
-    padding: 10px;
-    white-space: pre-wrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 90%;
-}
-
-.commentAuthor {
-    text-align: left;
-    color: #4599FF;
-    font-size: 1.2rem;
-    padding: 5px;
-}
-
-.commentDate {
-    text-align: right;
-    padding: 5px;
-}
-
-.commentPreviewAuthor {
-}
-
-.commentPreviewContent {
-}
-
-.commentPreviewDate {
-}
-
-.comment > form {
-    max-width: 45%;
-    display: inline-block;
-}
-
-.prompt {
-    text-align: center;
-    width: calc(100% - 40px);
-    font-size: 1.25rem;
-    padding: 20px;
-    border-radius: 15px;
-}
-
-.success {
-    color: #4F8A10;
-    background-color: #DFF2BF;
-    border: 1.5px solid #4F8A10;
-}
-
-.fail {
-    color: #D8000C;
-    background-color: #FFD2D2;
-    border: 1.5px solid #D8000C;
-}
-
-.footer {
-	padding: 20px;
-	font-size: 1.25rem;
-	min-height: 30px;
-	max-width: 100%;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-	opacity: 0.95;
-}
-
-.footer > a {
-	text-decoration: none;
-	color: #828282;
+@media only screen and (min-width: 1920px) {
+   .loggingPanel {
+      width: 25vw;
+   }
+   .loggingHeader {
+      font-size: 2rem;
+   }
+   .footer {
+      font-size: 1.4rem;
+   }
+   .prompt {
+      font-size: 1.7rem;
+   }
+   .adminPasswordInput {
+      margin-bottom: 10px;
+      font-size: 1.5rem;
+      padding: 12px;
+      width: 100%;
+   }
+   .adminLoggingButton {
+      padding: 9px;
+      font-size: 1.2rem;
+   }
 }

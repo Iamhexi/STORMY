@@ -68,23 +68,26 @@ END;
     
     public static function renderForm(string $destination = "processor.php"){
         echo<<<END
-        <form action="$destination" method="POST" class="addingForm" enctype="multipart/form-data">
-            <header class="header">Dodawanie wpisu</header>
-            <div><label>Tytuł <input type="text" class="addingInput" name="title" size="70" required></label></div>
-            <div><label>Zdjęcie <input type="file" name="photo" class="addingInput"></label></div>
-            <div><label>URL <input type="text" name="url" placeholder="przyjazny-link-123" class="addingInput" required></label></div>
-            <div><label>Autor <input type="text" name="author" class="addingInput" required></label></div>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        
+<form action="$destination" method="POST" class="addingForm" enctype="multipart/form-data">
+    <header class="header">Dodawanie wpisu</header>
+    <div><label><span>Tytuł</span><input type="text" class="addingInput" name="title" size="70" required></label></div>
+    <div><label><span>Zdjęcie</span><i class="fas fa-upload photoUploaderIcon"></i><input id="photoUploaderInput" type="file" name="photo" class="addingInput"></label></div>
+    <div><label><span>URL</span><input type="text" name="url" placeholder="przyjazny-link-123" class="addingInput" required></label></div>
+    <div><label><span>Autor</span><input type="text" name="author" class="addingInput" required></label></div>
+
 END;
             DatabaseControl::renderCategorySelector("", "category");
             DatabaseControl::renderCategorySelector("", "additionalCategory");
         echo<<<END
-            <div><label>Data publikacji <input type="date" name="publicationDateOnly" class="addingInput"></label></div>
-            <div><label>Godzina publikacji <input type="time" name="publicationTimeOnly" class="addingInput"></label></div>
-            <div><label>Treść <textarea spellcheck="true" id="content" rows="4" cols="50" name="content" class="addingInput" required><p></textarea></label></div>    
+        <div><label><span>Data publikacji</span><input type="date" name="publicationDateOnly" class="addingInput"></label></div>
+    <div><label><span>Godzina publikacji</span><input type="time" name="publicationTimeOnly" class="addingInput"></label></div>
+    <div><label><span>Treść</span><textarea spellcheck="true" id="content" rows="4" cols="50" name="content" class="addingInput" required><p></textarea></label></div>    
 
-            
-            <div><input type="submit" value="Dodaj wpis!" name="addingArticle" class="addingSubmitButton"></div>
-        </form>
+
+    <div><input type="submit" value="Dodaj wpis!" name="addingArticle" class="addingSubmitButton"></div>
+</form>
 END;
                 self::provideEnterSupport();
     }

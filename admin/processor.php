@@ -46,7 +46,7 @@ else if (isset($_POST['pageSettingsSavingButton'])){ // SAVING PAGE SETTINGS
         if ($name !== 'adminPassword')
             $settings->__set($name, $value);
     
-    if (isset($_POST['adminPassword'])){
+    if (isset($_POST['adminPassword']) && !empty($_POST['adminPassword'])){
         $options = ['cost' => 12];
         $password = password_hash($_POST['adminPassword'], PASSWORD_BCRYPT, $options);
         $settings->__set('adminPassword', $password);

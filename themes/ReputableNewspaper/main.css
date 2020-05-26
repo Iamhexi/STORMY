@@ -8,21 +8,21 @@ html, body {
 }
 
 .menu {
+    display: flex;
     width: 100%;
     box-sizing: border-box;
     font-size: 1.3rem;
     text-align: left;
     border-bottom: 1.5px solid #031605;
     background-color: #e0dada;
-    max-height: 100px;
-}
-
-.menu > a:first-child {
-    margin-left: 50px;
+    max-width: 100vw;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 5px 20px;
 }
 
 .menu > a {
-    display: inline-block;
     color: #031605;
     text-decoration: none;
     padding: 20px;
@@ -53,17 +53,12 @@ html, body {
     
 }
 
-.articleThumbnail:first-child {
-     width: 100%;
-}
-
 .articleThumbnail {
     width: 49%;
     box-sizing: border-box;
     margin: 20px auto;
-    background-color: RGBA(45,0,0,0.05);
     display: inline-block;
-    vertical-align: top;
+    vertical-align: middle;
     padding: 15px;
     border-radius: 40px;
 }
@@ -86,6 +81,7 @@ html, body {
 
 .articleThumbnailTitle {
     font-size: 1.7rem;
+    padding: 5px;
 }
 
 .article {
@@ -110,6 +106,8 @@ html, body {
 .articleTitle {
     text-align: center;
     font-weight: 700;
+    font-size: 2rem;
+    margin: 7vh auto;
 }
 
 .articleText {
@@ -119,6 +117,15 @@ html, body {
     line-height: 1.875rem;
     width: 90%;
     margin: 0 auto;
+}
+
+.articleText > img {
+    max-width: 70%;
+    text-align: center;
+    margin: 20px auto;
+    display: block;
+    border-radius: 10px;
+    border: 2px solid black;
 }
 
 .commentForm {
@@ -151,9 +158,8 @@ html, body {
 }
 
 .commentAuthor {
-    font-size: 1.2rem;
-    text-align: right;
     font-weight: 500;
+    font-size: 1rem;
 }
 
 .commentContent {
@@ -204,5 +210,26 @@ html, body {
 .footer > a:hover {
     text-decoration: underline overline;
     color: black;
+}
+
+@media all and (min-width: 0) and (max-width: 1050px){
+    .articleThumbnailTitle {
+        font-size: 1.3rem;
+    }
+    
+    .articlesWrapper {
+        width: 100%;
+        padding: 5px;
+    }
+    
+    .articleThumbnail {
+        width: auto;
+    }
+}
+
+@media all and (min-width: 800.01px) and (max-width: 1200px){
+    .articleThumbnailTitle {
+        font-size: 1.5rem;
+    }
 }
 

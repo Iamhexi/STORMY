@@ -131,9 +131,9 @@ class Comments implements CommentsManager {
             echo<<<END
             
                 <div class="comment">
-                    <div class="commentAuthor">$author</div>
+                    <div class="commentAuthor">Autor: $author</div>
                     <div class="commentContent"><p>$content</p></div>
-                    <div class="commentDate">$additionDate</div>
+                    <div class="commentDate">Dodano: $additionDate</div>
                 </div>
 END;
     }
@@ -145,11 +145,11 @@ END;
             echo<<<END
             
                 <div class="comment">
-                    <div class="commentAuthor">$author</div>
+                    <div class="commentAuthor">Autor: $author</div>
                     <div class="commentContent"><p>$content</p></div>
-                    <div class="commentDate">$additionDate</div>
-                    <form method="POST" action="$destination"><input style="display:none;" type="number" name="commentId" value="$commentId"><input name="acceptComment" type="submit" value="&#10004;"></form>
-                    <form method="POST" action="$destination"><input style="display:none;" type="number" name="commentId" value="$commentId"><input name="refuseComment" type="submit" value="&#10007;"></form>
+                    <div class="commentDate">Dodano: $additionDate</div>
+                    <form class="acceptForm" method="POST" action="$destination"><input style="display:none;" type="number" name="commentId" value="$commentId"><input name="acceptComment" type="submit" value="&#10004;"></form>
+                    <form class="refuseForm" method="POST" action="$destination"><input style="display:none;" type="number" name="commentId" value="$commentId"><input name="refuseComment" type="submit" value="&#10007;"></form>
                 </div>
 END;
     }

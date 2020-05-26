@@ -61,7 +61,7 @@ class SubpageEditor implements SubpageManagement{
         echo<<<END
         <div class="subpageCreatorWrapper">
             <header class="header">Tworzenie nowej podstrony</header>
-            <form clas="subpageCreator" method="POST" action="$destination">
+            <form class="subpageCreator" method="POST" action="$destination">
                 <div><label>Nazwa podstrony <input type="text" class="subpageCreatorInput" name="title" required></label></div>
                 <div title="Bez polskich znaków, spacji ani kropek."><label>URL podstrony <input type="text" class="subpageCreatorInput" name="url" required></label></div>
                 <div><input type="submit" name="addingSubpage" value="Stwórz podstronę!"></div>

@@ -35,8 +35,8 @@ END;
             
                 <section class="adminArticleGrid">
                     <a class="adminArticleLink" href="editor.php?url=$articleUrl">
-                    Kliknij, aby edytować...
                     <img class="adminArticlePhoto" src="../$photoDirectory/$photo" alt="Zdjęcie do artykułu pt. $title">
+                    <div>Kliknij, aby edytować...</div>
                     </a>
                 </section>
 END;
