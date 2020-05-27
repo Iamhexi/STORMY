@@ -61,9 +61,12 @@ html {
    border-radius: 5px;
 }
 
+.adminLoggingButton:hover {
+    cursor: pointer;
+}
+
 .prompt {
    text-align: center;
-   margin-top: 2%;
    padding: 10px;
    font-weight: 700;
 }
@@ -76,6 +79,11 @@ html {
 .success {
    color: #4f8a10;
    background-color: #dff2bf;
+}
+
+.info {
+    color: #00529B;
+    background-color: #BDE5F8;
 }
 
 .footer > a {
@@ -357,6 +365,14 @@ li {
 
 .statisticsTable > tbody > tr:last-child > td {
 	border-bottom-width: 2px;
+}
+
+.returnButtonAfterExit {
+    display: block;
+    color: black;
+    margin: 10px auto;
+    font-size: 2rem;
+    text-align: center;
 }
 
 

@@ -87,15 +87,18 @@ class AdminPanel {
         $subpageEditor->renderListOfSubpages();
     }
     
-    private function renderAddingCategoryForm(){
+    private function renderAddingCategoryForm(): void{
         Categories::renderAddingForm($this->processorLocation);
     }
     
-    private function renderRemovingCategoryfForm(){
+    private function renderRemovingCategoryfForm(): void{
         Categories::renderRemovalForm($this->processorLocation);
     }
     
-    
+    private function renderErrorPrompt(): void{
+        echo '<div class="prompt fail">Nie udało się dokończyć wybranego działania.</div>';
+        echo '<a class="returnButtonAfterExit" href="panel.php">Powrót</a>';
+    }
     
     private function handleAction(?string $action){
         switch ($action){
@@ -153,6 +156,10 @@ class AdminPanel {
                 
             case "commentsReviewPanel":
                 $this->renderCommentsReviewPanel();
+            break;
+                
+            case 'error':
+                $this->renderErrorPrompt();
             break;
                 
             default:

@@ -154,14 +154,20 @@ END;
     }
     
     private function renderCommentsFromDb(int $howMany): ?Exception{
+        $zeroComments = true;
+        
         $query = $this->prepareQueryForRetrievingComments($howMany);
         
         $result = $this->performQuery($query, false, true);
         
         while ($retrieved = $result->fetch_array(MYSQLI_BOTH)){
+            $zeroComments = false;
             $articleTitle = $this->findArticleTitle($retrieved['articleUrl']);
             $this->renderComment($articleTitle, $retrieved['articleUrl'], $retrieved['author'], $retrieved['content'], $retrieved['additionDate']);
         }
+        
+        if ($zeroComments)
+            echo 'Żadne komentarze nie zostały jeszcze dodane. Zajrzyj tu później, kiedy jakieś się już pojawią.';
 
         
         return null;
@@ -169,7 +175,8 @@ END;
     
     public function renderCommentsPreview(int $howMany = 10): void{
         try {
-            echo '<div class="commentsPreviewWrapper"><header class="header">10 ostatnich komentarzy</header>';
+            echo '<div class="commentsPreviewWrapper">
+            <header class="header">10 ostatnich komentarzy</header>';
             $this->renderCommentsFromDb($howMany);
             echo '</div>';
         } catch (Exception $e){

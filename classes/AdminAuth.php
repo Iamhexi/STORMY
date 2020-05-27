@@ -3,6 +3,7 @@ session_start();
 
 require_once "PageSettings.php";
 require_once "Installer.php";
+require_once 'TwoFactorAuth.php';
 
 interface AdministratorAuthentication {
     function controlAccess(string $givenPassword = null);
@@ -16,9 +17,9 @@ interface AdministratorAuthentication {
 
 
 $settings = new PageSettings("../settings/default.json");
-define("HASHED_ADMIN_PASSWORD", $settings->getAdminPassword());
+define('HASHED_ADMIN_PASSWORD', $settings->getAdminPassword());
 
-class AdminAuth implements AdministratorAuthentication{
+class AdminAuth implements AdministratorAuthentication {
     private bool $isLogged;
     private string $loggingUrl;
     private string $adminPanelUrl;
@@ -26,8 +27,8 @@ class AdminAuth implements AdministratorAuthentication{
     
     public function __construct(bool $isLogged = false){
         $this->isLogged = $isLogged;
-        $this->loggingUrl = "login.php";
-        $this->adminPanelUrl = "panel.php";
+        $this->loggingUrl = 'login.php';
+        $this->adminPanelUrl = 'panel.php';
         @$this->prompt = $_SESSION['prompt'];
     }
     
@@ -44,19 +45,31 @@ class AdminAuth implements AdministratorAuthentication{
     }
     
     public function controlAccess(string $givenPassword = null){
-        if (!$this->isLogged) {
+        if (!$this->isLogged){
             
             if ($givenPassword !== null){
                 if ($this->isPasswordCorrect($givenPassword)){
+                    
                     $this->isLogged = true;
-                    $this->redirectUser();
+                    $auth = new TwoFactorAuth();
+                    
+                    if ($auth->isBrowserAuthenticated()){
+                        $this->redirectUser();
+                    } 
+                    
+                    else {               // 2FA
+                        header('location: 2FA.php');
+                        exit();
+                    }
+     
+ 
                 }
                 
-                else $this->prompt = "Incorrect password has been given!";
+                else $this->prompt = 'Incorrect password has been given!';
                 
             }
             
-            else if ($givenPassword == null) $this->redirectUser();
+            else $this->redirectUser();
             
         }
         
@@ -106,9 +119,11 @@ END;
     
     public function handleFirstTimeLogging(bool $isFirstTime): void{
         if ($isFirstTime){
-        echo "<div style=\"font-size: 26px; text-align: center; color: red;\"><h2>Instalacja powiodła się. Aby ją dokończyć...</h2></div><div style=\"font-size: 26px; text-align: center; color: red;\"><br>1. Zaloguj się domyślnym hasłem: <b>admin</b>. <u>Zmień to hasło od razu po zalogowaniu!</u></div>";
+        echo '<div class="prompt success">Instalacja powiodła się. Aby ją dokończyć...</div>
+        <div class="prompt info">1. Zaloguj się domyślnym hasłem: admin. 
+        Zmień to hasło od razu po zalogowaniu!</div>';
         if (Installer::removeInstallDirectory() === false)
-            echo '<div style=\"font-size: 26px; text-align: center; color: red;\"><br>2. Koniecznie usuń cały folder \'install\'. To ważne, ponieważ inaczej dowolna osoba będzie mogła włamać się na Twoją stronę!</div>';
+            echo '<div class="prompt fail">2. Koniecznie usuń cały folder \'install\'. To ważne, ponieważ inaczej dowolna osoba będzie mogła włamać się na Twoją stronę!</div>';
         }
     }
     
