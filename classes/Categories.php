@@ -179,7 +179,7 @@ END;
         DatabaseControl::renderCategorySelector(" ", "categoryUrl");
         
         echo<<<END
-            <div><input type="submit" class="button" value="Usuń kategorię" name="removingCategory"></div>
+            <div><input type="submit" value="Usuń kategorię" name="removingCategory"></div>
         </form>
 END;
     }
@@ -189,9 +189,9 @@ END;
         echo<<<END
             <form action="$destination" method="POST" class="addingCategoryForm">
                 <header class="header">Dodawanie kategorii</header>
-                <div><label><span>Nazwa kategorii</span> <input type="text" name="categoryName" required autofocus></label></div>
-                <div title="Bez polskich znaków, spacji, tabulatorów"><label><span>URL kategorii</span> <input type="text" name="categoryUrl" required></label></div>
-                <div><input type="submit" class="button" name="addingCategory" value="Dodaj kategorię"></div>
+                <div><label>Nazwa kategorii <input type="text" name="categoryName" required autofocus></label></div>
+                <div title="Bez polskich znaków, spacji, tabulatorów"><label>URL kategorii <input type="text" name="categoryUrl" required></label></div>
+                <div><input type="submit" name="addingCategory" value="Dodaj kategorię"></div>
             </form>
 END;
     }
