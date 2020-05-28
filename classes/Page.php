@@ -13,6 +13,7 @@ interface iPage {
     function renderMenu($isForAdmin = false, string $proccessorLocation = null): void;
     function renderFooter(): void;
     function setTitle($newTitle): void;
+    function addCSS(string $css): void;
 }
 
 class Page extends Theme implements iTheme{
@@ -22,12 +23,17 @@ class Page extends Theme implements iTheme{
     private $theme;
     
     private $authorForMetaTag;
+    private ?string $addedCSS;
     
 
     public function __construct(PageSettings $settings, string $pathToMainDirectory = null, bool $exceptionReporting = false){
         $this->settings = $settings;
         $this->theme = new Theme($this->settings->theme, $pathToMainDirectory);
         $this->exceptionReporting = $exceptionReporting;
+    }
+    
+    public function addCSS(string $css){
+        $this->addedCSS = $this->sanitizeInput($css);
     }
     
     private function attachTracking(): void{
@@ -57,6 +63,7 @@ class Page extends Theme implements iTheme{
             <meta name="author" content="$author">
             <link rel="icon" href="themes/favicon.ico" type="image/x-icon">
             <meta http-equiv="X-Ua-Compatible" content="IE=edge">
+            <style>{$this->addedCSS}</style>
 END;
         
         $this->theme->renderStyles();

@@ -65,7 +65,7 @@ class AdminAuth implements AdministratorAuthentication {
  
                 }
                 
-                else $this->prompt = 'Incorrect password has been given!';
+                else $this->prompt = 'The given password is incorrect!';
                 
             }
             

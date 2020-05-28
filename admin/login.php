@@ -12,6 +12,7 @@ $adminAuth = new AdminAuth();
 $settings = new PageSettings("../settings/default.json");
 $page = new Page($settings, "..");
 
+$page->addCSS('body { background-color: #244999 !important; }');
 $page->renderHead();
 
 if (isset($_GET['firstTime']))

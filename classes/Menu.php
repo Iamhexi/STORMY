@@ -42,7 +42,7 @@ class Menu implements Navigation{
                 else 
                     $this->rederElement($fetched['visibleName'], $fetched['destination']);
             }
-            echo ($this->isForAdmin) ? '<input type="submit" class="menuEditorButton" value="Zapisz zmiany" name="saveMenuLayout"></form>' : '</nav>';
+            echo ($this->isForAdmin) ? '<input type="submit" class="button" value="Zapisz zmiany" name="saveMenuLayout"></form>' : '</nav>';
 
         } catch (Exception $e){
             $this->reportException($e);
@@ -55,10 +55,10 @@ class Menu implements Navigation{
     
     private function rederElementForAdmin(string $name, string $destination, int $order, int $id): void{
         echo '<div><input type="number" style="display:none;" name="id[]" value="'.$id.'">';
-        echo '<label title="Kolejność odnośnika w menu.">Kolejność w menu <input type="number" name="order[]" class="menuEditorElementOrder" value="'.$order.'"></label>';
-        echo '<label title="Nazwa wyświetlana w menu.">Nazwa odnośnika <input type="text" name="name[]" class="menuEditorElementName" value="'.$name.'"></label>';
-        echo '<label class="switch" title="Jeśli chcesz usunąć odnośnik z menu, zaznacz tę opcję.">Do usunięcia? <input type="checkbox" name="remove[]" class="menuEditorCheckbox"></label>';
-        echo '<label title="Zalecamy nie zmieniać wartości tego pola, o ile to nie jest konieczne. Wskazuje ono, dokąd zostanie przkierowany użytkownik po kliknięciu w odnośnik.">Dokąd prowadzi? <input type="text" name="destination[]" class="menuEditorElementDestination" value="'.$destination.'"></label></div>';
+        echo '<label title="Kolejność odnośnika w menu."><span>Kolejność w menu</span><input type="number" name="order[]" class="menuEditorElementOrder" value="'.$order.'"></label>';
+        echo '<label class="checkboxLabel" title="Nazwa wyświetlana w menu."><span>Nazwa odnośnika</span><input type="text" name="name[]" class="menuEditorElementName" value="'.$name.'"></label>';
+        echo '<label class="switch" title="Jeśli chcesz usunąć odnośnik z menu, zaznacz tę opcję."><span>Do usunięcia?</span><span class="checkbox"></span><input type="checkbox" name="remove[]" class="menuEditorCheckbox"></label>';
+        echo '<label title="Zalecamy nie zmieniać wartości tego pola, o ile to nie jest konieczne. Wskazuje ono, dokąd zostanie przkierowany użytkownik po kliknięciu w odnośnik."><span>Dokąd prowadzi?</span><input type="text" name="destination[]" class="menuEditorElementDestination" value="'.$destination.'"></label></div>';
              
     }
     
@@ -105,7 +105,7 @@ class Menu implements Navigation{
         $arrayOfCategories = $categories->getCategoriesArray();
         $arrayOfSubpages = $pageManager->getArrayOfSubpages();
         
-        echo '<div><label>Dokąd prowadzi <select name="menuElementDestination">';
+        echo '<div><label><span>Dokąd prowadzi</span><select name="menuElementDestination">';
     
         echo '<option selected disabled>Wybierz lokalizację</option>';
         echo '<option value="'.$pageSettings->__get("url").'">Strona główna</option>';
@@ -120,12 +120,12 @@ class Menu implements Navigation{
     
     public static function renderAddingElementForm(string $destination): void{ 
         echo<<<END
-            <form action="$destination" method="POST">
-                <div><label>Nazwa opcji <input type="text" name="menuElementName" class="addingInput" required></label></div>
+             <form action="$destination" method="POST" class="addingMenuOptionForm">
+                <div><label><span>Nazwa opcji</span> <input type="text" name="menuElementName" class="addingInput"></label></div>
 END;
         Menu::renderDestinationSelector();
         echo<<<END
-                <div><label><input type="submit" value="Dodaj opcję do menu" name="addNewMenuElement" class="addingMenuElementButton" required></label></div>
+                 <div><label><input type="submit" class="button" value="Dodaj opcję do menu" name="addNewMenuElement" class="addingMenuElementButton"></label></div>
             </form>
 END;
     }

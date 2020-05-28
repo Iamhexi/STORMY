@@ -1,358 +1,429 @@
 * {
-   box-sizing: border-box;
-    font-size: 1rem;
+	box-sizing: border-box;
+	font-size: 1rem;
 }
 
 body,
 html {
-   margin: 0;
-   padding: 0;
-   border: 0;
-   font-family: Arial;
-   background-color: #FAFAFA;
-    overflow-x: hidden;
+	background-color: #FAFAFA;
+	border: 0;
+	font-family: Arial;
+	margin: 0;
+	overflow-x: hidden;
+	padding: 0;
+    min-height: 100vh;
 }
 
 .loggingPanel {
-   display: flex;
-   justify-content: space-around;
-   align-items: center;
-   background-color: beige;
-   flex-direction: column;
-   margin: 10vh auto;
-   width: 30%;
-   padding: 3%;
-   height: 60vh;
-   border-radius: 5px;
-}
-
-.loggingForm {
-   width: 100%;
+	align-items: center;
+	background-color: #f5f5dc;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+	height: 60vh;
+	justify-content: space-around;
+	margin: 10vh auto;
+	padding: 3%;
+	width: 30%;
 }
 
 .adminPasswordInput {
-   margin-bottom: 10px;
-   padding: 10px;
-   width: 100%;
+	margin-bottom: 10px;
+	padding: 10px;
+	width: 100%;
 }
 
 .passwordText {
-   text-align: left;
-   font-size: 0.9rem;
+	font-size: .9rem;
+	text-align: left;
 }
 
 .loggingHeader {
-   font-size: 1.75rem;
-}
-
-.loggingForm:nth-child(2) {
-   text-align: right;
+	font-size: 1.75rem;
 }
 
 .adminLoggingButton {
-   width: 45%;
-   align-self: center;
-   margin-top: 10px;
-   padding: 7.5px;
-   background-color: beige;
-   color: #244999;
-   border: 1.8px solid #244999;
-   font-size: 1rem;
-   border-radius: 5px;
+	align-self: center;
+	background-color: #f5f5dc;
+	border: 1.8px solid #244999;
+	border-radius: 5px;
+	color: #244999;
+	font-size: 1rem;
+	margin-top: 10px;
+	padding: 7.5px;
+	width: 45%;
 }
 
 .adminLoggingButton:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .prompt {
-   text-align: center;
-   padding: 10px;
-   font-weight: 700;
+	font-weight: 700;
+	padding: 10px;
+	text-align: center;
 }
 
 .fail {
-   color: #d8000c;
-   background-color: #ffd2d2;
+	background-color: #ffd2d2;
+	color: #d8000c;
 }
 
 .success {
-   color: #4f8a10;
-   background-color: #dff2bf;
+	background-color: #dff2bf;
+	color: #4f8a10;
 }
 
 .info {
-    color: #00529B;
-    background-color: #BDE5F8;
+	background-color: #BDE5F8;
+	color: #00529B;
 }
 
-.footer > a {
-   text-decoration: none;
-   color: #bdbdbd;
+.footer>a {
+	color: #bdbdbd;
+	text-decoration: none;
+    font-size: 1.25rem;
 }
 
 .footer {
-   padding: 20px;
-   text-align: center;
-   color: #bdbdbd;
-   font-size: 1.25rem;
+	color: #bdbdbd;
+	font-size: 1.25rem;
+	padding: 20px;
+	text-align: center;
 }
 
 li {
-    list-style-type: none;
+	list-style-type: none;
 }
 
 .mainMenu {
-   width: 100vw;
-   display: flex;
-   justify-content: space-around;
-   align-items: center;
-   flex-direction: row;
-   margin-bottom: 5vh;
-   min-height: 200px;
-    flex-wrap: wrap;
-}
-
-.mainMenu li ul li {
-    display: none;
-}
-
-.mainMenu li {
-    display: block;
-}
-
-.mainMenu li:hover ul li {
-    display: block;  
-}
-
-.mainMenu li:hover {
-    display: block;  
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	margin-bottom: 5vh;
+	min-height: 10vh;
+	width: 100vw;
 }
 
 .header {
-    font-weight: 500;
-    font-size: 2rem;
-    text-align: center;
-    margin: 20px auto;
+	font-size: 2rem;
+	font-weight: 500;
+	margin: 20px auto;
+	text-align: center;
 }
 
 .addingForm {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #244999;
-    max-width: 50%;
-    margin: 10px auto;
-    color: white;
+	align-items: center;
+	background-color: #244999;
+	color: #fff;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin: 10px auto;
+	max-width: 50%;
 }
 
-.addingForm > div > label > span {
-    display: block;
-    padding: 3.5px;
+.addingForm>div>label>span {
+	display: block;
+	padding: 3.5px;
 }
 
-.addingForm > div {
-    margin: 15px auto;
-}
-
-#photoUploaderInput {
-    display: none;
+.addingForm>div {
+	margin: 15px auto;
 }
 
 .photoUploaderIcon {
-    padding: 15px;
-    border: 2px dashed gray;
-    width: 30vw;
-    background-color: white;
-    text-align: center;
-    font-size: 2.5rem;
-    color: #bdbdbd;
+	background-color: #fff;
+	border: 2px dashed gray;
+	color: #bdbdbd;
+	font-size: 2.5rem;
+	padding: 15px;
+	text-align: center;
+	width: 30vw;
 }
 
 .photoUploaderIcon:hover {
-    cursor: pointer;
-    box-shadow: 2px 2px 2px 2px black;
+	box-shadow: 2px 2px 2px 2px #000;
+	cursor: pointer;
 }
 
-.addingForm > div > label > input,
-.addingForm > div > label > textarea,
-.addingForm > div > label > select {
-    width: 30vw;
-    padding: 7.5px;
-    line-height: 20px;
+.addingForm>div>label>input,
+.addingForm>div>label>textarea,
+.addingForm>div>label>select {
+	line-height: 20px;
+	padding: 7.5px;
+	width: 30vw;
 }
 
-.addingForm > div > label > input:focus, 
-.addingForm > div > label > textarea:focus,
-.addingForm > div > label > select:focus
-.photoUploaderIcon:hover {
-    box-shadow: 2px 2px 2px 2px black;
+.addingForm>div>label>input:focus,
+.addingForm>div>label>textarea:focus,
+.addingForm>div>label>select:focus .photoUploaderIcon:hover {
+	box-shadow: 2px 2px 2px 2px #000;
 }
 
 .addingSubmitButton {
-    width: 20vw;
-    padding: 7.5px;
-    line-height: 20px;
-    margin-bottom: 5px;
-    transition: all ease-in .2s;
-    background-color: #ff5a00;
-    border: none;
-    font-weight: 600;
-    text-align: center;
-
+	background-color: #ff5a00;
+	border: none;
+	font-weight: 600;
+	line-height: 20px;
+	margin-bottom: 5px;
+	padding: 7.5px;
+	text-align: center;
+	transition: all ease-in .2s;
+	width: 20vw;
 }
 
 .addingSubmitButton:hover {
-    cursor: pointer;
-    background-color: #ff7b33;
+	background-color: #ff7b33;
+	cursor: pointer;
 }
 
-.articlesWrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 100%;
+.articlesWrapper, .subpageList {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	max-width: 100%;
+}
+
+.subpageList {
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.subpageList > a {
+    text-align: center;
+    padding: 20px;
+    color: black;
+    text-decoration: none;
+}
+
+.subpageList > a:hover {
+    text-decoration: underline;
 }
 
 .adminArticleGrid {
-    display: inline-block;
-    text-align: center;
-    background-color: #fbfbf0;
-    margin: 25px;
-    padding: 25px;
-    border-radius: 5px;
-    box-shadow: -1px -10px 36px -4px rgba(189,189,189,1);
+	background-color: #fbfbf0;
+	border-radius: 5px;
+	box-shadow: -1px -10px 36px -4px rgba(189, 189, 189, 1);
+	display: inline-block;
+	margin: 25px;
+	padding: 25px;
+	text-align: center;
 }
 
 .adminArticlePhoto {
-    width: 300px;
-    height: 150px;
-    border: 1px groove gray;
-    margin: 5px;
-    border-radius: 5px;
+	border: 1px groove gray;
+	border-radius: 5px;
+	height: 150px;
+	margin: 5px;
+	width: 300px;
 }
 
-.adminArticleLink > div {
-    margin-top: 6px;
-    padding: 3.5px;
-    color: black;
-    text-align: right;
+.adminArticleLink>div {
+	color: #000;
+	margin-top: 6px;
+	padding: 3.5px;
+	text-align: right;
 }
 
 .adminArticleLink {
-    text-decoration: none;
-    color: white;
+	color: #fff;
+	text-decoration: none;
 }
 
-.adminArticleLink:hover {
-    text-decoration: underline;
+.commentsWrapper,
+.commentsPreviewWrapper {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
 }
 
-
-.commentsWrapper, .commentsPreviewWrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.comment,
+.commentPreview {
+	box-shadow: 0 -1px 19px -6px rgba(0, 0, 0, 0.34);
+	color: #fff;
+	color: #000;
+	margin: 30px 0;
+	padding: 15px;
+	width: 75%;
 }
 
-.comment, .commentPreview {
-    width: 75%;
-    padding: 15px;
-    color: #fff;
-    box-shadow: 0px -1px 19px -6px rgba(0,0,0,0.34);
-    color: black;
-    margin: 30px 0;
+.commentPreview>div {
+	margin: 5px;
 }
 
-.commentPreview > div {
-    margin: 5px;
+.commentPreviewWhereFrom>a {
+	color: #000;
+	text-decoration: none;
 }
 
-.commentPreviewWhereFrom > a {
-    color: black;
-    text-decoration: none;
+.commentContent>p,
+.commentPreviewContent>p {
+	margin: 25px 0;
+	text-align: justify;
 }
 
-.commentPreviewWhereFrom > a:hover{
-    text-decoration: underline;
-}
-
-.commentContent > p, .commentPreviewContent > p {
-    margin: 25px 0;
-    text-align: justify;
-}
-
-.commentDate, .commentPreviewDate {
-    text-align: right;
-}
-
-.acceptForm, 
+.acceptForm,
 .refuseForm {
-    display: inline-block;
-    margin: 15px 5px;
+	display: inline-block;
+	margin: 15px 5px;
 }
 
-.acceptForm > input {
-    color: #4f8a10;
+.acceptForm>input {
+	color: #4f8a10;
 }
 
-.refuseForm > input {
-    color: #d8000c;
+.refuseForm>input {
+	color: #d8000c;
 }
 
-.acceptForm > input, .refuseForm > input {
-    border: 0;
-    font-weight: 700;
-    padding: 5px;
-    border-radius: 3.5px;
-    min-width: 5vw;
-    font-size: 1.3rem;
+.acceptForm>input,
+.refuseForm>input {
+	border: 0;
+	border-radius: 3.5px;
+	font-size: 1.3rem;
+	font-weight: 700;
+	min-width: 5vw;
+	padding: 5px;
 }
 
-.acceptForm > input:hover, .refuseForm > input:hover {
-    cursor: pointer;
-    box-shadow: 0px -3px 20px -12px rgba(0,0,0,0.34);
+.acceptForm>input:hover,
+.refuseForm>input:hover {
+	box-shadow: 0 -3px 20px -12px rgba(0, 0, 0, 0.34);
+	cursor: pointer;
 }
 
-.statisticsPanel, .subpageCreatorWrapper {
-    width: 40%;
-    margin: 20px auto;
-    padding: 20px;
-    border: 2px solid gray;
-    border-radius: 3.5px;
+.subpageCreator span,
+.addingCategoryForm span,
+.removingCategoryForm span,
+.addingMenuOptionForm span,
+.menuEditor span {
+	display: block;
+	margin: 5px 0;
+}
+
+.subpageCreator input[type='text'],
+.addingCategoryForm input[type='text'],
+.addingMenuOptionForm input[type='text'],
+.addingMenuOptionForm select,
+.menuEditor input:not(.button),
+.settingsEditor input:not(.button),
+.settingsEditor select {
+	padding: 4px;
+	width: 100%;
+}
+
+.subpageCreator,
+.addingCategoryForm,
+.removingCategoryForm,
+.addingMenuOptionForm,
+.menuEditor {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.menuEditor {
+    flex-direction: row !important;
+}
+
+.button {
+	background-color: #244999;
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+	font-size: .9rem;
+	margin-top: 20px;
+	padding: 7px;
+	transition: all ease-in .2s;
+}
+
+.button:hover {
+	box-shadow: 2px 2px 6px -2px #696969;
+	cursor: pointer;
+}
+
+.subpageCreator div label span,
+.removingCategoryForm div label span,
+.addingMenuOptionForm div label span,
+.menuEditor div label span,
+.addingCategoryForm div label span,
+.settingsEditor div label span {
+	font-size: .85rem;
+	margin-top: 20px;
+}
+
+.articleEditorInput {
+	padding: 5px;
+}
+
+.subpageCreator {
+	font-size: .85rem;
+}
+
+.statisticsPanel,
+.subpageCreatorWrapper,
+.addingCategoryForm,
+.removingCategoryForm,
+.addingMenuOptionForm,
+.menuEditor,
+.settingsEditor {
+	border: 2px solid #b1b1b1;
+	border-radius: 3.5px;
+	margin: 10px auto;
+	padding: 2.5vh 5vw;
+	width: 40%;
+    max-width: 99vw;
+}
+
+.menuEditor {
+    width: 60%;
+}
+
+.menuEditor>div {
+    min-width: 200px;
+	padding: 10px;
+	width: 70%;
+    border-left: 2px solid gray;
+}
+
+.menuEditor>div:first-of-type {
+    border-right: 0;
+}
+
+.menuEditor>div:last-of-type {
+    border-right: 2px solid gray;
 }
 
 #statisticsForm {
-    margin-top: 60px;
+	margin-top: 60px;
 }
 
 #startingDatePicker {
-    padding: 5px;
-    margin: 0 0 0 10px;
+	margin: 0 0 0 10px;
+	padding: 5px;
 }
 
 .statisticsTable td {
-	padding: 10px;
 	border: 2px solid #244999;
-    transition: all ease-in 0.25s;
-}
-
-
-.statisticsTable tr:nth-child(1) {
-	border-bottom-width: 2px;
+	padding: 10px;
+	transition: all ease-in .25s;
 }
 
 .statisticsTable {
-	font-size: 1.3rem;
-	text-align: center;
-	padding: 10px;
-	margin: 20px auto;
-	border-spacing: 0;
 	border-collapse: separate;
 	border-radius: 5px;
+	border-spacing: 0;
+	font-size: 1.3rem;
+	margin: 20px auto;
+	padding: 10px;
+	text-align: center;
 }
 
 .statisticsTable .leftColumn {
@@ -360,131 +431,182 @@ li {
 }
 
 .statisticsTable .rightColumn {
-	border-width: 2px 2px 0 2px;
+	border-width: 2px 2px 0;
 }
 
-.statisticsTable > tbody > tr:last-child > td {
-	border-bottom-width: 2px;
+.menuEditorElementDestination {
+	margin-bottom: 5%;
+}
+
+.menuEditor>div:last-of-type {
+	margin-right: 5%;
 }
 
 .returnButtonAfterExit {
-    display: block;
-    color: black;
-    margin: 10px auto;
-    font-size: 2rem;
-    text-align: center;
+	color: #000;
+	display: block;
+	font-size: 2rem;
+	margin: 10px auto;
+	text-align: center;
 }
 
+.settingsEditor {
+	align-items: stretch;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.settingsEditor>div {
+	margin-top: 15px;
+}
+
+.settingsEditor>div:last-of-type {
+	display: flex;
+	justify-content: center;
+}
+
+.loggingForm,
+.settingsEditor textarea {
+	width: 100%;
+    padding: 4px;
+}
+
+.loggingForm:nth-child(2),
+.commentDate,
+.commentPreviewDate {
+	text-align: right;
+}
+
+.mainMenu li ul li,
+#photoUploaderInput{
+	display: none;
+}
+
+.checkbox {
+    display: none;
+    margin: 0 !important;
+}
+
+.mainMenu li,
+.mainMenu li:hover ul li,
+.mainMenu li:hover,
+.menuEditorCheckbox {
+	display: block;
+}
+
+.adminArticleLink:hover,
+.commentPreviewWhereFrom>a:hover {
+	text-decoration: underline;
+}
+
+.statisticsTable tr:nth-child(1),
+.statisticsTable>tbody>tr:last-child>td {
+	border-bottom-width: 2px;
+}
 
 @media only screen and (max-width: 600px) {
-   .loggingPanel {
-      width: 70vw;
-   }
-   .loggingHeader {
-      font-size: 1.3rem;
-   }
-   .footer {
-      font-size: 1rem;
-   }
-    
-    .addingForm {
-       max-width: 100%;
-    }
-    
-    .addingForm > div > label > input,
-    .addingForm > div > label > textarea,
-    .addingForm > div > label > select {
-        width: 80vw;
-    }
+	.loggingPanel {
+		width: 70vw;
+	}
+	.loggingHeader {
+		font-size: 1.3rem;
+	}
+	.footer {
+		font-size: 1rem;
+	}
+	.addingForm {
+		max-width: 100%;
+	}
+	.addingForm>div>label>input,
+	.addingForm>div>label>textarea,
+	.addingForm>div>label>select,
+	.addingForm>div>label>select:focus .photoUploaderIcon:hover {
+		width: 80vw;
+	}
 }
 
 @media only screen and (max-width: 1000px) {
-   .loggingPanel {
-      width: 40vw;
-   }
-   .loggingHeader {
-      font-size: 1.4rem;
-   }
-   .footer {
-      font-size: 1rem;
-   }
-    
-    .addingForm {
-       max-width: 80%;
-    }
-    
-    .addingForm > div > label > input,
-    .addingForm > div > label > textarea,
-    .addingForm > div > label > select {
-        width: 60vw;
-    }
-
+	.loggingPanel {
+		width: 40vw;
+	}
+	.loggingHeader {
+		font-size: 1.4rem;
+	}
+	.footer {
+		font-size: 1rem;
+	}
+	.addingForm {
+		max-width: 80%;
+	}
+	.addingForm>div>label>input,
+	.addingForm>div>label>textarea,
+	.addingForm>div>label>select {
+		width: 60vw;
+	}
 }
 
 @media only screen and (max-width: 1300px) {
-   .loggingPanel {
-      width: 30vw;
-   }
-   .loggingHeader {
-      font-size: 1.3rem;
-   }
-   .footer {
-      font-size: 1.2rem;
-   }
-    
-    .addingForm {
-       max-width: 70%;
-    }
-    
-    .addingForm > div > label > input,
-    .addingForm > div > label > textarea,
-    .addingForm > div > label > select {
-        width: 50vw;
-    }
-    
+	.loggingPanel {
+		width: 30vw;
+	}
+	.loggingHeader {
+		font-size: 1.3rem;
+	}
+	.footer {
+		font-size: 1.2rem;
+	}
+	.addingForm {
+		max-width: 70%;
+	}
+	.addingForm>div>label>input,
+	.addingForm>div>label>textarea,
+	.addingForm>div>label>select {
+		width: 50vw;
+	}
 }
 
 @media only screen and (max-width: 1600px) {
-   .loggingPanel {
-      width: 25vw;
-   }
-   .loggingHeader {
-      font-size: 1.7rem;
-   }
-   .footer {
-      font-size: 1.2rem;
-   }
-   .prompt {
-      font-size: 1.5rem;
-   }
-   .adminPasswordInput {
-      margin-bottom: 10px;
-      font-size: 1.2rem;
-      width: 100%;
-   }
+	.loggingPanel {
+		width: 25vw;
+	}
+	.loggingHeader {
+		font-size: 1.7rem;
+	}
+	.footer {
+		font-size: 1.2rem;
+	}
+	.prompt {
+		font-size: 1.5rem;
+	}
+	.adminPasswordInput {
+		font-size: 1.2rem;
+		margin-bottom: 10px;
+		width: 100%;
+	}
 }
 
 @media only screen and (min-width: 1920px) {
-   .loggingPanel {
-      width: 25vw;
-   }
-   .loggingHeader {
-      font-size: 2rem;
-   }
-   .footer {
-      font-size: 1.4rem;
-   }
-   .prompt {
-      font-size: 1.7rem;
-   }
-   .adminPasswordInput {
-      margin-bottom: 10px;
-      font-size: 1.5rem;
-      padding: 12px;
-      width: 100%;
-   }
-   .adminLoggingButton {
-      padding: 9px;
-      font-size: 1.2rem;
-   }
+	.loggingPanel {
+		width: 25vw;
+	}
+	.loggingHeader {
+		font-size: 2rem;
+	}
+	.footer {
+		font-size: 1.4rem;
+	}
+	.prompt {
+		font-size: 1.7rem;
+	}
+	.adminPasswordInput {
+		font-size: 1.5rem;
+		margin-bottom: 10px;
+		padding: 12px;
+		width: 100%;
+	}
+	.adminLoggingButton {
+		font-size: 1.2rem;
+		padding: 9px;
+	}
 }

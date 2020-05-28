@@ -79,23 +79,22 @@ class PageSettings implements Settings{
         echo<<<END
             <form action="$destination" method="POST" class="settingsEditor" enctype="multipart/form-data">
                 <header class="header">Ustawienia strony</header>
-                <div><label>Tytuł strony <input type="text" name="title" value="{$this->settingsObject->title}" class="settingsInput" required></label></div>
-                <div><label>Nagłówek strony <input type="text" name="headerText" value="{$this->settingsObject->headerText}" class="settingsInput" required></label></div>
-                <div title="Na przykład: https://mojastrona.pl"><label>Adres URL strony<input type="url" name="url" value="{$this->settingsObject->url}" class="settingsInput" maxlength="54" required></label></div>
+                <div><label><span>Tytuł strony</span><input type="text" name="title" value="{$this->settingsObject->title}" class="settingsInput" required></label></div>
+                <div title="Na przykład: https://mojastrona.pl"><label><span>Adres URL strony</span><input type="url" name="url" value="{$this->settingsObject->url}" class="settingsInput" maxlength="54" required></label></div>
 END;
             
         $this->renderThemeChoice();
         echo<<<END
-            <div><label>Hasło administratora <input type="password" name="adminPassword" placeholder="Wpisz tylko, jeśli chcesz zmienić obecne hasło" class="settingsInput"></label></div>
-            <div><label>E-mail administratora <input type="email" name="adminEmail" value="{$this->settingsObject->adminEmail}" class="settingsInput" required></label></div>
-            <div><label>E-mail do wysyłania newslettera <input type="email" name="newsletterEmail" value="{$this->settingsObject->newsletterEmail}" class="settingsInput"></label></div>
-            <div title="Słowa kluczowe wpisywane po przecinku"><label>Słowa kluczowe <input type="text" name="keywords" value="{$this->settingsObject->keywords}" class="settingsInput" required></label></div>
-            <div><label>Autor strony <input type="text" name="author" value="{$this->settingsObject->author}" class="settingsInput" required></label></div>
-            <div><label>Opis strony <textarea name="description" rows="10" cols="50" maxlength="220" class="settingsInput">{$this->settingsObject->description}</textarea></label></div>
+            <div><label><span>Hasło administratora</span><input type="password" name="adminPassword" placeholder="Wpisz tylko, jeśli chcesz zmienić obecne hasło" class="settingsInput"></label></div>
+            <div><label><span>E-mail administratora</span><input type="email" name="adminEmail" value="{$this->settingsObject->adminEmail}" class="settingsInput" required></label></div>
+            <div><label><span>E-mail do wysyłania newslettera</span><input type="email" name="newsletterEmail" value="{$this->settingsObject->newsletterEmail}" class="settingsInput"></label></div>
+            <div title="Słowa kluczowe wpisywane po przecinku"><label><span>Słowa kluczowe</span><input type="text" name="keywords" value="{$this->settingsObject->keywords}" class="settingsInput" required></label></div>
+            <div><label><span>Autor strony</span><input type="text" name="author" value="{$this->settingsObject->author}" class="settingsInput" required></label></div>
+            <div><label><span>Opis strony</span><textarea name="description" rows="10" cols="50" maxlength="220" class="settingsInput">{$this->settingsObject->description}</textarea></label></div>
 END;
         $this->renderCommentPolicySelector();
         echo<<<END
-            <div><input type="submit" name="pageSettingsSavingButton" class="pageSettingsButton" value="Zapisz ustawienia"></div>
+            <div><input type="submit" name="pageSettingsSavingButton" class="button" value="Zapisz ustawienia"></div>
         </form>
         
 END;
@@ -109,7 +108,7 @@ END;
     }
     
     private function renderThemeChoice(): void{
-        echo '<div><label>Motyw graficzny <select name="theme" class="themeSelectInput">';
+        echo '<div><label><span>Motyw graficzny</span><select name="theme" class="themeSelectInput">';
         
         $themes = scandir("../themes/");
         foreach ($themes as $theme){
@@ -127,7 +126,7 @@ END;
         else $s2 = 'selected';
         echo<<<END
             <div>
-                <label>Polityka komentarzy:
+                <label><span>Polityka komentarzy<span>
                     <select name="commentsPolicy" class="settingsInput">
                         <option value="safetyPolicy" $s1>Najpierw zaakceptuj, potem publikuj</option>
                         <option value="freedomPolicy" $s2>Od razu publikuj wszystkie</option>
