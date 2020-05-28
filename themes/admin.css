@@ -1,6 +1,6 @@
 * {
    box-sizing: border-box;
-    font-size: 1rem;
+   font-size: 1rem;
 }
 
 body,
@@ -9,8 +9,8 @@ html {
    padding: 0;
    border: 0;
    font-family: Arial;
-   background-color: #FAFAFA;
-    overflow-x: hidden;
+   background-color: #fafafa;
+   overflow-x: hidden;
 }
 
 .loggingPanel {
@@ -91,7 +91,7 @@ html {
 }
 
 li {
-    list-style-type: none;
+   list-style-type: none;
 }
 
 .mainMenu {
@@ -102,263 +102,325 @@ li {
    flex-direction: row;
    margin-bottom: 5vh;
    min-height: 200px;
-    flex-wrap: wrap;
+   flex-wrap: wrap;
 }
 
 .mainMenu li ul li {
-    display: none;
+   display: none;
 }
 
 .mainMenu li {
-    display: block;
+   display: block;
 }
 
 .mainMenu li:hover ul li {
-    display: block;  
+   display: block;
 }
 
 .mainMenu li:hover {
-    display: block;  
+   display: block;
 }
 
 .header {
-    font-weight: 500;
-    font-size: 2rem;
-    text-align: center;
-    margin: 20px auto;
+   font-weight: 500;
+   font-size: 2rem;
+   text-align: center;
+   margin: 20px auto;
 }
 
 .addingForm {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #244999;
-    max-width: 50%;
-    margin: 10px auto;
-    color: white;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+   background-color: #244999;
+   max-width: 50%;
+   margin: 10px auto;
+   color: white;
 }
 
 .addingForm > div > label > span {
-    display: block;
-    padding: 3.5px;
+   display: block;
+   padding: 3.5px;
 }
 
 .addingForm > div {
-    margin: 15px auto;
+   margin: 15px auto;
 }
 
 #photoUploaderInput {
-    display: none;
+   display: none;
 }
 
 .photoUploaderIcon {
-    padding: 15px;
-    border: 2px dashed gray;
-    width: 30vw;
-    background-color: white;
-    text-align: center;
-    font-size: 2.5rem;
-    color: #bdbdbd;
+   padding: 15px;
+   border: 2px dashed gray;
+   width: 30vw;
+   background-color: white;
+   text-align: center;
+   font-size: 2.5rem;
+   color: #bdbdbd;
 }
 
 .photoUploaderIcon:hover {
-    cursor: pointer;
-    box-shadow: 2px 2px 2px 2px black;
+   cursor: pointer;
+   box-shadow: 2px 2px 2px 2px black;
 }
 
 .addingForm > div > label > input,
 .addingForm > div > label > textarea,
 .addingForm > div > label > select {
-    width: 30vw;
-    padding: 7.5px;
-    line-height: 20px;
+   width: 30vw;
+   padding: 7.5px;
+   line-height: 20px;
 }
 
-.addingForm > div > label > input:focus, 
+.addingForm > div > label > input:focus,
 .addingForm > div > label > textarea:focus,
-.addingForm > div > label > select:focus
-.photoUploaderIcon:hover {
-    box-shadow: 2px 2px 2px 2px black;
+.addingForm > div > label > select:focus .photoUploaderIcon:hover {
+   box-shadow: 2px 2px 2px 2px black;
 }
 
 .addingSubmitButton {
-    width: 20vw;
-    padding: 7.5px;
-    line-height: 20px;
-    margin-bottom: 5px;
-    transition: all ease-in .2s;
-    background-color: #ff5a00;
-    border: none;
-    font-weight: 600;
-    text-align: center;
-
+   width: 20vw;
+   padding: 7.5px;
+   line-height: 20px;
+   margin-bottom: 5px;
+   transition: all ease-in 0.2s;
+   background-color: #ff5a00;
+   border: none;
+   font-weight: 600;
+   text-align: center;
 }
 
 .addingSubmitButton:hover {
-    cursor: pointer;
-    background-color: #ff7b33;
+   cursor: pointer;
+   background-color: #ff7b33;
 }
 
 .articlesWrapper {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 100%;
+   display: flex;
+   flex-direction: row;
+   flex-wrap: wrap;
+   justify-content: center;
+   max-width: 100%;
 }
 
 .adminArticleGrid {
-    display: inline-block;
-    text-align: center;
-    background-color: #fbfbf0;
-    margin: 25px;
-    padding: 25px;
-    border-radius: 5px;
-    box-shadow: -1px -10px 36px -4px rgba(189,189,189,1);
+   display: inline-block;
+   text-align: center;
+   background-color: #fbfbf0;
+   margin: 25px;
+   padding: 25px;
+   border-radius: 5px;
+   box-shadow: -1px -10px 36px -4px rgba(189, 189, 189, 1);
 }
 
 .adminArticlePhoto {
-    width: 300px;
-    height: 150px;
-    border: 1px groove gray;
-    margin: 5px;
-    border-radius: 5px;
+   width: 300px;
+   height: 150px;
+   border: 1px groove gray;
+   margin: 5px;
+   border-radius: 5px;
 }
 
 .adminArticleLink > div {
-    margin-top: 6px;
-    padding: 3.5px;
-    color: black;
-    text-align: right;
+   margin-top: 6px;
+   padding: 3.5px;
+   color: black;
+   text-align: right;
 }
 
 .adminArticleLink {
-    text-decoration: none;
-    color: white;
+   text-decoration: none;
+   color: white;
 }
 
 .adminArticleLink:hover {
-    text-decoration: underline;
+   text-decoration: underline;
 }
 
-
-.commentsWrapper, .commentsPreviewWrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.commentsWrapper,
+.commentsPreviewWrapper {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
 
-.comment, .commentPreview {
-    width: 75%;
-    padding: 15px;
-    color: #fff;
-    box-shadow: 0px -1px 19px -6px rgba(0,0,0,0.34);
-    color: black;
-    margin: 30px 0;
+.comment,
+.commentPreview {
+   width: 75%;
+   padding: 15px;
+   color: #fff;
+   box-shadow: 0px -1px 19px -6px rgba(0, 0, 0, 0.34);
+   color: black;
+   margin: 30px 0;
 }
 
 .commentPreview > div {
-    margin: 5px;
+   margin: 5px;
 }
 
 .commentPreviewWhereFrom > a {
-    color: black;
-    text-decoration: none;
+   color: black;
+   text-decoration: none;
 }
 
-.commentPreviewWhereFrom > a:hover{
-    text-decoration: underline;
+.commentPreviewWhereFrom > a:hover {
+   text-decoration: underline;
 }
 
-.commentContent > p, .commentPreviewContent > p {
-    margin: 25px 0;
-    text-align: justify;
+.commentContent > p,
+.commentPreviewContent > p {
+   margin: 25px 0;
+   text-align: justify;
 }
 
-.commentDate, .commentPreviewDate {
-    text-align: right;
+.commentDate,
+.commentPreviewDate {
+   text-align: right;
 }
 
-.acceptForm, 
+.acceptForm,
 .refuseForm {
-    display: inline-block;
-    margin: 15px 5px;
+   display: inline-block;
+   margin: 15px 5px;
 }
 
 .acceptForm > input {
-    color: #4f8a10;
+   color: #4f8a10;
 }
 
 .refuseForm > input {
-    color: #d8000c;
+   color: #d8000c;
 }
 
-.acceptForm > input, .refuseForm > input {
-    border: 0;
-    font-weight: 700;
-    padding: 5px;
-    border-radius: 3.5px;
-    min-width: 5vw;
-    font-size: 1.3rem;
+.acceptForm > input,
+.refuseForm > input {
+   border: 0;
+   font-weight: 700;
+   padding: 5px;
+   border-radius: 3.5px;
+   min-width: 5vw;
+   font-size: 1.3rem;
 }
 
-.acceptForm > input:hover, .refuseForm > input:hover {
-    cursor: pointer;
-    box-shadow: 0px -3px 20px -12px rgba(0,0,0,0.34);
+.acceptForm > input:hover,
+.refuseForm > input:hover {
+   cursor: pointer;
+   box-shadow: 0px -3px 20px -12px rgba(0, 0, 0, 0.34);
 }
 
-.statisticsPanel, .subpageCreatorWrapper {
-    width: 40%;
-    margin: 20px auto;
-    padding: 20px;
-    border: 2px solid gray;
-    border-radius: 3.5px;
+.subpageCreator span,
+.addingCategoryForm span,
+.removingCategoryForm span,
+.addMenuOptionForm span {
+   display: block;
+   margin: 5px 0;
+}
+
+.subpageCreator input[type='text'],
+.addingCategoryForm input[type='text'] {
+   width: 100%;
+}
+
+.subpageCreator,
+.addingCategoryForm,
+.removingCategoryForm,
+.addMenuOptionForm {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   margin-top: 10vh;
+}
+
+.addingSubpageButton,
+.button {
+   margin-top: 20px;
+   padding: 7px;
+   font-size: 0.9rem;
+   border-radius: 5px;
+   border: none;
+   background-color: #244999;
+   color: white;
+   transition: all ease-in 0.2s;
+}
+
+.button:hover {
+   cursor: pointer;
+   box-shadow: 2px 2px 10px dimgray;
+}
+
+.subpageCreator div label span,
+.removingCategoryForm div label span,
+.addMenuOptionForm div label span {
+   font-size: 0.85rem;
+   margin-top: 5vh;
+}
+
+.articleEditorInput {
+   padding: 5px;
+}
+
+.subpageCreator {
+   font-size: 0.85rem;
+}
+
+.statisticsPanel,
+.subpageCreatorWrapper,
+.addingCategoryForm,
+.removingCategoryForm {
+   width: 40%;
+   margin: 20px auto;
+   padding: 25px;
+   border: 2px solid rgb(177, 177, 177);
+   border-radius: 3.5px;
 }
 
 #statisticsForm {
-    margin-top: 60px;
+   margin-top: 60px;
 }
 
 #startingDatePicker {
-    padding: 5px;
-    margin: 0 0 0 10px;
+   padding: 5px;
+   margin: 0 0 0 10px;
 }
 
 .statisticsTable td {
-	padding: 10px;
-	border: 2px solid #244999;
-    transition: all ease-in 0.25s;
+   padding: 10px;
+   border: 2px solid #244999;
+   transition: all ease-in 0.25s;
 }
 
-
 .statisticsTable tr:nth-child(1) {
-	border-bottom-width: 2px;
+   border-bottom-width: 2px;
 }
 
 .statisticsTable {
-	font-size: 1.3rem;
-	text-align: center;
-	padding: 10px;
-	margin: 20px auto;
-	border-spacing: 0;
-	border-collapse: separate;
-	border-radius: 5px;
+   font-size: 1.3rem;
+   text-align: center;
+   padding: 10px;
+   margin: 20px auto;
+   border-spacing: 0;
+   border-collapse: separate;
+   border-radius: 5px;
 }
 
 .statisticsTable .leftColumn {
-	border-width: 2px 0 0 2px;
+   border-width: 2px 0 0 2px;
 }
 
 .statisticsTable .rightColumn {
-	border-width: 2px 2px 0 2px;
+   border-width: 2px 2px 0 2px;
 }
 
 .statisticsTable > tbody > tr:last-child > td {
-	border-bottom-width: 2px;
+   border-bottom-width: 2px;
 }
 
+/*media*/
 
 @media only screen and (max-width: 600px) {
    .loggingPanel {
@@ -370,16 +432,16 @@ li {
    .footer {
       font-size: 1rem;
    }
-    
-    .addingForm {
-       max-width: 100%;
-    }
-    
-    .addingForm > div > label > input,
-    .addingForm > div > label > textarea,
-    .addingForm > div > label > select {
-        width: 80vw;
-    }
+
+   .addingForm {
+      max-width: 100%;
+   }
+
+   .addingForm > div > label > input,
+   .addingForm > div > label > textarea,
+   .addingForm > div > label > select {
+      width: 80vw;
+   }
 }
 
 @media only screen and (max-width: 1000px) {
@@ -392,17 +454,16 @@ li {
    .footer {
       font-size: 1rem;
    }
-    
-    .addingForm {
-       max-width: 80%;
-    }
-    
-    .addingForm > div > label > input,
-    .addingForm > div > label > textarea,
-    .addingForm > div > label > select {
-        width: 60vw;
-    }
 
+   .addingForm {
+      max-width: 80%;
+   }
+
+   .addingForm > div > label > input,
+   .addingForm > div > label > textarea,
+   .addingForm > div > label > select {
+      width: 60vw;
+   }
 }
 
 @media only screen and (max-width: 1300px) {
@@ -415,17 +476,16 @@ li {
    .footer {
       font-size: 1.2rem;
    }
-    
-    .addingForm {
-       max-width: 70%;
-    }
-    
-    .addingForm > div > label > input,
-    .addingForm > div > label > textarea,
-    .addingForm > div > label > select {
-        width: 50vw;
-    }
-    
+
+   .addingForm {
+      max-width: 70%;
+   }
+
+   .addingForm > div > label > input,
+   .addingForm > div > label > textarea,
+   .addingForm > div > label > select {
+      width: 50vw;
+   }
 }
 
 @media only screen and (max-width: 1600px) {
