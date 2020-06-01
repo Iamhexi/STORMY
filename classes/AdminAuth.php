@@ -1,9 +1,9 @@
 <?php
-session_start();
 
-require_once "PageSettings.php";
-require_once "Installer.php";
-require_once 'TwoFactorAuth.php';
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
+
+@session_start();
 
 interface AdministratorAuthentication {
     function controlAccess(string $givenPassword = null);

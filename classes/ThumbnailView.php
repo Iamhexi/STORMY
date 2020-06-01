@@ -1,5 +1,7 @@
 <?php
-require_once "DatabaseControl.php";
+
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface ArticlesGrid {
     function renderThumbnails(?string $category = null, bool $adminView = false): bool;

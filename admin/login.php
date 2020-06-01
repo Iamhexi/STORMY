@@ -1,7 +1,7 @@
 <?php
-require_once "../classes/AdminAuth.php";
-require_once "../classes/Menu.php";
-require_once "../classes/PageSettings.php";
+
+require_once '../classes/ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 @session_start();
 

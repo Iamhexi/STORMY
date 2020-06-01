@@ -1,7 +1,7 @@
 <?php
 
-require_once "AddingArticle.php";
-require_once "DatabaseControl.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iFileUploader {
     public function uploadFile(array $fileArray): bool;

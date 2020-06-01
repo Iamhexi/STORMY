@@ -1,7 +1,7 @@
 <?php
 
-require_once "DatabaseControl.php";
-require_once "PageSettings.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iNewsletter {
     function renderEmails(): void;

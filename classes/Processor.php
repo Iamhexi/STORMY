@@ -1,12 +1,7 @@
 <?php
 
-require_once "../classes/AddingArticle.php";
-require_once "../classes/EditingArticle.php";
-require_once "../classes/FileUploader.php";
-require_once "../classes/ErrorLog.php";
-require_once "../classes/Menu.php";
-require_once "../classes/PageSettings.php";
-require_once "../classes/CommentsStatistics.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface CommandsProcessor{
     function addArticle(string $title, array $photoFile, string $content, string $url, string $author, string $category, $additionalCategory = null, $publicationDateOnly = null, $publicationTimeOnly = null): void;

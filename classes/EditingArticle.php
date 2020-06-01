@@ -1,8 +1,7 @@
 <?php
 
-require_once "Categories.php";
-require_once "DatabaseControl.php";
-require_once "Article.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iEditingArticle {
     function renderEditor(string $destination = "processor.php"): void;

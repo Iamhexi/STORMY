@@ -1,6 +1,7 @@
 <?php 
 
-require_once "DatabaseControl.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface SubpageManagement{
     function createSubpage(string $url, string $title): bool;

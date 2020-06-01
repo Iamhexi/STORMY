@@ -1,15 +1,7 @@
 <?php
 
-require_once "../classes/AdminMenu.php";
-require_once "../classes/AdminAuth.php";
-require_once "../classes/AddingArticle.php";
-require_once "../classes/ErrorLog.php";
-require_once "../classes/ThumbnailView.php";
-require_once "../classes/Menu.php";
-require_once "../classes/PageSettings.php";
-require_once "../classes/CommentsStatistics.php";
-require_once "../classes/Categories.php";
-require_once "../classes/SubpageEditor.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iAdminPanel {
     function renderPanel(?string $action): void;

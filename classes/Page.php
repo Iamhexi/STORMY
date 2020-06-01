@@ -1,10 +1,7 @@
 <?php
 
-require_once "Theme.php";
-require_once "PageSettings.php";
-require_once "DatabaseControl.php";
-require_once "Menu.php";
-require_once "Statistics.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iPage {
     function attachTracking(): void;
@@ -23,7 +20,7 @@ class Page extends Theme implements iTheme{
     private $theme;
     
     private $authorForMetaTag;
-    private ?string $addedCSS;
+    private ?string $addedCSS = null;
     
 
     public function __construct(PageSettings $settings, string $pathToMainDirectory = null, bool $exceptionReporting = false){

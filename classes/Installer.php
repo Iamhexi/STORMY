@@ -1,6 +1,7 @@
 <?php
 
-require_once 'PageSettings.php';
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iInstaller {
     static function renderInstallationForm(string $destination): void;

@@ -1,7 +1,7 @@
 <?php
 
-require_once "Comments.php";
-require_once "DatabaseControl.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iCommentsStatistics {
     function countAll(?int $startingDate = null, ?int $endingDate = null): int;
@@ -145,7 +145,7 @@ END;
     private function renderComment(string $articleTitle, string $articleUrl, string $author, string $content, string $additionDate): void{
         echo<<<END
             <div class="commentPreview">
-                <div class="commentPreviewWhereFrom"><b>Komentarz do artykułu:</b> <a target="_blank" href="../read.php?url=$articleUrl">$articleTitle</a></div>
+                <div class="commentPreviewWhereFrom"><b>Komentarz do artykułu:</b> <a target="_blank" rel="noreferrer noopener" href="../read.php?url=$articleUrl">$articleTitle</a></div>
                 <div class="commentPreviewAuthor"><b>Autor:</b> $author</div>
                 <div class="commentPreviewContent"><b>Treść:</b><p> $content</p></div>
                 <div class="commentPreviewDate"><b>Data dodania:</b> $additionDate</div>
