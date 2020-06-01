@@ -1,7 +1,7 @@
 <?php
 
-require_once "Comments.php";
-require_once "DatabaseControl.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iCommentsStatistics {
     function countAll(?int $startingDate = null, ?int $endingDate = null): int;
@@ -145,7 +145,7 @@ END;
     private function renderComment(string $articleTitle, string $articleUrl, string $author, string $content, string $additionDate): void{
         echo<<<END
             <div class="commentPreview">
-                <div class="commentPreviewWhereFrom"><b>Komentarz do artykułu:</b> <a target="_blank" href="../read.php?url=$articleUrl">$articleTitle</a></div>
+                <div class="commentPreviewWhereFrom"><b>Komentarz do artykułu:</b> <a target="_blank" rel="noreferrer noopener" href="../read.php?url=$articleUrl">$articleTitle</a></div>
                 <div class="commentPreviewAuthor"><b>Autor:</b> $author</div>
                 <div class="commentPreviewContent"><b>Treść:</b><p> $content</p></div>
                 <div class="commentPreviewDate"><b>Data dodania:</b> $additionDate</div>
@@ -154,14 +154,20 @@ END;
     }
     
     private function renderCommentsFromDb(int $howMany): ?Exception{
+        $zeroComments = true;
+        
         $query = $this->prepareQueryForRetrievingComments($howMany);
         
         $result = $this->performQuery($query, false, true);
         
         while ($retrieved = $result->fetch_array(MYSQLI_BOTH)){
+            $zeroComments = false;
             $articleTitle = $this->findArticleTitle($retrieved['articleUrl']);
             $this->renderComment($articleTitle, $retrieved['articleUrl'], $retrieved['author'], $retrieved['content'], $retrieved['additionDate']);
         }
+        
+        if ($zeroComments)
+            echo 'Żadne komentarze nie zostały jeszcze dodane. Zajrzyj tu później, kiedy jakieś się już pojawią.';
 
         
         return null;
@@ -169,7 +175,8 @@ END;
     
     public function renderCommentsPreview(int $howMany = 10): void{
         try {
-            echo '<div class="commentsPreviewWrapper"><header class="header">10 ostatnich komentarzy</header>';
+            echo '<div class="commentsPreviewWrapper">
+            <header class="header">10 ostatnich komentarzy</header>';
             $this->renderCommentsFromDb($howMany);
             echo '</div>';
         } catch (Exception $e){

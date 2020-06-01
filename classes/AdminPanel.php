@@ -1,15 +1,7 @@
 <?php
 
-require_once "../classes/AdminMenu.php";
-require_once "../classes/AdminAuth.php";
-require_once "../classes/AddingArticle.php";
-require_once "../classes/ErrorLog.php";
-require_once "../classes/ThumbnailView.php";
-require_once "../classes/Menu.php";
-require_once "../classes/PageSettings.php";
-require_once "../classes/CommentsStatistics.php";
-require_once "../classes/Categories.php";
-require_once "../classes/SubpageEditor.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iAdminPanel {
     function renderPanel(?string $action): void;
@@ -87,15 +79,18 @@ class AdminPanel {
         $subpageEditor->renderListOfSubpages();
     }
     
-    private function renderAddingCategoryForm(){
+    private function renderAddingCategoryForm(): void{
         Categories::renderAddingForm($this->processorLocation);
     }
     
-    private function renderRemovingCategoryfForm(){
+    private function renderRemovingCategoryfForm(): void{
         Categories::renderRemovalForm($this->processorLocation);
     }
     
-    
+    private function renderErrorPrompt(): void{
+        echo '<div class="prompt fail">Nie udało się dokończyć wybranego działania.</div>';
+        echo '<a class="returnButtonAfterExit" href="panel.php">Powrót</a>';
+    }
     
     private function handleAction(?string $action){
         switch ($action){
@@ -153,6 +148,10 @@ class AdminPanel {
                 
             case "commentsReviewPanel":
                 $this->renderCommentsReviewPanel();
+            break;
+                
+            case 'error':
+                $this->renderErrorPrompt();
             break;
                 
             default:

@@ -1,6 +1,7 @@
 <?php
 
-require_once "AdminAuth.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface AdministratorMenu {
     function renderMenu(): void;

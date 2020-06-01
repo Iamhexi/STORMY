@@ -1,5 +1,7 @@
 <?php
-require_once "DatabaseControl.php";
+
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface ArticlesGrid {
     function renderThumbnails(?string $category = null, bool $adminView = false): bool;
@@ -34,6 +36,7 @@ END;
             ECHO<<<END
             
                 <section class="adminArticleGrid">
+                    <header class="adminArticleTitle">$title</header>
                     <a class="adminArticleLink" href="editor.php?url=$articleUrl">
                     <img class="adminArticlePhoto" src="../$photoDirectory/$photo" alt="Zdjęcie do artykułu pt. $title">
                     <div>Kliknij, aby edytować...</div>

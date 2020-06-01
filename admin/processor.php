@@ -9,8 +9,11 @@ require_once "../classes/SubpageEditor.php";
 require_once "../classes/Processor.php";
 $processor = new Processor;
 
-if (isset($_POST['addingArticle'])){
+$action = 'error';
+
+if (isset($_POST['addingArticle'], $_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category']) && !DatabaseControl::mempty($_POST['addingArticle'], $_POST['title'], $_FILES['photo']['name'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category'])){
     $action = 'addEntry';
+    
     $processor->addArticle($_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category'], $_POST['additionalCategory'], $_POST['publicationDateOnly'], $_POST['publicationTimeOnly']);
 }
  
@@ -32,9 +35,9 @@ else if (isset($_POST['saveMenuLayout'])){ /// ALTERING MENU: CHANGING, REMOVING
     $action = 'editOptions';
 }
 
-else if (isset($_POST['addNewMenuElement'])){ // ADDING A NEW OPTION TO MENU
+else if (isset($_POST['addNewMenuElement'], $_POST['menuElementDestination'])){ // ADDING A NEW OPTION TO MENU
     $menu = new Menu(false);
-    $menu->addElement($_POST['menuElementName'], $_POST['menuElementDestination']);
+    $menu->addElement($_POST['menuElementName'], $_POST['menuElementDestination'], $_POST['menuElementName']);
     $action = 'editOptions';
 }
 

@@ -5,12 +5,8 @@ if (!file_exists('settings/connection.php')){ // autorun installer if not instal
     exit();
 }
 
-require_once "classes/Menu.php";
-require_once "classes/Article.php";
-require_once "classes/Comments.php";
-require_once "classes/ThumbnailView.php";
-require_once "classes/PageSettings.php";
-require_once "classes/Newsletter.php";
+require 'classes/ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
     
     $pageSettings = new PageSettings();

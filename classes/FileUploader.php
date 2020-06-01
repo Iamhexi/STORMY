@@ -1,6 +1,7 @@
 <?php
 
-require_once "AddingArticle.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iFileUploader {
     public function uploadFile(array $fileArray): bool;
@@ -9,6 +10,7 @@ interface iFileUploader {
 define("UPLOAD_DIRECTORY", '../'.AddingArticle::$photoDirectory);
 
 class FileUploader implements iFileUploader{
+    use DatabaseControl;
     
     public $uploadDirectory = "upload/storage/";
     
@@ -23,7 +25,7 @@ class FileUploader implements iFileUploader{
             break;
                 
             case UPLOAD_ERR_INI_SIZE:
-            case UPLOAD_ERR_FROM_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
                 throw new Exception("Maximal file size has been exceeded! Change max file size in php.ini or the maximal size of data uploaded in php form.");
             break;
                 

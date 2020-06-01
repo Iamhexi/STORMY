@@ -1,23 +1,32 @@
 <?php
 
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
+
 interface iInstaller {
     static function renderInstallationForm(string $destination): void;
     static function removeInstallDirectory(): bool;
 }
 
 class Installer implements iInstaller{
-    private $dbUsername;
-    private $dbPassword;
-    private $dbName;
-    private $dbServerAddress;
-
+    private string $dbUsername;
+    private ?string $dbPassword;
+    private string $dbName;
+    private string $dbServerAddress;
     
-    public function __construct(string $databaseServerAddress, string $databaseUsername, string $databasePassword, string $databaseName){
+    private string $adminEmail;
+
+    protected function sanitizeInput(string $input): ?string{
+        return filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+    }
+    
+    public function __construct(string $databaseServerAddress, string $databaseUsername, string $databasePassword, string $databaseName, string $adminEmail){
         try {
             $this->dbServerAddress = $this->sanitizeInput($databaseServerAddress);
             $this->dbUsername = $this->sanitizeInput($databaseUsername);
             $this->dbPassword = $this->sanitizeInput($databasePassword);
             $this->dbName = $this->sanitizeInput($databaseName);
+            $this->adminEmail = $this->sanitizeInput($adminEmail);
             
             $this->runInstallation();
             
@@ -33,6 +42,8 @@ class Installer implements iInstaller{
     }
     
     private function runInstallation(): ?Exception{
+        if (!$this->setAdminEmail())
+            throw new Exception("Cannot set admin e-mail to configuration file. Insert correct e-mail or try later.");
         if (!($this->canConnect()))
             throw new Exception("Cannot connect with given database credentials! Change access information to the database and try again.");
         if (@!($this->createDatabaseIfNotExists()))
@@ -44,6 +55,12 @@ class Installer implements iInstaller{
         
         
         return null;
+    }
+    
+    private function setAdminEmail(): bool{
+        $settings = new PageSettings('../settings/default.json');
+        $settings->__set('adminEmail', $this->adminEmail);
+        return $settings->saveSettings();
     }
     
     private function performQuery(string $query, bool $enterToDb = true, bool $needResponce = false, bool $needResult = false){
@@ -126,14 +143,10 @@ class Installer implements iInstaller{
             <div><label>Nazwa użytkownika bazy danych: <input type="text" name="dbUser" class="installerInput" required></label></div>
             <div><label>Hasło użytkownika bazy danych: <input type="password" name="dbPassword" class="installerInput"></label></div>
             <div><label>Nazwa bazy danych: <input type="name" name="dbName" class="installerInput" required></label></div>
+            <div title="Koniecznie podaj poprawny e-mail, ponieważ inaczej nie będziesz w stanie się zalogować."><label>E-mail administratora: <input type="email" name="adminEmail" class="installerInput" required></label></div>
             <div><input type="submit" value="Instaluj STORMY!"></div>
         </form>
 END;
-    }
-    
-    
-    protected function sanitizeInput(string $input): ?string{
-        return filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
     
     private function createDatabaseConnectionFile(): bool{

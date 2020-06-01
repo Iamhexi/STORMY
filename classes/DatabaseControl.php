@@ -63,6 +63,13 @@ public static function renderCategorySelector(string $defaultValue, string $html
         echo '</select></label></div>';
     } 
     
+public static function mempty(...$arguments): bool{
+    foreach($arguments as $argument) {
+        if(empty($argument))
+            return true;
+    }
+    
+    return false;
+}
     
 }
-

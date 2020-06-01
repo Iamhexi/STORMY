@@ -1,7 +1,7 @@
 <?php
 
-require_once "DatabaseControl.php";
-require_once "Page.php";
+require_once 'ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 interface iCustomPage {
     public function setHTMLContent(string $html): void;

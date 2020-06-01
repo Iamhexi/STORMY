@@ -1,7 +1,9 @@
 <?php
-require_once "../classes/AdminAuth.php";
-require_once "../classes/Menu.php";
-require_once "../classes/PageSettings.php";
+
+require_once '../classes/ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
+
+@session_start();
 
 $adminAuth = new AdminAuth();
 
@@ -10,6 +12,7 @@ $adminAuth = new AdminAuth();
 $settings = new PageSettings("../settings/default.json");
 $page = new Page($settings, "..");
 
+$page->addCSS('body { background-color: #244999 !important; }');
 $page->renderHead();
 
 if (isset($_GET['firstTime']))
