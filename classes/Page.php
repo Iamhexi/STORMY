@@ -23,10 +23,9 @@ class Page extends Theme implements iTheme{
     private ?string $addedCSS = null;
     
 
-    public function __construct(PageSettings $settings, string $pathToMainDirectory = null, bool $exceptionReporting = false){
+    public function __construct(PageSettings $settings, string $pathToMainDirectory = null){
         $this->settings = $settings;
         $this->theme = new Theme($this->settings->theme, $pathToMainDirectory);
-        $this->exceptionReporting = $exceptionReporting;
     }
     
     public function addCSS(string $css){

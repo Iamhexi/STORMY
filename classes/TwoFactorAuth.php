@@ -28,10 +28,10 @@ class TwoFactorAuth implements TwoFactorAuthentication {
         echo<<<END
         <article class="authenticationWrapper">
             <header class="header">Chcemy potwierdzić Twoją tożsamość</header>
-            <p class="authenticationDescription">Aby sprawdzić, czy jesteś osobą, za którą się podajesz, wysłaliśmy Ci wiadomość na adres e-mail: <b>$partiallyHiddenEmail</b>. Sprawdź proszę swoją skrzynkę odbiorczą i wprowadź otrzymany kod potwierdzający. W razie problemów spróbuj zalogować się, używając jednej ze wcześniej zweryfikowanych przeglądarek.</p>
+            <p class="authenticationDescription">Aby sprawdzić, czy jesteś osobą, za którą się podajesz, wysłaliśmy Ci wiadomość na adres e-mail: <b>$partiallyHiddenEmail</b>.<br> Sprawdź proszę swoją skrzynkę odbiorczą i wprowadź otrzymany kod potwierdzający. W razie problemów spróbuj zalogować się, używając jednej ze wcześniej zweryfikowanych przeglądarek.</p>
             <form action="$destination" method="POST" class="authenticationForm">
-                <div><label>Kod potwierdzający<span></span><input type="text" name="authenticationCode"></label></div>
-                <div><input type="submit" value="Zaloguj się" class="authenticateLogin"></div>
+                <div><label><span>Kod potwierdzający</span><input type="text" name="authenticationCode"></label></div>
+                <div><input type="submit" value="Zaloguj się" class="button"></div>
             </form>
         </article>
 END;
@@ -94,8 +94,8 @@ END;
             $this->sendAuthenticationEmail();
     }
         
-    public function isVerificationCodeCorrect(?int $code = null): int{
-        if (!isset($code) || empty($code) || $code == null)
+    public function isVerificationCodeCorrect($code = null): int{
+        if (!isset($code) || empty($code) || $code == null || !is_numeric($code))
             return 0;
        
         return $this->isEmailCodeValid($code);

@@ -470,11 +470,6 @@ li {
 	display: none;
 }
 
-.checkbox {
-    display: none;
-    margin: 0 !important;
-}
-
 .checkbox:hover {
     cursor: pointer;
 }
@@ -531,8 +526,48 @@ li {
     background: none;
     border: 1.5px solid black;
     border-radius: 3.5px;
-    opacity: 0.5
+    opacity: 0.5;
+    margin: 5px auto !important;
 }
+
+.authenticationWrapper {
+    border: 2px solid var(--primary-variant);
+	border-radius: 3.5px;
+	margin: 5vh auto;
+	padding: 2.5vh 2vw;
+	width: 40%;
+    max-width: 99vw;
+}
+
+.authenticationDescription {
+    line-height: 1.235;
+    text-align: justify;
+}
+
+.authenticationForm {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-items:stretch;
+}
+
+.authenticationForm > div > label {
+    display: block;
+    margin: 0px auto;
+}
+
+.authenticationForm > div > label > span {
+	display: block;
+	margin: 8px 0 5px;
+
+}
+
+.authenticationForm input[type=text]{
+    line-height: 20px;
+	padding: 7.5px;
+	width: 100%;
+}
+
 
 #optionsWrapper > div > label > .menuEditorCheckbox:checked + .checkbox::before {
 }
@@ -558,6 +593,8 @@ li {
     cursor: grabbing;
     text-align: center;
     margin-top: 16px;
+    margin-left: -20px;
+    margin-right: 10px;
 }
 
 
