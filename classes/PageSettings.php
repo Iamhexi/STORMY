@@ -15,7 +15,7 @@ interface Settings {
 class PageSettings implements Settings{
     use DatabaseControl;
     
-    private $sourceFile;
+    private string $sourceFile;
     private $settingsObject;
     
     private function loadSettings(string $sourceFile){

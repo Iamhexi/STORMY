@@ -12,7 +12,7 @@ define("UPLOAD_DIRECTORY", '../'.AddingArticle::$photoDirectory);
 class FileUploader implements iFileUploader{
     use DatabaseControl;
     
-    public $uploadDirectory = "upload/storage/";
+    public string $uploadDirectory = "upload/storage/";
     
     public function __construct(string $uploadDirectory = UPLOAD_DIRECTORY){
         if (!is_null($this->uploadDirectory)) $this->uploadDirectory = $uploadDirectory;

@@ -10,7 +10,7 @@ interface iStatistics {
 
 class Statistics implements iStatistics {
     use DatabaseControl;
-    private $table;
+    private string $table;
     
     public function __construct(){
         $this->table = DatabaseControl::$statisticsTable;

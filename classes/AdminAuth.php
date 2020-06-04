@@ -23,7 +23,7 @@ class AdminAuth implements AdministratorAuthentication {
     private bool $isLogged;
     private string $loggingUrl;
     private string $adminPanelUrl;
-    private $prompt;
+    private ?string $prompt;
     
     public function __construct(bool $isLogged = false){
         $this->isLogged = $isLogged;

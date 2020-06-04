@@ -17,9 +17,9 @@ interface CommentsManager {
 class Comments implements CommentsManager {
     use DatabaseControl;
     
-    protected $tableName;
-    private $commentDefaultStatus;
-    private $maxLineLength = 140;
+    protected string $tableName;
+    private int $commentDefaultStatus;
+    private static int $maxLineLength = 140;
     
     public function __construct(string $settingsLocation = "settings/default.json"){
         $this->tableName = Comments::$commentsTable;
@@ -83,11 +83,11 @@ class Comments implements CommentsManager {
         $new = "";
         $oldLength = strlen($old);
         
-        if ($oldLength <= $this->maxLineLength)
+        if ($oldLength <= self::$maxLineLength)
             return $old;
         
-        for ($i=0;$i<round($oldLength/$this->maxLineLength);$i++)
-            $new .= (substr($old, $i*$this->maxLineLength, $this->maxLineLength).'<br>');
+        for ($i=0;$i<round($oldLength/self::$maxLineLength);$i++)
+            $new .= (substr($old, $i*self::$maxLineLength, self::$maxLineLength).'<br>');
         
         
         return $new;

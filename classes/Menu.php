@@ -11,9 +11,7 @@ interface Navigation {
 class Menu implements Navigation{
     use DatabaseControl;
     
-    private $isForAdmin;
-    private $loadedElements;
-    private $elements;
+    private bool $isForAdmin;
     
     public function __construct(bool $isForAdmin, $processorLocation = null){
         $this->isForAdmin = $isForAdmin;

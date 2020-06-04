@@ -13,9 +13,9 @@ interface PagesManager {
 class CustomPageManager{
     use DatabaseControl;
     
-    private $subpages;
-    private $currentSubpage;
-    private $table;
+    private array $subpages;
+    private CustomPage $currentSubpage;
+    private string $table;
     
     public function __construct(PageSettings $settings){
         $this->table = DatabaseControl::$pagesTable;

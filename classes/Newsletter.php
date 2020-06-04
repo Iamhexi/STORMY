@@ -20,8 +20,8 @@ define("TITLE", $settingsForMail->__get("title"));
 class Newsletter implements iNewsletter{
     use DatabaseControl;
     
-    private $emailsFile = 'mailing.txt';
-    private $mailingList;
+    private string $emailsFile = 'mailing.txt';
+    private array $mailingList;
     
     public function __construct($emailsFile = null){
         if ($emailsFile != null) $this->emailsFile = $emailsFile;

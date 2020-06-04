@@ -11,8 +11,8 @@ interface iErrorLog {
 class ErrorLog implements iErrorLog{
     use DatabaseControl;
     
-    private $errorLogFile;
-    private $errors;
+    private string $errorLogFile;
+    private array $errors;
     
     public function __construct(string $errorLogFile = "errorLog.txt") {
         $this->errorLogFile = $errorLogFile;

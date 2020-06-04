@@ -12,7 +12,7 @@ interface iCommentsStatistics {
 
 class CommentsStatistics extends Comments implements iCommentsStatistics {
     
-    private function getNumberOfCommentsFromDB(){
+    private function getNumberOfCommentsFromDB(): int{
         $query = "SELECT COUNT(*) AS numberOfComments FROM $this->tableName";
         
         if (@!($fetched = $this->performQuery($query, true)))

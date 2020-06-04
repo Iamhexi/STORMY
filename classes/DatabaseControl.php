@@ -5,13 +5,13 @@
 
 trait DatabaseControl {
 
-    private $exceptionReporting = true; /// TURN OFF BEFORE REALSING APP
-    public static $contentTable = "news";
-    public static $commentsTable = "comments";
-    public static $pagesTable = "pages";
-    public static $menuTable = "menu";
-    public static $categoriesTable = "categories";
-    public static $statisticsTable = "statistics";
+    private bool $exceptionReporting = true; /// TURN OFF BEFORE REALSING APP
+    public static string $contentTable = "news";
+    public static string $commentsTable = "comments";
+    public static string $pagesTable = "pages";
+    public static string $menuTable = "menu";
+    public static string $categoriesTable = "categories";
+    public static string $statisticsTable = "statistics";
     
 protected function reportException(Exception $e): void{
     if ($this->exceptionReporting === true) 
@@ -45,7 +45,7 @@ protected function performQuery(string $query, bool $needResponce = false, bool 
     }
 }
     
-protected function sanitizeInput(string $input): string{
+protected function sanitizeInput(string $input): string {
     return filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
     
@@ -63,11 +63,10 @@ public static function renderCategorySelector(string $defaultValue, string $html
         echo '</select></label></div>';
     } 
     
-public static function mempty(...$arguments): bool{
-    foreach($arguments as $argument) {
+public static function mempty(...$arguments): bool {
+    foreach($arguments as $argument)
         if(empty($argument))
             return true;
-    }
     
     return false;
 }

@@ -16,8 +16,8 @@ interface iCategories {
 class Categories implements iCategories{
     use DatabaseControl;
     
-    private $table;
-    private $categories;
+    private string $table;
+    private array $categories;
     
     public function __construct(){
         $this->categories = array();

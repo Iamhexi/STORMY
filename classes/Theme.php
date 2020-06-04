@@ -7,16 +7,16 @@ interface iTheme {
 
 class Theme implements iTheme{
     
-    protected $name;
-    protected static $themeDirectory = 'themes';
-    protected static $scriptSubdirectory = 'js';
+    protected string $name;
+    protected static string $themeDirectory = 'themes';
+    protected static string $scriptSubdirectory = 'js';
     
-    protected $adminStylesheetPath = '../themes/admin.css';
-    protected $mainStylesheetPath;
+    protected string $adminStylesheetPath = '../themes/admin.css';
+    protected string $mainStylesheetPath;
     
-    protected $mainStylesheet = 'main.css';
+    protected string $mainStylesheet = 'main.css';
     
-    protected $path;
+    protected string $path;
     
     public function loadStylesheets(): void{
         $this->mainStylesheetPath = $this->path.'/'.Theme::$themeDirectory.'/'.$this->name.'/'.$this->mainStylesheet;

@@ -14,10 +14,10 @@ interface SubpageManagement{
 }
 
 class Subpage{
-    public $id;
-    public $url;
-    public $title;
-    public $content;
+    public int $id;
+    public string $url;
+    public string $title;
+    public string $content;
     
     public function __construct(int $id = 0, string $url = "", string $title = "", string $content = ""){
         $this->id = $id;
@@ -30,8 +30,8 @@ class Subpage{
 class SubpageEditor implements SubpageManagement{
     use DatabaseControl;
     
-    private $currentSubpage;
-    private $subpages;
+    private Subpage $currentSubpage;
+    private array $subpages;
     
     public function __construct(){
         $this->table = DatabaseControl::$pagesTable;

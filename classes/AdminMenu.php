@@ -9,7 +9,7 @@ interface AdministratorMenu {
 
 class AdminMenu implements AdministratorMenu {
     
-    private $panelLocation;
+    private string $panelLocation;
     
     public function __construct(string $panelLocation = "panel.php"){
         $this->panelLocation = $panelLocation;

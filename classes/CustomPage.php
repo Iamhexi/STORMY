@@ -14,10 +14,10 @@ interface iCustomPage {
 class CustomPage extends Page {
     use DatabaseControl;
     
-    private $id;
-    protected $title;
-    private $url;
-    private $content;
+    private int $id;
+    protected string $title;
+    private string $url;
+    private string $content;
     
     public function setHTMLContent(string $html): void{
         $this->content = $html;

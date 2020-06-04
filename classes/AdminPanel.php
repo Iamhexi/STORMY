@@ -9,10 +9,10 @@ interface iAdminPanel {
 
 class AdminPanel {
     
-    private $processorLocation = "processor.php";
-    private $settings;
-    private $page;
-    private $adminAuth;
+    private string $processorLocation = "processor.php";
+    private PageSettings $settings;
+    private Page $page;
+    private AdminAuth $adminAuth;
     
     public function __construct(){
 

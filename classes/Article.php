@@ -12,15 +12,15 @@ interface iArticle {
 class Article implements iArticle{ 
     use DatabaseControl;
     
-    protected $id;
-    protected $title;
-    protected $content;
-    protected $photo;
-    protected $articleUrl;
-    protected $author;
-    protected $publicationDate;
-    protected $category;
-    protected $additionalCategory;
+    protected int $id;
+    protected string $title;
+    protected string $content;
+    protected string $photo;
+    protected string $articleUrl;
+    protected string $author;
+    protected ?string $publicationDate;
+    protected string $category;
+    protected ?string $additionalCategory;
     
     public function getTitle(): ?string{
         return $this->title;

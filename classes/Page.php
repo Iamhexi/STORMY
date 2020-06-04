@@ -16,10 +16,10 @@ interface iPage {
 class Page extends Theme implements iTheme{
     use DatabaseControl;
 
-    private $settings;
-    private $theme;
+    private PageSettings $settings;
+    private Theme $theme;
     
-    private $authorForMetaTag;
+    private ?string $authorForMetaTag = null;
     private ?string $addedCSS = null;
     
 
@@ -37,7 +37,7 @@ class Page extends Theme implements iTheme{
         if (strpos($_SERVER['REQUEST_URI'], 'admin') === false) $stats->addRecord(); // ignore admins' visits
     }
     
-    private function prepareAuthorTagContent(): ?string{
+    private function getAuthor(): ?string{
         $a = $this->authorForMetaTag;
         return ($a != null) ? $a : $this->settings->author;
     }
@@ -45,7 +45,7 @@ class Page extends Theme implements iTheme{
     public function renderHead(): void{
         $this->attachTracking();
         
-        $author = $this->prepareAuthorTagContent();
+        $author = $this->getAuthor();
         echo<<<END
         <!DOCTYPE html>
         <html lang="pl">

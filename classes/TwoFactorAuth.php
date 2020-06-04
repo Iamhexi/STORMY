@@ -24,7 +24,7 @@ class TwoFactorAuth implements TwoFactorAuthentication {
     
     public function renderTwoFactorAuthForm(string $destination): void{
         
-        $partiallyHiddenEmail = $this->replaceEmailLettersWithAsterisks($this->adminEmail);
+        $partiallyHiddenEmail = $this->replaceLettersWithAsterisks($this->adminEmail);
         echo<<<END
         <article class="authenticationWrapper">
             <header class="header">Chcemy potwierdzić Twoją tożsamość</header>
@@ -37,26 +37,24 @@ class TwoFactorAuth implements TwoFactorAuthentication {
 END;
     }
     
-    private function replaceEmailLettersWithAsterisks(string $email): string{
+    private function replaceLettersWithAsterisks(string $email): string{
         $length = strlen($email);
-        for ($i=0;$i<$length;$i++){
+        for ($i=0;$i<$length;$i++)
             if ($i >= 2 && $i <= 10){
                 if ($email[$i] === '@')
                     break;
                 $email[$i] = '*';
             }
-                
-        }
         
         return $email;
     }
     
-    private function isEmailCodeValid(int $emailCode): int{
+    private function checkStatusOfEmailCode(int $emailCode): int{ // 0 - isn't set yet, -1 - incorrect, 1 - correct
         $correctCode = $_SESSION['emailVerificationCode'];
         if (!isset($correctCode) || empty($correctCode))
-            return 0; // unset
+            return 0; 
         
-        return ($emailCode == $correctCode) ? 1 : -1; // correct : incorrect
+        return ($emailCode == $correctCode) ? 1 : -1; 
     }
     
     private function isVerficationNumberValid(int $verificationNumber): bool{
@@ -73,11 +71,16 @@ END;
     }
     
     public function demandAuthenticationViaEmail(): bool{
-        $_SESSION['emailVerificationCode'] = $this->generateEmailVerificationCode();
-        return $this->sendVerificationCodeViaEmail();
+        $verificationCode = $this->generateEmailVerificationCode();
+        if ($this->sendVerificationCodeViaEmail($verificationCode)){
+            $_SESSION['emailVerificationCode'] = $verificationCode;
+            return true;
+        }
+        
+        return false;
     }
     
-    private function sendAuthenticationEmail(){
+    private function sendAuthenticationEmail(): void{
         if ($this->demandAuthenticationViaEmail()){
             echo '<div class="prompt success">Wysłano e-mail z kodem potwierdzającym</div>';
             $_SESSION['alreadySent'] = true;
@@ -98,30 +101,25 @@ END;
         if (!isset($code) || empty($code) || $code == null || !is_numeric($code))
             return 0;
        
-        return $this->isEmailCodeValid($code);
+        return $this->checkStatusOfEmailCode($code);
     }
     
     public function authenticateBrowser(): void{
-        $verificationNumber = rand(100000, 999999);
-        setcookie('STORMY_2FA_TOKEN', $verificationNumber, time()+60*60*24*365*10);
+        $authenticationId = rand(100000, 999999);
+        setcookie('STORMY_2FA_TOKEN', $authenticationId, time()+60*60*24*365*10);
     }
     
     private function generateEmailVerificationCode(): int{
         if (!isset($_SESSION['emailVerificationCode']) || empty($_SESSION['emailVerificationCode']))
-            $_SESSION['emailVerificationCode'] = rand(100000, 999999);
-        
-       return $_SESSION['emailVerificationCode'];
+            return rand(100000, 999999);
     }
     
-    private function sendVerificationCodeViaEmail(): bool{
-        
-        $emailVerificationCode =  $_SESSION['emailVerificationCode'];
-        
+    private function sendVerificationCodeViaEmail(int $verificationCode): bool{
         
         $to = $this->adminEmail;
         $subject = "[$this->webpageUrl] Kod potwierdzający";
         $message = 'Witaj!<br>Oto Twój kod potwierdzający: <b>';
-        $message .= (string)$emailVerificationCode;
+        $message .= (string)$verificationCode;
         $message .= '</b>.<p style="text-align: justify; max-width: 500px;">Teraz mamy pewność, że faktycznie jesteś osobą, za którą się podajesz. Zapamiętamy Twoje logowanie w tej przeglądarce i odtąd nie będzie wymagane ponowne potwierdzanie  tożsamości. Miłego korzystania ze STORMY, drogi administratorze!</p><br>';
         
         $message .= '<p style="text-align: justify; max-width: 500px;">Uwaga! <b>Jeżeli to nie Ty logowałeś się z nowego urządzenia</b>, możesz być ofiarą próby włamania. Potencjalny włamywacz przejął Twoje hasło i usiłuje się zalogować do panelu administratora Twojej strony. Nie masz się jednak czego obawiać - STORMY zablokował próbę włamania. Jak najszybciej zmień hasło i przeskanuj swoje urządzenie w poszukiwaniu złośliwego oprogramowania.</p>';
