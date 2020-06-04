@@ -11,7 +11,7 @@ $processor = new Processor;
 
 $action = 'error';
 
-if (isset($_POST['addingArticle'], $_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category']) && !DatabaseControl::mempty($_POST['addingArticle'], $_POST['title'], $_FILES['photo']['name'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category'])){
+if (isset($_POST['addingArticle'], $_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category']) && !DatabaseControl::mempty($_POST['title'], $_FILES['photo']['name'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category'])){
     $action = 'addEntry';
     
     $processor->addArticle($_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category'], $_POST['additionalCategory'], $_POST['publicationDateOnly'], $_POST['publicationTimeOnly']);

@@ -102,7 +102,7 @@ END;
     }
     
     private function isItThemeDirectory(string $object): bool{
-        if ($object != '.' && $object != '..' && $object != 'favicon.ico' && $object != $this->theme && $object != 'admin.css')
+        if ($object != '.' && $object != '..' && $object != $this->theme && is_dir('../themes/'.$object))
             return true;
         else
             return false;
@@ -111,7 +111,7 @@ END;
     private function renderThemeChoice(): void{
         echo '<div><label><span>Motyw graficzny</span><select name="theme" class="themeSelectInput">';
         
-        $themes = scandir("../themes/");
+        $themes = scandir('../themes/');
         foreach ($themes as $theme){
             if ($this->isItThemeDirectory($theme))
                 echo "<option value=\"$theme\">$theme</option>";

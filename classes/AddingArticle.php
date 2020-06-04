@@ -3,11 +3,7 @@
 require_once 'ClassAutoLoader.php';
 $autoLoader = new ClassAutoLoader();
 
-interface iAddingArticle {
-    static function renderForm(string $destination = "processor.php");
-}
-
-class AddingArticle implements iAddingArticle{
+class AddingArticle{
     use DatabaseControl;
     
     private string $title;
@@ -28,19 +24,23 @@ class AddingArticle implements iAddingArticle{
         return "INSERT INTO $table (title, photo, content, articleUrl, author, $p2 category, additionalCategory) VALUES ('{$this->title}', '{$this->photo}', '{$this->content}', '{$this->articleUrl}', '{$this->author}', $p '{$this->category}', '{$this->additionalCategory}')";
     }
     
-    public function __construct(string $title, string $photo, string $content, string $articleUrl, string $author, string $category, string $additionalCategory = null, string $publicationDate = null){
-        $this->title = $this->santizeInput($title);
-        $this->photo = $this->santizeInput($photo);
-        $this->content = $this->santizeInput($content);
-        $this->articleUrl = $this->santizeInput($articleUrl);
-        $this->author = $this->santizeInput($author);
-        $this->category = $this->santizeInput($category);
-        $this->publicationDate = $this->santizeInput($publicationDate);
+    public function __construct(string $title, string $photo, string $content, string $articleUrl, string $author, string $category, ?string $additionalCategory = null, ?string $publicationDate = null){
         
-        $this->additionalCategory =
+        $this->title = $this->sanitizeInput($title);
+        $this->photo = $this->sanitizeInput($photo);
+        $this->content = $this->sanitizeInput($content);
+        $this->articleUrl = $this->sanitizeInput($articleUrl);
+        $this->author = $this->sanitizeInput($author);
+        $this->category = $this->sanitizeInput($category);
+        
+        $this->publicationDate = ($publicationDate != null) ?
+            $this->sanitizeInput($publicationDate) :
+            null;
+            
+       $this->additionalCategory =
             ($additionalCategory === null) ?
-            $this->santizeInput($category) :
-            $this->santizeInput($additionalCategory);
+            $this->category :
+            $this->sanitizeInput($additionalCategory);
         
         $this->addArticle();
     }
@@ -112,3 +112,4 @@ END;
     
     
 }
+

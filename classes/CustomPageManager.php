@@ -14,7 +14,7 @@ class CustomPageManager{
     use DatabaseControl;
     
     private array $subpages;
-    private CustomPage $currentSubpage;
+    private ?CustomPage $currentSubpage;
     private string $table;
     
     public function __construct(PageSettings $settings){
