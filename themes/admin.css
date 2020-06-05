@@ -141,6 +141,45 @@ li {
 	margin: 15px auto;
 }
 
+.articleEditor {
+	display: block;
+	margin: 0 auto;
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.articleEditor > div > label > span {
+	display: block;
+	margin-top: 5px;
+	margin-bottom: 3px;
+}
+
+.articleEditor > div > label > input,
+.articleEditor > div > label > textarea,
+.articleEditor > div > label > select {
+	width: 100%;
+	min-width: 30vw;
+}
+
+.articleEditor > div {
+	margin: 10px 20px;
+}
+
+.articleEditorTextarea {
+	padding: 5px;
+}
+
+.articleEditorPhoto {
+	display: block;
+	width: 80%;
+	margin: 0 auto;
+	border: 2px solid black;
+	border-radius: 3.5px;
+}
+
 .photoUploaderIcon {
 	background-color: var(--background);
 	border: 2px dashed var(--primary-variant);

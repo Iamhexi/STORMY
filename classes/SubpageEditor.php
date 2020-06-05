@@ -228,6 +228,8 @@ END;
                 echo '<a href="editor.php?purl='.$page['url'].'">'.$page['title'].'</a><br>';
             }
             echo '</article>';
+        } else {
+            echo '<p style="text-align: center;">Nie dodano jeszcze żadnych podstron. Dodaj nową podstronę, wybierając "Podstrony" -> "Dodaj nową".</p>';
         }
     }
     
