@@ -151,8 +151,6 @@ CREATE TABLE `news` (
 CREATE TABLE `statistics` (
   `recordId` int(11) NOT NULL,
   `ip` varchar(45) COLLATE utf8_bin NOT NULL,
-  `browser` varchar(250) COLLATE utf8_bin NOT NULL,
-  `system` int(250) NOT NULL,
   `visitDatetime` datetime NOT NULL,
   `visitedUrl` varchar(100) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

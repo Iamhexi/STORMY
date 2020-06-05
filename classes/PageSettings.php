@@ -6,7 +6,7 @@ $autoLoader = new ClassAutoLoader();
 interface Settings {
     function getAdminPassword(): string;
     function getSettingsFileLocation(): ?string;
-    function __get(string $variable): ?string; // this needs to be removed soon
+    function __get(string $variable); // this needs to be removed soon
     function __set(string $varName, $value): void; //this needs to be removed soon
     function saveSettings(): bool;
     function renderEditor(string $destination): void;
@@ -48,11 +48,13 @@ class PageSettings implements Settings{
         return $this->sourceFile;
     }
     
-    public function __get(string $variable): ?string{
+    public function __get(string $variable){
         return $this->settingsObject->$variable;
     }
     
     public function __set(string $varName, $value): void{
+        if ($varName === 'twoFactorAuth')
+            $value = (bool)$value;
         $this->settingsObject->$varName = $value;
     }
     
@@ -74,6 +76,29 @@ class PageSettings implements Settings{
         }
 
     }
+
+    private function render2FASelector(): void {
+        if ($this->settingsObject->twoFactorAuth === false)
+            $selected1 = 'selected';
+        
+        else
+            $selected2 = 'selected';
+        
+            
+
+         echo<<<END
+            <div>
+                <label><span>Autoryzacja dwustopniowa<span>
+                    <select name="twoFactorAuth" class="settingsInput">
+                        <option value="0" $selected1>Nie</option>
+                        <option value="1" $selected2>Tak</option>
+                    </select>
+                </label>
+            </div>
+END;
+
+    }
+
     
 
     public function renderEditor(string $destination): void{
@@ -94,6 +119,7 @@ END;
             <div><label><span>Opis strony</span><textarea name="description" rows="10" cols="50" maxlength="220" class="settingsInput">{$this->settingsObject->description}</textarea></label></div>
 END;
         $this->renderCommentPolicySelector();
+        $this->render2FASelector();
         echo<<<END
             <div><input type="submit" name="pageSettingsSavingButton" class="button" value="Zapisz ustawienia"></div>
         </form>

@@ -17,13 +17,10 @@ class Statistics implements iStatistics {
     }
     
     private function prepareAddingQuery(): string{
-        $ip = $_SERVER['REMOTE_ADDR'];
-        @$browserObject = get_browser();
-        @$browser = $browserObject->browser;
-        @$system = $browserObject->platform;
+        $ip = $_SERVER['REMOTE_ADDR'];    
         $visitedUrl = $_SERVER['REQUEST_URI'];
         
-        return "INSERT INTO $this->table (ip, browser, system, visitDatetime, visitedUrl) VALUES ('$ip', '$browser', '$system', NOW(), '$visitedUrl')";
+        return "INSERT INTO $this->table (ip, visitDatetime, visitedUrl) VALUES ('$ip', NOW(), '$visitedUrl')";
     }
     
     public function addRecord(): bool{

@@ -46,7 +46,7 @@ else if (isset($_POST['pageSettingsSavingButton'])){ // SAVING PAGE SETTINGS
     
     
     foreach($_POST as $name => $value)
-        if ($name !== 'adminPassword')
+        if ($name !== 'adminPassword' && $name !== 'pageSettingsSavingButton')
             $settings->__set($name, $value);
     
     if (isset($_POST['adminPassword']) && !empty($_POST['adminPassword'])){
