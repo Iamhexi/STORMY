@@ -69,12 +69,22 @@ END;
     }
     
     private function chooseProperView(mysqli_result $result, bool $adminView){
+        $entries = 0;
+
         if ($adminView === false) 
-            while ($fetched = $result->fetch_array(MYSQLI_BOTH))
-                  $this->renderThumbnailAsHTML($fetched['articleUrl'], $fetched['title'], $fetched['photo']);
+            while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
+                $this->renderThumbnailAsHTML($fetched['articleUrl'], $fetched['title'], $fetched['photo']);
+                $entries++;
+            }
+                  
         else
-            while ($fetched = $result->fetch_array(MYSQLI_BOTH))
+            while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
                 $this->renderThumbnailForAdmin($fetched['articleUrl'], $fetched['title'], $fetched['photo']);
+                $entries++;
+            }
+
+        if ($entries === 0)
+            echo '<p>Aktualnie nie ma jeszcze żadnym wpisów. Dodaj swój pierwszy wspis, wybierając "Wpisy" -> "Dodaj nowy" z menu.</p>';
     }
     
     private function executeRenderingThumbnails(?string $category, bool $adminView): void{

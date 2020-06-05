@@ -111,7 +111,6 @@ li {
 	flex-wrap: wrap;
 	justify-content: space-around;
 	margin-bottom: 5vh;
-	min-height: 10vh;
 	width: 100vw;
 }
 
@@ -474,11 +473,69 @@ li {
     cursor: pointer;
 }
 
-.mainMenu li,
-.mainMenu li:hover ul li,
-.mainMenu li:hover,
 .menuEditorCheckbox {
 	display: block;
+}
+
+.mainMenu ul {
+	padding: 0;
+}
+
+.mainMenu > li {
+	display: block;
+	width: 200px;
+	background-color: var(--primary);
+	z-index: 100;
+	border-radius: 3.5px;
+	max-height: 40px;
+}
+
+.logoutButton {
+	border: 0;
+	height: auto;
+	background-color: transparent;
+	color: var(--background);
+}
+
+.logoutButton:hover {
+	cursor: pointer;
+}
+
+.mainMenu a {
+	display: block;
+	text-decoration: none;
+	color: white;
+	font-size: 1.1rem;
+}
+
+.mainMenu li:hover ul li:last-child {
+	border-bottom: 1.5px solid var(--primary-variant);
+}
+
+.mainMenu li:hover ul li {
+	z-index: 100;
+	box-sizing: content-box;
+	display: block;
+	width: calc( (200px - 20px) - 3px);
+	height: 40px;
+	background-color: var(--primary);
+	border: 1.5px solid var(--primary-variant);
+	border-bottom: 0;
+	padding: 5px 10px;
+	border-radius: 1.5px;
+}
+
+.mainMenu li ul li:hover
+ {
+	background-color: var(--primary-variant);
+}
+
+.mainMenu li > a,
+.logoutButton {
+	display: block;
+	margin: 0px auto;
+	text-align: center;
+	padding: 10px;
 }
 
 .adminArticleLink:hover,

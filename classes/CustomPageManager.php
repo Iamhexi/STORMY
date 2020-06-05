@@ -18,6 +18,7 @@ class CustomPageManager{
     private string $table;
     
     public function __construct(PageSettings $settings){
+        $this->subpages = array();
         $this->table = DatabaseControl::$pagesTable;
         $this->currentSubpage = new CustomPage($settings);
     }
@@ -109,6 +110,7 @@ class CustomPageManager{
     }
     
     public function getArrayOfSubpages(): array{
+        if (isset($this->subpages))
         if ($this->loadListOfSubpages() && $this->subpages !== null)
             return $this->subpages;
         else 

@@ -11,13 +11,13 @@ interface AdministratorAuthentication {
     function handleloggingOut(): void;
     function renderLoggingOutForm(): void;
     function renderPrompt(): void;
-    static function renderHomeButton(): void;
     function handleFirstTimeLogging(bool $isFirstTime): void;
 }
 
 
 $settings = new PageSettings("../settings/default.json");
 define('HASHED_ADMIN_PASSWORD', $settings->getAdminPassword());
+define('IS_TWO_FACTOR_AUTH_ENABLED', $settings->__get('twoFactorAuth'));
 
 class AdminAuth implements AdministratorAuthentication {
     private bool $isLogged;
@@ -32,47 +32,48 @@ class AdminAuth implements AdministratorAuthentication {
         @$this->prompt = $_SESSION['prompt'];
     }
     
-    private function isPasswordCorrect(string $givenPassword){
+    private function isPasswordCorrect(?string $givenPassword){
         return (password_verify($givenPassword, HASHED_ADMIN_PASSWORD)) ? true : false;
     }
     
     private function redirectUser(){
         $url = ($this->isLogged) ? $this->adminPanelUrl : $this->loggingUrl;
+        if (basename($_SERVER['PHP_SELF']) == 'editor.php') 
+            return null;
         if (basename($_SERVER['PHP_SELF']) != $url){
             header("location: $url");
-            die();
+            exit();
         }
     }
     
-    public function controlAccess(string $givenPassword = null){
-        if (!$this->isLogged){
-            
-            if ($givenPassword !== null){
-                if ($this->isPasswordCorrect($givenPassword)){
-                    
-                    $this->isLogged = true;
-                    $auth = new TwoFactorAuth();
-                    
-                    if ($auth->isBrowserAuthenticated()){
-                        $this->redirectUser();
-                    } 
-                    
-                    else {               // 2FA
-                        header('location: 2FA.php');
-                        exit();
-                    }
-     
+    public function controlAccess(?string $givenPassword = null){
+
+        if ($this->isLogged)
+            $this->redirectUser();
  
-                }
-                
-                else $this->prompt = 'The given password is incorrect!';
-                
-            }
-            
-            else $this->redirectUser();
-            
+        if ($givenPassword === null){
+            $this->redirectUser();
+            return null;
         }
-        
+
+        if (!$this->isPasswordCorrect($givenPassword)){
+            $this->prompt = 'The given password is incorrect!';
+            return null;
+        }
+                    
+        $this->isLogged = true;
+        $auth = new TwoFactorAuth();
+
+        if (IS_TWO_FACTOR_AUTH_ENABLED !== true)
+            $this->redirectUser();
+                                 
+        if ($auth->isBrowserAuthenticated())
+            $this->redirectUser();
+                            
+        header('location: 2FA.php');
+        exit();
+                        
+
     }
     
     public function renderLoggingForm(): void{
@@ -105,7 +106,8 @@ END;
     }
     
     public function renderPrompt(): void{
-        if (isset($this->prompt)) echo '<div class="prompt fail">'.$this->prompt.'</div>';
+        if (isset($this->prompt))
+            echo '<div class="prompt fail">'.$this->prompt.'</div>';
     }
     
     public function __destruct(){
@@ -113,15 +115,11 @@ END;
         $_SESSION['prompt'] = $this->prompt;
     }
     
-    public static function renderHomeButton(): void{
-        echo '<a class="returnButtonLink" href="panel.php"><button class="returnButton">Wróć</button></a>';
-    }
-    
     public function handleFirstTimeLogging(bool $isFirstTime): void{
         if ($isFirstTime){
-        echo '<div class="prompt success">Instalacja powiodła się. Aby ją dokończyć...</div>
-        <div class="prompt info">1. Zaloguj się domyślnym hasłem: admin. 
-        Zmień to hasło od razu po zalogowaniu!</div>';
+            echo '<div class="prompt success">Instalacja powiodła się. Aby ją dokończyć...</div>
+                <div class="prompt info">1. Zaloguj się domyślnym hasłem: admin. 
+                Zmień to hasło od razu po zalogowaniu!</div>';
         if (Installer::removeInstallDirectory() === false)
             echo '<div class="prompt fail">2. Koniecznie usuń cały folder \'install\'. To ważne, ponieważ inaczej dowolna osoba będzie mogła włamać się na Twoją stronę!</div>';
         }
