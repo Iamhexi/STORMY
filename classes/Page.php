@@ -44,6 +44,9 @@ class Page extends Theme implements iTheme{
     
     public function renderHead(): void{
         $this->attachTracking();
+
+        $faviconLocation = (strpos($_SERVER['REQUEST_URI'], 'admin') === false)
+            ? 'themes/favicon.ico' : '../themes/favicon.ico';
         
         $author = $this->getAuthor();
         echo<<<END
@@ -57,7 +60,7 @@ class Page extends Theme implements iTheme{
             <meta name="description" content="{$this->settings->description}">
             <meta name="keywords" content="{$this->settings->keywords}">
             <meta name="author" content="$author">
-            <link rel="icon" href="themes/favicon.ico" type="image/x-icon">
+            <link rel="icon" href="{$faviconLocation}" type="image/x-icon">
             <meta http-equiv="X-Ua-Compatible" content="IE=edge">
             <style>{$this->addedCSS}</style>
 END;

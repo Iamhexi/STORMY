@@ -17,7 +17,7 @@ class EditingArticle extends Article implements iEditingArticle {
             <form class="articleEditor" action="$destination?url={$this->articleUrl}" method="POST">
                 <div><label><span>Tytuł</span><input class="articleEditorInput" type="" value="{$this->title}" name="title" required></label></div>
                 <div><img class="articleEditorPhoto" src="$photoDir$this->photo" alt="Zdjęcie do artykułu pt. {$this->title}"></div>
-                <div><label><span>Treść</span><textarea rows="4" cols="50" name="content" value="{$this->content}" class="articleEditorTextarea" required>{$this->content}</textarea></label></div>
+                <div><label><span>Treść</span><textarea rows="4" cols="50" name="content" value="{$this->content}" id="content" class="articleEditorTextarea" required>{$this->content}</textarea></label></div>
 END;
         DatabaseControl::renderCategorySelector($this->category, "category");
         DatabaseControl::renderCategorySelector($this->additionalCategory, "additionalCategory");
@@ -25,8 +25,8 @@ END;
                 <div><label><span>Data publikacji</span><input type="text" value="{$this->publicationDate}" name="publicationDate" class="articleEditorInput" required></label></div>
                 <div><input type="submit" value="Zapisz zmiany" name="savingArticle" class="button" required></div>
             </form>
-        
 END;
+        AddingArticle::provideEditor();
     }
     
     public function saveChanges(string $title = null, string $content, string $category = null, string $additionalCategory = null, string $publicationDate = null): bool{

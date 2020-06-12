@@ -174,7 +174,7 @@ li {
 
 .articleEditorPhoto {
 	display: block;
-	width: 80%;
+	max-width: 30vw;
 	margin: 0 auto;
 	border: 2px solid black;
 	border-radius: 3.5px;
@@ -378,7 +378,9 @@ li {
 	justify-content: center;
 }
 
-
+.ck-editor {
+	color: black;
+}
 
 .button {
 	background-color: var(--primary);
@@ -693,8 +695,26 @@ li {
     margin-right: 10px;
 }
 
+.ck-content {
+	min-height: 30vh;
+}
 
+.ck-editor {
+	width: 30vw !important;
+	border-radius: 
+}
 
+.ck-editor h1 {
+	font-size: 1.9rem;
+}
+
+.ck-editor h2 {
+	font-size: 1.5rem;
+}
+
+.ck-editor h3 {
+	font-size: 1.3rem;
+}
 
 @media only screen and (max-width: 600px) {
 	.loggingPanel {

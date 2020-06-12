@@ -28,7 +28,7 @@ class AddingArticle{
         
         $this->title = $this->sanitizeInput($title);
         $this->photo = $this->sanitizeInput($photo);
-        $this->content = $this->sanitizeInput($content);
+        $this->content = $content;
         $this->articleUrl = $this->sanitizeInput($articleUrl);
         $this->author = $this->sanitizeInput($author);
         $this->category = $this->sanitizeInput($category);
@@ -56,18 +56,16 @@ class AddingArticle{
         }
     }
     
-    private static function provideEnterSupport(): void{
+    public static function provideEditor(): void{
         echo<<<END
+        <script src="https://cdn.ckeditor.com/ckeditor5/19.1.1/classic/ckeditor.js"></script>
         <script>
-        document.getElementById("content")
-            .addEventListener("keyup", function(event) {
-            event.preventDefault();
-        if (event.keyCode === 13) {
-            let x = document.getElementById("content");
-            x.value += "</p><p>";
-        }
-    }); 
-    </script>
+            ClassicEditor
+                .create( document.querySelector( '#content' ) )
+                .catch( error => {
+                    console.error( error );
+                } );
+        </script>
 END;
     }
     
@@ -107,7 +105,7 @@ END;
         }, true);
         </script>
 END;
-                self::provideEnterSupport();
+                self::provideEditor();
     }
     
     
