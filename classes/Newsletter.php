@@ -7,23 +7,26 @@ interface iNewsletter {
     function renderEmails(): void;
     function getMailingListAsString(): ?string;
     function sendMail(string $subject, string $message);
-    function addEmail(string $email): bool;
+    function addEmailAddress(string $email): bool;
     function removeEmail(string $email): bool;
     function renderFrom(string $destinationFile): void;
 }
 
-
-$settingsForMail = new PageSettings();
-define("NEWSLETTER_EMAIL", $settingsForMail->__get("newsletterEmail"));
-define("TITLE", $settingsForMail->__get("title"));
 
 class Newsletter implements iNewsletter{
     use DatabaseControl;
     
     private string $emailsFile = 'mailing.txt';
     private array $mailingList;
+
+    private static string $websiteName;
+    private static string $newsletterSenderEmail;
     
     public function __construct($emailsFile = null){
+        $settings = new PageSettings();
+        self::$newsletterSenderEmail = $settings->__get("newsletterEmail"));
+        self::$websiteName = $settings->__get("title");
+
         if ($emailsFile != null) $this->emailsFile = $emailsFile;
         $this->loadEmails();
     }
@@ -58,13 +61,13 @@ class Newsletter implements iNewsletter{
     }
     
     public function sendMail(string $subject, string $message){
-        $title = TITLE;    
-        $newsletterEmail = NEWSLETTER_EMAIL;    
+        $websiteName = self::$websiteName;    
+        $senderEmail = self::$newsletterSenderEmail;    
 
         $headers[] = 'MIME-Version: 1.0';
         $headers[] = 'Content-type: text/html; charset=utf-8';
-        $headers[] = "From: $title <$newsletterEmail>";
-        $headers[] = "Bcc: $newsletterEmail";
+        $headers[] = "From: $websiteName <$senderEmail>";
+        $headers[] = "Bcc: $senderEmail";
 
         mail($this->getMailingListAsString(), $subject, $message, implode("\r\n", $headers));
     }
@@ -81,7 +84,7 @@ class Newsletter implements iNewsletter{
             throw new Exception("Couldn't save a new e-mail from user in the mailing file!");
     }
     
-    public function addEmail(string $email): bool{ // subscribe to newsletter
+    public function addEmailAddress(string $email): bool{ // subscribe to newsletter
         try {
             $this->addEmailToFile();
             return true;

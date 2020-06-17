@@ -4,7 +4,7 @@ trait UrlGenerator {
 	
 	private function generateUrlFromTitle(string $title): string {
         $title = $this->sanitizeInput($title);
-        $title = preg_replace('/\s+/', '', $title);
+        $title = preg_replace('/\s+/', '_', $title);
         $title = strtolower($title);
 
         if ($title == null)
