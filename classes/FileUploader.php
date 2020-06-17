@@ -40,7 +40,7 @@ class FileUploader {
     private function checkForErrors($errorIndex): void {
         switch ($errorIndex){
             case UPLOAD_ERR_OK:
-                return null;
+                return;
             break;
                 
             case UPLOAD_ERR_INI_SIZE:
