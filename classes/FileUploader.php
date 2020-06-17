@@ -3,21 +3,40 @@
 require_once 'ClassAutoLoader.php';
 $autoLoader = new ClassAutoLoader();
 
-interface iFileUploader {
-    public function uploadFile(array $fileArray): bool;
-}
 
-define("UPLOAD_DIRECTORY", '../'.AddingArticle::$photoDirectory);
-
-class FileUploader implements iFileUploader{
+class FileUploader {
     use DatabaseControl;
+
+    private static string $defaultUploadDirectory;
+    public string $uploadDirectory;
     
-    public string $uploadDirectory = "upload/storage/";
-    
-    public function __construct(string $uploadDirectory = UPLOAD_DIRECTORY){
-        if (!is_null($this->uploadDirectory)) $this->uploadDirectory = $uploadDirectory;
+    public function __construct(?string $uploadDirectory = null){
+        self::$defaultUploadDirectory = '../'.AddingArticle::$photoDirectory;
+        $this->uploadDirectory = 
+            ($uploadDirectory == null)
+             ? self::$defaultUploadDirectory
+             : $uploadDirectory;
     }
     
+    public function uploadFile(array $fileArray): bool{ // $_FILES['inputName']
+        if (!$this->handleUploadErrors($fileArray['error'])) 
+            return false;
+        if (!$this->moveFile($fileArray))
+            return false;
+
+        return true;
+    }
+    
+    private function handleUploadErrors($errorIndex): bool{
+        try {
+            $this->checkForErrors($errorIndex);
+            return true;
+        } catch (Exception $e){
+            $this->reportException($e);
+            return false;
+        }
+    }
+
     private function checkForErrors($errorIndex): ?Exception{
         switch ($errorIndex){
             case UPLOAD_ERR_OK:
@@ -26,7 +45,7 @@ class FileUploader implements iFileUploader{
                 
             case UPLOAD_ERR_INI_SIZE:
             case UPLOAD_ERR_FORM_SIZE:
-                throw new Exception("Maximal file size has been exceeded! Change max file size in php.ini or the maximal size of data uploaded in php form.");
+                throw new Exception("Maximal file size has been exceeded! Change max file size in php.ini or the maximal size of data uploaded in php form or upload a smaller file.");
             break;
                 
             case UPLOAD_ERR_PARTIAL:
@@ -46,7 +65,7 @@ class FileUploader implements iFileUploader{
             break;
                 
             case UPLOAD_ERR_EXTENSION:
-                throw new Exception("Uploading a file has been inturrupted by PHP extension.");
+                throw new Exception("Uploading a file has been inturrupted by a PHP extension.");
             break;
                 
                 default:
@@ -54,34 +73,13 @@ class FileUploader implements iFileUploader{
         }
     }
     
-    private function handleUploadErrors($errorIndex): bool{
-        try {
-            $this->checkForErrors($errorIndex);
-            return true;
-        } catch (Exception $e){
-            $this->reportException($e);
-            return false;
-        }
-    }
-    
-    private function getNewFileLocation(string $uploadedFileName): string {
-        return $this->uploadDirectory.$uploadedFileName;
-    }
-    
-    public function uploadFile(array $fileArray): bool{ // $_FILES['inputName']
-        if (!$this->handleUploadErrors($fileArray['error'])) return false;
+    private function moveFile(array $fileArray){
         $tmpLocation = $fileArray['tmp_name'];
         $newLocation = $this->uploadDirectory.$fileArray['name'];
         
-        if (!move_uploaded_file($tmpLocation, $newLocation)) return false;
-        return true;
-    }
-    
-    public function uploadFiles(){
-        
-    }
-    
-    public function renderUploadForm(){
-        
+        if (!move_uploaded_file($tmpLocation, $newLocation)) 
+            return false;
+        else 
+            return true;
     }
 }

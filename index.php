@@ -19,7 +19,6 @@ $autoLoader = new ClassAutoLoader();
     $page->renderMenu();
     
 
-
     @$articleGrid->renderThumbnails($_GET['category']);
 
 

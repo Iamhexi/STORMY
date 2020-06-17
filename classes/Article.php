@@ -4,9 +4,9 @@ require_once 'ClassAutoLoader.php';
 $autoLoader = new ClassAutoLoader();
 
 interface iArticle {
-    public function getTitle(): ?string;
-    public function getAuthor(): ?string;
-    public function renderArticle(): void;
+    function getTitle(): ?string;
+    function getAuthor(): ?string;
+    function renderArticle(): void;
 }
 
 class Article implements iArticle{ 
@@ -81,6 +81,6 @@ class Article implements iArticle{
         echo '<div class="articleText">'.$this->content.'</div>';
         echo '</article>';
     }
-    
+
     
 }

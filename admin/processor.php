@@ -11,10 +11,10 @@ $processor = new Processor;
 
 $action = 'error';
 
-if (isset($_POST['addingArticle'], $_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category']) && !DatabaseControl::mempty($_POST['title'], $_FILES['photo']['name'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category'])){
+if (isset($_POST['addingArticle'], $_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['author'], $_POST['category']) && !DatabaseControl::mempty($_POST['title'], $_FILES['photo']['name'], $_POST['content'], $_POST['author'], $_POST['category'])){
     $action = 'addEntry';
     
-    $processor->addArticle($_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['url'], $_POST['author'], $_POST['category'], $_POST['additionalCategory'], $_POST['publicationDateOnly'], $_POST['publicationTimeOnly']);
+    $processor->addArticle($_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['author'], $_POST['category'], $_POST['additionalCategory'], $_POST['publicationDateOnly'], $_POST['publicationTimeOnly']);
 }
  
 else if (isset($_POST['eraseErrorLog'])){ // ERASING ERROR LOG
@@ -34,6 +34,7 @@ else if (isset($_POST['saveMenuLayout'])){ /// ALTERING MENU: CHANGING, REMOVING
     $menu->updateMenu($_POST['name'], $_POST['order'], $_POST['destination'], $_POST['id'], $_POST['remove']);
     $action = 'editOptions';
 }
+
 
 else if (isset($_POST['addNewMenuElement'], $_POST['menuElementDestination'])){ // ADDING A NEW OPTION TO MENU
     $menu = new Menu(false);
@@ -77,15 +78,20 @@ else if (isset($_POST['savingSubpage'])){ // saving changes on subpage
 
 else if (isset($_POST['addingSubpage'])){ // adding a new subpage
     $subpageEditor = new SubpageEditor();
-    $subpageEditor->createSubpage($_POST['url'], $_POST['title']);
+    $subpageEditor->createSubpage($_POST['title']);
     $action = 'listSubpages';
 }
 
+else if (isset($_POST['removingSubpage'])){
+    $subpageEditor = new SubpageEditor();
+    if ($subpageEditor->removeSubpageWithId($_POST['id']))
+        $action = 'listSubpages';
+}
 
 else if (isset($_POST['addingCategory'])){ // adding a new category
     $categories = new Categories();
-    if (isset($_POST['categoryName'], $_POST['categoryUrl']))
-        $categories->add($_POST['categoryName'], $_POST['categoryUrl']);
+    if (isset($_POST['categoryName']))
+        $categories->add($_POST['categoryName']);
     $action = "addCategory";
 }
 

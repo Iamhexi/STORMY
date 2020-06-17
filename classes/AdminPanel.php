@@ -9,7 +9,7 @@ interface iAdminPanel {
 
 class AdminPanel {
     
-    private string $processorLocation = "processor.php";
+    private string $processorLocation = 'processor.php';
     private PageSettings $settings;
     private Page $page;
     private AdminAuth $adminAuth;
@@ -20,8 +20,8 @@ class AdminPanel {
         $this->adminAuth->handleloggingOut();
         @$this->adminAuth->controlAccess();
 
-        $this->settings = new PageSettings("../settings/default.json");
-        $this->page = new Page($this->settings, "..");
+        $this->settings = new PageSettings('../settings/default.json');
+        $this->page = new Page($this->settings, '..');
     }
     
     private function renderNewEntryForm(){
@@ -88,65 +88,81 @@ class AdminPanel {
     }
     
     private function renderErrorPrompt(): void{
-        echo '<div class="prompt fail">Nie udało się dokończyć wybranego działania.</div>';
-        echo '<a class="returnButtonAfterExit" href="panel.php">Powrót</a>';
+        echo '<div class="prompt fail">Nie udało się dokończyć wybranego działania.</div>
+              <a class="returnButtonAfterExit" href="panel.php">Powrót</a>';
+    }
+
+    private function renderEntryAndSubpageEditor(): void {
+        if (isset($_GET['url'])){
+            $EditingArticle = new EditingArticle($_GET['url']);
+            $EditingArticle->renderEditor($this->processorLocation);
+        }
+
+        else if (isset($_GET['purl'])){
+            $subpageEditor = new SubpageEditor;
+            $subpageEditor->renderEditor($this->processorLocation, $_GET['purl']);
+        }
     }
     
     private function handleAction(?string $action){
         switch ($action){
-            case "addEntry":
+            case 'addEntry':
                 $this->renderNewEntryForm();
             break;
                 
-            case "entryList":
+            case 'entryList':
                 $this->renderListOfArticles();
             break; 
+
+            case 'entryAndSubpageEditor':
+                $this->renderEntryAndSubpageEditor();
+            break;
             
-            case "commentStats":
+            case 'commentStats':
                 $this->renderCommentsStatictics();
             break;
             
-            case "normalStats":
+            case 'normalStats':
                 $this->renderVisitsStatistics();
             break;
             
-            case "addSubpage":
+            case 'addSubpage':
                 $this->renderAddingSupageForm();
             break;
             
-            case "listSubpages":
+            case 'listSubpages':
                 $this->renderListOfSubpages();
             break;
             
-            case "addOption":
+            case 'addOption':
                 $this->renderNewMenuElementForm();
             break; 
                 
-            case "addCategory":
+            case 'addCategory':
                 $this->renderAddingCategoryForm();
             break;
                 
-            case "removeCategory":
+            case 'removeCategory':
                 $this->renderRemovingCategoryfForm();
             break;
             
-            case "editOptions":
+            case 'editOptions':
                 $this->renderListOfMenuOptions();
             break; 
             
-            case "settings":
+            case 'settings':
                 $this->renderSettingsEditor();
             break;
             
-            case "errorLog":
+            case 'errorLog':
                 $this->renderErrorLog();
             break;
                 
-            case "10lastComments":
+            case '10lastComments':
                 $this->renderCommentsPreview();
             break;
                 
-            case "commentsReviewPanel":
+            case 'commentsReviewPanel':
                 $this->renderCommentsReviewPanel();
             break;
                 

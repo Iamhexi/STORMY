@@ -4,7 +4,7 @@ require_once 'ClassAutoLoader.php';
 $autoLoader = new ClassAutoLoader();
 
 interface SubpageManagement{
-    function createSubpage(string $url, string $title): bool;
+    function createSubpage(string $title): bool;
     function removeSubpageWithUrl(string $url): bool;
     function removeSubpageWithId(int $id): bool;
     function editSubpageWithUrl(string $url, $title, $content): bool;
@@ -29,6 +29,7 @@ class Subpage{
 
 class SubpageEditor implements SubpageManagement{
     use DatabaseControl;
+    use UrlGenerator;
     
     private Subpage $currentSubpage;
     private array $subpages;
@@ -38,8 +39,9 @@ class SubpageEditor implements SubpageManagement{
         $subpages = array();
     }
     
-    private function createNewSubpage(string $url, string $title): ?Exception{
+    private function createNewSubpage(string $title): ?Exception{
         $content = '<h1>Nowa podstrona</h1><p>Właśnie utworzyłeś nową podstronę. Teraz możesz edytować ją z poziomu panelu administratora. Dodaj tutaj, co tylko chcesz. Nie zapomnij tylko podpiąć tej podstrony do menu.    Miłego tworzenia!</p>';
+        $url = $this->generateUrlFromTitle($title);
         $query = "INSERT INTO $this->table (url, title, content) VALUES ('$url', '$title', '$content')";
         
         if (@!($this->performQuery($query)))
@@ -48,9 +50,9 @@ class SubpageEditor implements SubpageManagement{
         return null;
     }
     
-    public function createSubpage(string $url, string $title): bool{
+    public function createSubpage(string $title): bool{
         try {
-            $this->createNewSubpage($url, $title);
+            $this->createNewSubpage($title);
             return true;
         } catch (Exception $e){
             $this->reportException($e);
@@ -64,7 +66,6 @@ class SubpageEditor implements SubpageManagement{
             <header class="header">Tworzenie nowej podstrony</header>
             <form class="subpageCreator" method="POST" action="$destination">
                 <div><label><span>Nazwa podstrony</span> <input type="text" class="subpageCreatorInput" name="title" required></label></div>
-                <div title="Bez polskich znaków, spacji ani kropek."><label><span>URL podstrony</span> <input type="text" class="subpageCreatorInput" name="url" required></label></div>
                 <div><input type="submit" class="button" name="addingSubpage" value="Stwórz podstronę!"></div>
             </form>
         </div>
@@ -172,25 +173,28 @@ END;
             return $emptySubpage;
         }  
     }
-    
+  
     
     
     public function renderEditor(string $destination, string $url): void{
         $currentSubpage = $this->loadByUrl($url);
         
         echo<<<END
-        <form action="$destination" method="POST" class="subpageEditor">
+        <form action="$destination" method="POST" class="articleEditor">
             <input style="display:none;" type="number" name="id" value="{$currentSubpage->id}">
-            <div><label>URL strony <input class="addingInput" type="text" name="url" value="$url" disabled></label></div>
-            <div><label>Tytuł strony <input class="addingInput" type="text" name="title" value="{$currentSubpage->title}"></label></div>
-            <div><label>Zawartość HTML <textarea class="subpageEditorTextarea" cols="70" rows="25" name="content">{$currentSubpage->content}</textarea></label></div>
-            <div><input type="submit" class="subpageEditorButton" name="savingSubpage" value="Zapisz"></div>
+            <div><label><span>URL strony</span><input class="addingInput" type="text" name="url" value="$url" disabled></label></div>
+            <div><label><span>Tytuł strony</span><input class="addingInput" type="text" name="title" value="{$currentSubpage->title}"></label></div>
+            <div><label><span>Zawartość</span><textarea class="subpageEditorTextarea" cols="70" rows="25" id="content" name="content">{$currentSubpage->content}</textarea></label></div>
+            <div><input type="submit" class="button" name="savingSubpage" value="Zapisz"></div>
         </form>
+
         <form action="$destination" method="POST" class="subpageDeletion">
             <input style="display:none;" type="number" name="id" value="{$currentSubpage->id}">
-            <div title="Tego procesu nie można cofnąć!"><input type="submit" name="removingSubpage" value="Usuń podstronę"></div>
+            <div title="Tego procesu nie można cofnąć!"><input type="submit" name="removingSubpage" class="button removingButton" value="Usuń podstronę"></div>
         </form>
 END;
+
+        AddingArticle::provideEditor();
     }
     
     
@@ -207,7 +211,7 @@ END;
             throw new Exception("Couldn't load categories from database!");
 
         while ($fetched = $result->fetch_array(MYSQLI_BOTH))
-            $this->subpages[] = array("title" => $fetched['title'], "url" => $fetched['url']);
+            $this->subpages[] = array('title' => $fetched['title'], 'url' => $fetched['url']);
         
     }
     
@@ -221,19 +225,19 @@ END;
         }
     }
     
-    public function renderListOfSubpages(): void{
+    public function renderListOfSubpages(): void {
         if ($this->loadListOfSubpages() && !empty($this->subpages)){
             echo '<article class="subpageList"><header class="header">Edycja podstron</header>';
             foreach($this->subpages as $page){
-                echo '<a href="editor.php?purl='.$page['url'].'">'.$page['title'].'</a><br>';
+                echo '<a href="panel.php?action=entryAndSubpageEditor&purl='.$page['url'].'">'.$page['title'].'</a><br>';
             }
             echo '</article>';
-        } else {
+        } else
             echo '<p style="text-align: center;">Nie dodano jeszcze żadnych podstron. Dodaj nową podstronę, wybierając "Podstrony" -> "Dodaj nową".</p>';
-        }
+        
     }
     
-    private function getArrayOfSubpages(): array{
+    private function getArrayOfSubpages(): array {
         if ($this->loadListOfSubpages() && $this->subpages !== null)
             return $this->subpages;
         else 

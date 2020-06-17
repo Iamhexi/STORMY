@@ -15,31 +15,35 @@ interface AdministratorAuthentication {
 }
 
 
-$settings = new PageSettings("../settings/default.json");
-define('HASHED_ADMIN_PASSWORD', $settings->getAdminPassword());
-define('IS_TWO_FACTOR_AUTH_ENABLED', $settings->__get('twoFactorAuth'));
-
 class AdminAuth implements AdministratorAuthentication {
+
+    private static string $hashedAdminPassword;
+    private static bool $isTwoFactorAuthEnabled; 
+    private static PageSettings $settings;
+
     private bool $isLogged;
     private string $loggingUrl;
     private string $adminPanelUrl;
     private ?string $prompt;
     
-    public function __construct(bool $isLogged = false){
-        $this->isLogged = $isLogged;
+    public function __construct(?bool $isLogged = false){
+        self::$settings = new PageSettings("../settings/default.json");
+        self::$isTwoFactorAuthEnabled = self::$settings->__get('twoFactorAuth');
+        self::$hashedAdminPassword = self::$settings->getAdminPassword();
+
+        $this->isLogged = ($isLogged == null) ? false : $isLogged;
+
         $this->loggingUrl = 'login.php';
         $this->adminPanelUrl = 'panel.php';
         @$this->prompt = $_SESSION['prompt'];
     }
     
     private function isPasswordCorrect(?string $givenPassword){
-        return (password_verify($givenPassword, HASHED_ADMIN_PASSWORD)) ? true : false;
+        return password_verify($givenPassword, self::$hashedAdminPassword);
     }
     
     private function redirectUser(){
         $url = ($this->isLogged) ? $this->adminPanelUrl : $this->loggingUrl;
-        if (basename($_SERVER['PHP_SELF']) == 'editor.php') 
-            return null;
         if (basename($_SERVER['PHP_SELF']) != $url){
             header("location: $url");
             exit();
@@ -64,7 +68,7 @@ class AdminAuth implements AdministratorAuthentication {
         $this->isLogged = true;
         $auth = new TwoFactorAuth();
 
-        if (IS_TWO_FACTOR_AUTH_ENABLED !== true)
+        if (self::$isTwoFactorAuthEnabled !== true)
             $this->redirectUser();
                                  
         if ($auth->isBrowserAuthenticated())

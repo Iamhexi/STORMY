@@ -566,8 +566,7 @@ li {
 	border-radius: 1.5px;
 }
 
-.mainMenu li ul li:hover
- {
+.mainMenu li ul li:hover {
 	background-color: var(--primary-variant);
 }
 
@@ -683,6 +682,10 @@ li {
     background-color: var(--primary-variant);
 }
 
+.removingButton {
+	color: #fff;
+	background-color: #F00;
+}
 
 .handle {
     max-width: 34px;

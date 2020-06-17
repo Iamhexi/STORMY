@@ -37,7 +37,8 @@ END;
             
                 <section class="adminArticleGrid">
                     <header class="adminArticleTitle">$title</header>
-                    <a class="adminArticleLink" href="editor.php?url=$articleUrl">
+                    <a class="adminArticleLink" 
+                    href="panel.php?action=entryAndSubpageEditor&url=$articleUrl">
                     <img class="adminArticlePhoto" src="../$photoDirectory/$photo" alt="Zdjęcie do artykułu pt. $title">
                     <div>Kliknij, aby edytować...</div>
                     </a>

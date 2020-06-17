@@ -7,7 +7,7 @@ interface iCategories {
     function getCategoriesArray(): array;
     function saveAll(): bool;
     function editCategory(int $givenId, string $givenTitle, $givenUrl = null): void;
-    function add(string $title, string $url): bool;
+    function add(string $title): bool;
     function removeWithUrl(string $url): bool;
     static function renderRemovalForm(string $destination): void;
     static function renderAddingForm(string $destination): void;
@@ -15,6 +15,7 @@ interface iCategories {
 
 class Categories implements iCategories{
     use DatabaseControl;
+    use UrlGenerator;
     
     private string $table;
     private array $categories;
@@ -120,15 +121,16 @@ class Categories implements iCategories{
         }
     }
     
-    private function addCategory(string $title, string $url){
+    private function addCategory(string $title){
+        $url = $this->generateUrlFromTitle($title);
         $query = "INSERT INTO $this->table (categoryTitle, categoryUrl) VALUES ('$title', '$url')";
         if (@!($this->performQuery($query)))
             throw new Exception("Couldn't update");
     }
     
-    public function add(string $title, string $url): bool{
+    public function add(string $title): bool{
         try {
-            $this->addCategory($title, $url);
+            $this->addCategory($title);
             return true;
         } catch (Exception $e){
             $this->reportException($e);
@@ -190,8 +192,7 @@ END;
         echo<<<END
             <form action="$destination" method="POST" class="addingCategoryForm">
                 <header class="header">Dodawanie kategorii</header>
-                   <div><label><span>Nazwa kategorii</span> <input type="text" name="categoryName" required autofocus></label></div>
-                <div title="Bez polskich znaków, spacji, tabulatorów"><label><span>URL kategorii</span> <input type="text" name="categoryUrl" required></label></div>
+                <div><label><span>Nazwa kategorii</span> <input type="text" name="categoryName" required autofocus></label></div>
                 <div><input type="submit" class="button" name="addingCategory" value="Dodaj kategorię"></div>
             </form>
 END;

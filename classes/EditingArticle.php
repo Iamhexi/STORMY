@@ -11,7 +11,7 @@ interface iEditingArticle {
 class EditingArticle extends Article implements iEditingArticle {
     use DatabaseControl;
     
-    public function renderEditor(string $destination = "processor.php"): void{
+    public function renderEditor(string $destination = 'processor.php'): void{
         $photoDir = '../'.AddingArticle::$photoDirectory;
         echo<<<END
             <form class="articleEditor" action="$destination?url={$this->articleUrl}" method="POST">

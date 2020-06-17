@@ -144,7 +144,7 @@ class Installer implements iInstaller{
             <div><label>Hasło użytkownika bazy danych: <input type="password" name="dbPassword" class="installerInput"></label></div>
             <div><label>Nazwa bazy danych: <input type="name" name="dbName" class="installerInput" required></label></div>
             <div title="Koniecznie podaj poprawny e-mail, ponieważ inaczej nie będziesz w stanie się zalogować."><label>E-mail administratora: <input type="email" name="adminEmail" class="installerInput" required></label></div>
-            <div><input type="submit" value="Instaluj STORMY!"></div>
+            <div><input type="submit" value="Instaluj STORMY"></div>
         </form>
 END;
     }

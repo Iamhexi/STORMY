@@ -5,9 +5,11 @@ $autoLoader = new ClassAutoLoader();
 
 class AddingArticle{
     use DatabaseControl;
+    use UrlGenerator;
     
     private string $title;
-    public static string $photoDirectory = "upload/photos/"; /// All uploaded photo will be store here
+    public static string $photoDirectory = "upload/photos/";  /// All uploaded photo will be store here
+
     private string $photo;
     private string $content;
     private ?string $publicationDate;
@@ -24,12 +26,12 @@ class AddingArticle{
         return "INSERT INTO $table (title, photo, content, articleUrl, author, $p2 category, additionalCategory) VALUES ('{$this->title}', '{$this->photo}', '{$this->content}', '{$this->articleUrl}', '{$this->author}', $p '{$this->category}', '{$this->additionalCategory}')";
     }
     
-    public function __construct(string $title, string $photo, string $content, string $articleUrl, string $author, string $category, ?string $additionalCategory = null, ?string $publicationDate = null){
+    public function __construct(string $title, string $photo, string $content, string $author, string $category, ?string $additionalCategory = null, ?string $publicationDate = null){
         
         $this->title = $this->sanitizeInput($title);
         $this->photo = $this->sanitizeInput($photo);
         $this->content = $content;
-        $this->articleUrl = $this->sanitizeInput($articleUrl);
+        $this->articleUrl = $this->generateUrlFromTitle($title);
         $this->author = $this->sanitizeInput($author);
         $this->category = $this->sanitizeInput($category);
         
@@ -43,7 +45,9 @@ class AddingArticle{
             $this->sanitizeInput($additionalCategory);
         
         $this->addArticle();
+
     }
+
     
     private function addArticle(){
         try {
@@ -77,7 +81,6 @@ END;
     <header class="header">Dodawanie wpisu</header>
     <div><label><span>Tytuł</span><input type="text" class="addingInput" name="title" required></label></div>
     <div><label><span>Zdjęcie</span><i class="fas fa-upload photoUploaderIcon"></i><input id="photoUploaderInput" type="file" name="photo" class="addingInput"></label></div>
-    <div><label><span>URL</span><input type="text" name="url" placeholder="przyjazny-link-123" class="addingInput" required></label></div>
     <div><label><span>Autor</span><input type="text" name="author" class="addingInput" required></label></div>
 
 END;
@@ -89,7 +92,7 @@ END;
     <div><label><span>Treść</span><textarea spellcheck="true" id="content" name="content" class="addingInput" required><p></textarea></label></div>    
 
 
-    <div><input type="submit" value="Dodaj wpis!" name="addingArticle" class="addingSubmitButton"></div>
+    <div><input type="submit" value="Dodaj wpis" name="addingArticle" class="addingSubmitButton"></div>
 </form>
         <script>
         document.querySelector('#photoUploaderInput').addEventListener('input', function () {

@@ -4,7 +4,7 @@ require_once 'ClassAutoLoader.php';
 $autoLoader = new ClassAutoLoader();
 
 interface CommandsProcessor{
-    function addArticle(string $title, array $photoFile, string $content, string $url, string $author, string $category, $additionalCategory = null, $publicationDateOnly = null, $publicationTimeOnly = null): void;
+    function addArticle(string $title, array $photoFile, string $content, string $author, string $category, $additionalCategory = null, $publicationDateOnly = null, $publicationTimeOnly = null): void;
 }
 
 class Processor implements CommandsProcessor {
@@ -25,12 +25,12 @@ class Processor implements CommandsProcessor {
         return $photoFile['name'];
     }
     
-    public function addArticle(string $title, array $photoFile, string $content, string $url, string $author, string $category, $additionalCategory = null, $publicationDateOnly = null, $publicationTimeOnly = null): void{
+    public function addArticle(string $title, array $photoFile, string $content, string $author, string $category, $additionalCategory = null, $publicationDateOnly = null, $publicationTimeOnly = null): void{
         
         $publicationDate = $this->preparePublicationDate($publicationDateOnly, $publicationTimeOnly);
         $photoName = $this->handleUploadingPhoto($photoFile);
         
-        $addingArticle = new addingArticle($title, $photoName, $content, $url, $author, $category, $additionalCategory, $publicationDate);
+        $addingArticle = new addingArticle($title, $photoName, $content, $author, $category, $additionalCategory, $publicationDate);
     }
     
     

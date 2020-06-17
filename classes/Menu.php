@@ -97,13 +97,27 @@ document.addEventListener(\'dragend\', function() {
         echo '<a href="'.$destination.'">'.$name.'</a>';
     }
     
-    private function renderElementForAdmin(string $name, string $destination, int $order, int $id): void{
-        echo '<div><i class="fas fa-arrows-alt-v handle"></i><input type="number" style="display:none;" name="id[]" value="'.$id.'">';
-        echo '<input type="number" name="order[]" class="menuEditorElementOrder" value="'.$order.'">';
-        echo '<label class="checkboxLabel" title="Nazwa wyświetlana w menu."><span>Nazwa odnośnika</span><input type="text" name="name[]" class="menuEditorElementName" value="'.$name.'"></label>';
-        echo '<label title="Zalecamy nie zmieniać wartości tego pola, o ile to nie jest konieczne. Wskazuje ono, dokąd zostanie przkierowany użytkownik po kliknięciu w odnośnik."><span>Dokąd prowadzi?</span><input type="text" name="destination[]" class="menuEditorElementDestination" value="'.$destination.'"></label>';
-        echo '<label class="switch" title="Jeśli chcesz usunąć odnośnik z menu, zaznacz tę opcję."><span>Do usunięcia?</span><input type="checkbox" name="remove[]" class="menuEditorCheckbox"><span class="checkbox"></span></label></div>';
-             
+    private function renderElementForAdmin(string $name, string $destination, int $order, int $id): void {
+        echo<<<END
+            <div>
+                <i class="fas fa-arrows-alt-v handle"></i>
+                <input type="number" style="display:none;" name="id[]" value="$id">
+                <input type="number" name="order[]" class="menuEditorElementOrder" value="$order">
+                <label class="checkboxLabel" title="Nazwa wyświetlana w menu.">
+                    <span>Nazwa odnośnika</span>
+                    <input type="text" name="name[]" class="menuEditorElementName" value="$name">
+                </label>
+END;
+        Menu::renderDestinationSelectorForEditor($destination);
+
+        echo<<<END
+                <label class="switch" title="Jeśli chcesz usunąć odnośnik z menu, zaznacz tę opcję.">
+                    <span>Do usunięcia?</span>
+                    <input type="checkbox" name="remove[]" class="menuEditorCheckbox">
+                    <span class="checkbox"></span>
+                </label>
+            </div>
+END;
     }
     
     private function updateElements(array $name, array $order, array $destination, array $id, $toRemove): ?Exeption{
@@ -117,12 +131,14 @@ document.addEventListener(\'dragend\', function() {
             
         if (!isset($toRemove[$i])){
             $query = "UPDATE $table SET visibleName = '$elementName', optionOrder = '$elementOrder', destination = '$elementDestination' WHERE optionId = '$elementId'";
-            if (!$this->performQuery($query)) throw new Exception("Couldn't update menu with data: optionId = $id, optionOrder = $order, destination = $destination, visibleName = $name!");
+            if (!$this->performQuery($query)) 
+                throw new Exception("Couldn't update menu with data: optionId = $id, optionOrder = $order, destination = $destination, visibleName = $name!");
         }  
             
         else {
             $query = "DELETE FROM $table WHERE optionId = '$elementId'";
-            if (!$this->performQuery($query)) throw new Exception("Couldn't delete menu option with data: optionId = $id, optionOrder = $order, destination = $destination, visibleName = $name!");
+            if (!$this->performQuery($query))
+                throw new Exception("Couldn't delete menu option with data: optionId = $id, optionOrder = $order, destination = $destination, visibleName = $name!");
         }
             
             $i++;
@@ -161,6 +177,64 @@ document.addEventListener(\'dragend\', function() {
         
         echo '</select></label></div>';
     }
+
+    private static function renderDestinationSelectorForEditor(string $destination): void{
+        $categories = new Categories;
+        $pageSettings = new PageSettings("../settings/default.json");
+        $pageManager = new CustomPageManager($pageSettings);
+        
+        $arrayOfCategories = $categories->getCategoriesArray();
+        $arrayOfSubpages = $pageManager->getArrayOfSubpages();
+        
+        echo '<div><label><span>Dokąd prowadzi</span><select name="destination[]">';
+        
+        if ($pageSettings->__get('url') === $destination)
+            echo '<option value="'.$pageSettings->__get("url").'" selected>
+                    Strona główna
+                  </option>';
+        else 
+            echo '<option value="'.$pageSettings->__get("url").'" selected>
+                    Strona główna
+                  </option>';
+
+
+        foreach ($arrayOfCategories as $category){
+            $selected = '';
+            if (self::matchesDestination($category['categoryUrl'], 'category', $destination))
+                $selected = 'selected';
+
+            echo "<option value=\"index.php?category={$category['categoryUrl']}\" $selected>KATEGORIA: {$category['categoryTitle']}</option>";
+        }
+        
+        foreach ($arrayOfSubpages as $subpage){
+            $selected = '';
+            if (self::matchesDestination($subpage['url'], 'subpage', $destination))
+                $selected = 'selected';
+            echo "<option value=\"page.php?purl={$subpage['url']}\" $selected>PODSTRONA: {$subpage['title']}</option>";
+        }
+        
+        echo '</select></label></div>';
+    }
+
+    private static function matchesDestination(string $id, string $type, string $final): bool {
+        if ($type === 'category'){
+            if ('index.php?category='.$id === $final)
+                return true;
+            else 
+                return false;
+        }
+
+        else if ($type === 'subpage'){
+            if ('page.php?purl='.$id === $final)
+                return true;
+            else 
+                return false;
+        }
+
+        else 
+            throw new Exception('Unknown type of element!');
+            
+    }
     
     public static function renderAddingElementForm(string $destination): void{ 
         echo<<<END
@@ -187,11 +261,13 @@ END;
         return null;
     }
     
-    public function addElement(string $name, string $destination){
+    public function addElement(string $name, string $destination): bool {
         try {
             $this->addElementToDB($name, $destination);
+            return true;
         } catch (Exception $e){
             $this->reportException($e);
+            return false;
         } 
     }
     
