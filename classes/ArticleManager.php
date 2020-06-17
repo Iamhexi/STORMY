@@ -26,7 +26,8 @@ class ArticleManager {
 
     protected function loadFromDbUsingUrl(string $url): bool {
         $query = $this->prepareQuery($url);
-        if (!($data = $this->performQuery($query, true))) return false;
+        if (!($data = $this->performQuery($query, true))) 
+            return false;
 
         $article = new Article(
             $data['news_id'],

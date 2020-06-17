@@ -1,14 +1,10 @@
 <?php
 
-require_once "../classes/ErrorLog.php";
-require_once "../classes/EditingArticle.php";
-require_once "../classes/Menu.php";
-require_once "../classes/PageSettings.php";
-require_once "../classes/CommentsStatistics.php";
-require_once "../classes/SubpageEditor.php";
-require_once "../classes/Processor.php";
-$processor = new Processor;
+require_once '../classes/ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
+
+$processor = new Processor;
 $action = 'error';
 
 if (isset($_POST['addingArticle'], $_POST['title'], $_FILES['photo'], $_POST['content'], $_POST['author'], $_POST['category']) && !DatabaseControl::mempty($_POST['title'], $_FILES['photo']['name'], $_POST['content'], $_POST['author'], $_POST['category'])){

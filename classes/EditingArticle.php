@@ -14,6 +14,7 @@ interface iEditingArticle {
       ): bool;
 }
 
+
 class EditingArticle extends ArticleManager implements iEditingArticle {
     use DatabaseControl;
 
@@ -25,7 +26,7 @@ class EditingArticle extends ArticleManager implements iEditingArticle {
     public function renderEditor(string $destination = 'processor.php'): void{
         $photoDir = '../'.AddingArticle::$photoDirectory;
         echo<<<END
-            <form class="articleEditor" action="$destination?url={$this->loadedArticle->articleUrl}" method="POST">
+            <form class="articleEditor" action="$destination?url={$this->loadedArticle->url}" method="POST">
                 <div><label><span>Tytuł</span><input class="articleEditorInput" type="" value="{$this->loadedArticle->title}" name="title" required></label></div>
                 <div><img class="articleEditorPhoto" src="$photoDir/{$this->loadedArticle->photo}" alt="Zdjęcie do artykułu pt. {$this->loadedArticle->title}"></div>
                 <div><label><span>Treść</span><textarea rows="4" cols="50" name="content" value="{$this->loadedArticle->content}" id="content" class="articleEditorTextarea" required>{$this->loadedArticle->content}</textarea></label></div>
@@ -42,11 +43,11 @@ END;
     }
     
     public function saveChanges(
-        string $title = null,
-        string $content,
-        string $category = null,
-        string $additionalCategory = null,
-        string $publicationDate = null
+        ?string $title = null,
+        ?string $content,
+        ?string $category = null,
+        ?string $additionalCategory = null,
+        ?string $publicationDate = null
        ): bool {
 
         $table = self::$tableName;
@@ -60,7 +61,13 @@ END;
         if (!is_null($publicationDate)) 
             $this->loadedArticle->publicationDate = $publicationDate;
         
-        $query = "UPDATE $table SET title = '$this->title', content = '$this->content', publicationDate = '$this->publicationDate', category='$this->category', additionalCategory = '$this->additionalCategory' WHERE articleUrl = '$this->articleUrl'";
+        $query = "UPDATE $table SET 
+            title = '{$this->loadedArticle->title}',
+            content = '{$this->loadedArticle->content}',
+            publicationDate = '{$this->loadedArticle->publicationDate}',
+            category='{$this->loadedArticle->category}',
+            additionalCategory = '{$this->loadedArticle->additionalCategory}'
+            WHERE articleUrl = '{$this->loadedArticle->url}'";
         
         if (!($this->performQuery($query))) 
             return false;
