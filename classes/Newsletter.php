@@ -39,12 +39,11 @@ class Newsletter implements iNewsletter{
         }
     }
     
-    private function loadMailingList(): ?Exception{
+    private function loadMailingList(): void {
         if (@!$lines = file($this->emailsFile))
             throw new Exception("Couldn't open mailing list from the file $this->emailsFile or the file is empty!");
         
         $this->mailingList = $lines;
-        return null;
     }
     
     public function renderEmails(): void{

@@ -51,7 +51,7 @@ protected function sanitizeInput(string $input): string {
     return filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 }
     
-public static function renderCategorySelector(string $defaultValue, string $htmlAttributeName): void{
+public static function renderCategorySelector(string $defaultValue, string $htmlAttributeName): void {
         $categories = new Categories();
         $categoryList = $categories->getCategoriesArray();
         

@@ -14,6 +14,7 @@ interface CommentsManager {
     function renderCommentForm(string $url): void;
 }
 
+
 class Comments implements CommentsManager {
     use DatabaseControl;
     

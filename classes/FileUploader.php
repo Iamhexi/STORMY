@@ -37,7 +37,7 @@ class FileUploader {
         }
     }
 
-    private function checkForErrors($errorIndex): ?Exception{
+    private function checkForErrors($errorIndex): void {
         switch ($errorIndex){
             case UPLOAD_ERR_OK:
                 return null;

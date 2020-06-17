@@ -153,7 +153,7 @@ END;
 END;
     }
     
-    private function renderCommentsFromDb(int $howMany): ?Exception{
+    private function renderCommentsFromDb(int $howMany): void {
         $zeroComments = true;
         
         $query = $this->prepareQueryForRetrievingComments($howMany);
@@ -169,8 +169,6 @@ END;
         if ($zeroComments)
             echo 'Żadne komentarze nie zostały jeszcze dodane. Zajrzyj tu później, kiedy jakieś się już pojawią.';
 
-        
-        return null;
     }
     
     public function renderCommentsPreview(int $howMany = 10): void{

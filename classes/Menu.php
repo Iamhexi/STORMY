@@ -250,15 +250,12 @@ END;
     }
     
     
-    private function addElementToDB(string $name, string $destination): ?Exception{
+    private function addElementToDB(string $name, string $destination): void {
         $table = DatabaseControl::$menuTable;
         $query = "INSERT INTO $table (optionOrder, visibleName, destination) VALUES ('1', '$name', '$destination')";
         
         if (@!$this->performQuery($query))
             throw new Exception("Couldn't add a new option to menu!");
-        
-        
-        return null;
     }
     
     public function addElement(string $name, string $destination): bool {

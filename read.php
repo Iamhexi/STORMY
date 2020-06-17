@@ -1,29 +1,34 @@
 <?php
 
-if (!isset($_GET['url'])) header('location: index.php');
+$url = $_GET['url'];
+if (!isset($url) || empty($url)){
+	header('location: index.php');
+	exit();
+}
 
-
-require_once "classes/Article.php";
-require_once "classes/Comments.php";
-require_once "classes/Menu.php";
+require_once 'classes/ClassAutoLoader.php';
+$autoLoader = new ClassAutoLoader();
 
 $pageSettings = new PageSettings();
 $page = new Page($pageSettings);
+$articleManager = new ArticleManager();
+if ($articleManager->loadArticleByUrl($url)){
 
-@$article = new Article($_GET['url']);
-$page->setTitle($article->getTitle());
-$page->setAuthor($article->getAuthor());
+	$page->setTitle($articleManager->getTitle());
+	$page->setAuthor($articleManager->getAuthor());
 
-$page->renderHead();
+	$page->renderHead();
 
-$comments = new Comments();
-if (isset($_POST['commented'])) $comments->addComment($_GET['url'], $_POST['name'], $_POST['content']);
+	$comments = new Comments();
+	if (isset($_POST['commented']))
+		$comments->addComment($url, $_POST['name'], $_POST['content']);
 
-$page->renderMenu();
+	$page->renderMenu();
 
-$article->renderArticle();
+	$articleManager->renderLoadedArticle();
 
-$comments->renderCommentForm($_GET['url']);
-$comments->renderComments($_GET['url']);
+	$comments->renderCommentForm($url);
+	$comments->renderComments($url);
 
-$page->renderFooter();
+	$page->renderFooter();
+}

@@ -31,7 +31,7 @@ class Installer implements iInstaller{
             $this->runInstallation();
             
             header('location: ../admin/login.php?firstTime=1');
-            
+            exit();
             
         } catch (Exception $e){
             echo 'Instalacja nie powiodła się: ';
@@ -41,7 +41,7 @@ class Installer implements iInstaller{
         }
     }
     
-    private function runInstallation(): ?Exception{
+    private function runInstallation(): void {
         if (!$this->setAdminEmail())
             throw new Exception("Cannot set admin e-mail to configuration file. Insert correct e-mail or try later.");
         if (!($this->canConnect()))
@@ -52,9 +52,6 @@ class Installer implements iInstaller{
             throw new Exception("Couldn't import SQL data to database. Check whether the file exits. ");
         if (!($this->createDatabaseConnectionFile()))
             throw new Exception("Coldn't create the database configuration file! Try again using another database name.");
-        
-        
-        return null;
     }
     
     private function setAdminEmail(): bool{

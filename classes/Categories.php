@@ -53,7 +53,7 @@ class Categories implements iCategories{
         }
     }
     
-    private function getCategoryNameByUrl(string $searchedUrl): ?string{
+    private function getCategoryName(string $searchedUrl): ?string{
         $this->loadCategoriesFromDb();
         foreach ($this->categories as $category){
             if ($category['categoryUrl'] === $searchedUrl)
@@ -63,8 +63,8 @@ class Categories implements iCategories{
         return null;
     }
     
-    public function getCategoryName(string $searchedUrl): string{
-        $output = $this->getCategoryNameByUrl($searchedUrl);
+    public function getCategoryNameByUrl(string $searchedUrl): string{
+        $output = $this->getCategoryName($searchedUrl);
         if ($output === null)
             return 'Nieznana kategoria';
         else return $output;

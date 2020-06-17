@@ -30,6 +30,8 @@ class Subpage{
 class SubpageEditor implements SubpageManagement{
     use DatabaseControl;
     use UrlGenerator;
+
+    private const NEW_PAGE_CONTENT = '<h1>Nowa podstrona</h1><p>Właśnie utworzyłeś nową podstronę. Teraz możesz edytować ją z poziomu panelu administratora. Dodaj tutaj, co tylko chcesz. Nie zapomnij tylko podpiąć tej podstrony do menu.    Miłego tworzenia!</p>';
     
     private Subpage $currentSubpage;
     private array $subpages;
@@ -38,18 +40,7 @@ class SubpageEditor implements SubpageManagement{
         $this->table = DatabaseControl::$pagesTable;
         $subpages = array();
     }
-    
-    private function createNewSubpage(string $title): ?Exception{
-        $content = '<h1>Nowa podstrona</h1><p>Właśnie utworzyłeś nową podstronę. Teraz możesz edytować ją z poziomu panelu administratora. Dodaj tutaj, co tylko chcesz. Nie zapomnij tylko podpiąć tej podstrony do menu.    Miłego tworzenia!</p>';
-        $url = $this->generateUrlFromTitle($title);
-        $query = "INSERT INTO $this->table (url, title, content) VALUES ('$url', '$title', '$content')";
-        
-        if (@!($this->performQuery($query)))
-            throw new Exception("Couldn't create a new subpage with title = $title and url = $url!");
-        
-        return null;
-    }
-    
+
     public function createSubpage(string $title): bool{
         try {
             $this->createNewSubpage($title);
@@ -58,6 +49,19 @@ class SubpageEditor implements SubpageManagement{
             $this->reportException($e);
             return false;
         }
+    }
+    
+    private function createNewSubpage(string $title): void {
+        $content = self::NEW_PAGE_CONTENT;
+        $url = $this->generateUrlFromTitle($title);
+        $query = $this->prepareQuery($url, $title, $content);
+        
+        if (@!($this->performQuery($query)))
+            throw new Exception("Couldn't create a new subpage with title = $title and url = $url!");
+    }
+
+    private function prepareQuery(string $url, string $title, string $content){
+        return "INSERT INTO $this->table (url, title, content) VALUES ('$url', '$title', '$content')";
     }
     
     public static function renderSubpageCreator(string $destination): void{
@@ -83,11 +87,10 @@ END;
             return "DELETE FROM $this->table WHERE id = '$id'";
     }
     
-    private function removeSubpage($url, $id): ?Exception{
+    private function removeSubpage($url, $id): void {
         $query = $this->selectRemovingQuery($url, $id);
         if (@!($this->performQuery($query)))
             throw new Exception("Couldn't remove a subpage with given id = $id or url = $url [only 1 needs to be given]!");
-        return null;
     }
     
     public function removeSubpageWithUrl(string $url): bool{
@@ -122,11 +125,10 @@ END;
             return "UPDATE $this->table SET title = '$title', content = '$content' WHERE id = '$id'";
     }
     
-    private function editSubpage($url, $id, $title, $content): ?Exception{
+    private function editSubpage($url, $id, $title, $content): void {
         $query = $this->selectEditingQuery($url, $id, $title, $content);
         if (@!($this->performQuery($query)))
             throw new Exception("Couldn't edit a subpage with given id = $id or url = $url [only 1 needs to be given]!");
-        return null;
     }
     
     

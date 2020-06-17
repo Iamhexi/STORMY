@@ -3,8 +3,6 @@
 require_once 'ClassAutoLoader.php';
 $autoLoader = new ClassAutoLoader();
 
-@session_start();
-
 interface AdministratorAuthentication {
     function controlAccess(string $givenPassword = null);
     function renderLoggingForm(): void;
