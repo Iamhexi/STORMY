@@ -29,7 +29,7 @@ class EditingArticle extends ArticleManager implements iEditingArticle {
             <form class="articleEditor" action="$destination?url={$this->loadedArticle->url}" method="POST">
                 <div><label><span>Tytuł</span><input class="articleEditorInput" type="" value="{$this->loadedArticle->title}" name="title" required></label></div>
                 <div><img class="articleEditorPhoto" src="$photoDir/{$this->loadedArticle->photo}" alt="Zdjęcie do artykułu pt. {$this->loadedArticle->title}"></div>
-                <div><label><span>Treść</span><textarea rows="4" cols="50" name="content" value="{$this->loadedArticle->content}" id="content" class="articleEditorTextarea" required>{$this->loadedArticle->content}</textarea></label></div>
+                <div><label><span>Treść</span><textarea rows="4" cols="50" name="content" id="content" class="articleEditorTextarea" required>{$this->loadedArticle->content}</textarea></label></div>
 END;
 
         DatabaseControl::renderCategorySelector($this->loadedArticle->category, "category");
