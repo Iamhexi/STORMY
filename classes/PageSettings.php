@@ -149,12 +149,28 @@ END;
     }
     
     private function renderCommentPolicySelector(){
-        if ($this->settingsObject->commentsPolicy === 'safetyPolicy') $s1 = 'selected';
-        else $s2 = 'selected';
+        
+        switch ($this->settingsObject->commentsPolicy){
+            case 'safetyPolicy':
+                $s1 = 'selected';
+                break;
+
+            case 'freedomPolicy':
+                $s2 = 'selected';
+                break;
+
+            default:
+            case 'smartFilter':
+                $s3 = 'selected';
+                break; 
+
+        }
+
         echo<<<END
             <div>
                 <label><span>Polityka komentarzy<span>
                     <select name="commentsPolicy" class="settingsInput">
+                        <option value="smartFilter" $s3>Inteligentny filtr</option>
                         <option value="safetyPolicy" $s1>Najpierw zaakceptuj, potem publikuj</option>
                         <option value="freedomPolicy" $s2>Od razu publikuj wszystkie</option>
                     </select>

@@ -25,8 +25,20 @@ class Comments implements CommentsManager {
         $this->tableName = Comments::$commentsTable;
         
         $settings = new PageSettings($settingsLocation);
-        $this->commentDefaultStatus = ($settings->__get('commentsPolicy') === 'safetyPolicy') ? 0 : 1;  
-        // safetyPolicy, freedomPolicy
+        switch ($settings->__get('commentsPolicy')){
+            case 'safetyPolicy':
+                $this->commentDefaultStatus = 0;
+                break;
+            
+            case 'freedomPolicy':
+                $this->commentDefaultStatus = 1;
+                break;
+
+            case 'smartFilter':
+                $this->commentDefaultStatus = 2;
+                break;
+        }
+        // safetyPolicy = 0, freedomPolicy = 1, smartFilter = 2
     }
     
     private function addCommentToDB(string $articleUrl, string $author, string $content): void {
@@ -38,8 +50,9 @@ class Comments implements CommentsManager {
         if (empty($articleUrl) || empty($author) || empty($content))
             throw new Exception('Neither url nor author nor content cannot be empty!');
             
+        $status = $this->determineCommentStatus($content);
         
-        $query = "INSERT INTO $this->tableName (articleUrl, author, content, isPublished) VALUES ('$articleUrl', '$author', '$content', '$this->commentDefaultStatus')";
+        $query = "INSERT INTO $this->tableName (articleUrl, author, content, isPublished) VALUES ('$articleUrl', '$author', '$content', '$status')";
         
         if (@!$this->performQuery($query))
             throw new Exception("Couldn't add a new comment!");
@@ -55,6 +68,19 @@ class Comments implements CommentsManager {
             echo '<div class="prompt fail">Nie udało się dodać Twojego komentarza, spróbuj ponownie!</div>';
             return false;
         }
+    }
+
+    private function determineCommentStatus(string $content): int {
+        $status = $this->commentDefaultStatus;
+        if ($status === 2){
+            $smartFilter = new LanguageFilter();
+            if ($smartFilter->isVulgar($content))
+                $status = 0; // to be checked
+            else
+                $status = 1; // to be published
+        }
+
+        return $status;
     }
 
     private function removeAllCommentsFromDB(){
