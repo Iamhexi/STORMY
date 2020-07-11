@@ -20,10 +20,13 @@ trait UrlGenerator {
             'ć' => 'c',
             'ę' => 'e',
             'ł' => 'l',
-            'ó' => 'o',
             'ś' => 's',
             'ź' => 'z',
-            'ż' => 'z'
+            'ż' => 'z',
+            'ó' => 'o',
+            '?' => '_',
+            '=' => '_',
+            '.' => '_'
         );
 
         return str_replace(array_keys($transliterationTable), array_values($transliterationTable), $title);

@@ -101,7 +101,7 @@ class Statistics implements iStatistics {
             "Marzec" => (int) $dataToRender[3],
             "Kwiecień" => (int) $dataToRender[4],
             "Maj" => (int) $dataToRender[5],
-            "Czewiec" => (int) $dataToRender[6],
+            "Czerwiec" => (int) $dataToRender[6],
             "Lipiec" => (int) $dataToRender[7],
             "Sierpień" => (int) $dataToRender[8],
             "Wrzesień" => (int) $dataToRender[9],

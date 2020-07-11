@@ -49,7 +49,7 @@ INSERT INTO `categories` (`categoryId`, `categoryTitle`, `categoryUrl`) VALUES
 
 CREATE TABLE `comments` (
   `id` int(50) NOT NULL,
-  `articleUrl` varchar(50) NOT NULL,
+  `articleUrl` text NOT NULL,
   `author` varchar(50) NOT NULL,
   `content` text NOT NULL,
   `additionDate` timestamp NOT NULL DEFAULT current_timestamp()

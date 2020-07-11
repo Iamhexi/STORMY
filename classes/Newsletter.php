@@ -24,7 +24,7 @@ class Newsletter implements iNewsletter{
     
     public function __construct($emailsFile = null){
         $settings = new PageSettings();
-        self::$newsletterSenderEmail = $settings->__get("newsletterEmail"));
+        self::$newsletterSenderEmail = $settings->__get("newsletterEmail");
         self::$websiteName = $settings->__get("title");
 
         if ($emailsFile != null) $this->emailsFile = $emailsFile;
