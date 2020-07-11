@@ -2,3 +2,5 @@ connection.php
 *.png
 *.jpg
 index.sublime-workspace
+unitTests.php
+tests/

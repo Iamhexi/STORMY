@@ -20,7 +20,13 @@ class Installer implements iInstaller{
         return filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
     
-    public function __construct(string $databaseServerAddress, string $databaseUsername, string $databasePassword, string $databaseName, string $adminEmail){
+    public function __construct(
+        string $databaseServerAddress,
+        string $databaseUsername,
+        string $databasePassword,
+        string $databaseName,
+        string $adminEmail
+    ){
         try {
             $this->dbServerAddress = $this->sanitizeInput($databaseServerAddress);
             $this->dbUsername = $this->sanitizeInput($databaseUsername);

@@ -24,33 +24,33 @@ class AdminPanel {
         $this->page = new Page($this->settings, '..');
     }
     
-    private function renderNewEntryForm(){
+    private function renderNewEntryForm(): void {
         AddingArticle::renderForm();
     }
     
-    private function renderErrorLog(){
+    private function renderErrorLog(): void {
         $errorLog = new ErrorLog();
         $errorLog->renderErrorLog(); 
     }
     
-    private function renderListOfArticles(){
+    private function renderListOfArticles(): void {
         $articleGrid = new ThumbnailView();
         $articleGrid->renderThumbnails(null, true);
     }
     
-    private function renderListOfMenuOptions(){
+    private function renderListOfMenuOptions(): void {
         $this->page->renderMenu(true, $this->processorLocation);
     }
     
-    private function renderNewMenuElementForm(){
+    private function renderNewMenuElementForm(): void {
         Menu::renderAddingElementForm($this->processorLocation);
     }
     
-    private function renderSettingsEditor(){
+    private function renderSettingsEditor(): void {
         $this->settings->renderEditor($this->processorLocation);
     }
     
-    private function renderVisitsStatistics(): void{
+    private function renderVisitsStatistics(): void {
         $stats = new Statistics();
         $stats->renderTable();
     }

@@ -6,11 +6,11 @@ $autoLoader = new ClassAutoLoader();
 interface iEditingArticle {
     function renderEditor(string $destination = "processor.php"): void;
     function saveChanges(
-        string $title = null,
-        string $content,
-        string $category = null,
-        string $additionalCategory = null,
-        string $publicationDate = null
+        ?string $title = null,
+        ?string $content = null,
+        ?string $category = null,
+        ?string $additionalCategory = null,
+        ?string $publicationDate = null
       ): bool;
 }
 
@@ -44,7 +44,7 @@ END;
     
     public function saveChanges(
         ?string $title = null,
-        ?string $content,
+        ?string $content = null,
         ?string $category = null,
         ?string $additionalCategory = null,
         ?string $publicationDate = null

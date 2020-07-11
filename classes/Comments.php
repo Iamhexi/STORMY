@@ -4,8 +4,7 @@ require_once 'ClassAutoLoader.php';
 $autoLoader = new ClassAutoLoader();
 
 interface CommentsManager {
-    function addComment(string $articleUrl, string $author, string $content): void;
-    function addCommentThroughAPI(string $articleUrl, string $author, string $content): bool;
+    function addComment(string $articleUrl, string $author, string $content): bool;
     function removeAllComments(): bool;
     function removeComment(int $id): bool;
     function acceptComment(int $id): bool;
@@ -30,12 +29,15 @@ class Comments implements CommentsManager {
         // safetyPolicy, freedomPolicy
     }
     
-    private function addCommentToDB(string $articleUrl, string $author, string $content){
+    private function addCommentToDB(string $articleUrl, string $author, string $content): void {
         
         $articleUrl = $this->sanitizeInput($articleUrl);
         $author = $this->sanitizeInput($author);
         $content = $this->sanitizeInput($content);
         
+        if (empty($articleUrl) || empty($author) || empty($content))
+            throw new Exception('Neither url nor author nor content cannot be empty!');
+            
         
         $query = "INSERT INTO $this->tableName (articleUrl, author, content, isPublished) VALUES ('$articleUrl', '$author', '$content', '$this->commentDefaultStatus')";
         
@@ -43,22 +45,14 @@ class Comments implements CommentsManager {
             throw new Exception("Couldn't add a new comment!");
     }
     
-    public function addComment(string $articleUrl, string $author, string $content): void{
+    public function addComment(string $articleUrl, string $author, string $content): bool {
         try {
             $this->addCommentToDB($articleUrl, $author, $content);
             echo '<div class="prompt success">Komentarz został dodany pomyślnie!</div>';
-        } catch (Exception $e){
-            $this->reportException($e);
-            echo '<div class="prompt fail">Nie udało się dodać Twojego komentarza, spróbuj ponownie!</div>';
-        }
-    }
-    
-    public function addCommentThroughAPI(string $articleUrl, string $author, string $content): bool{
-        try {
-            $this->addCommentToDB($articleUrl, $author, $content);
             return true;
         } catch (Exception $e){
             $this->reportException($e);
+            echo '<div class="prompt fail">Nie udało się dodać Twojego komentarza, spróbuj ponownie!</div>';
             return false;
         }
     }
@@ -174,11 +168,17 @@ END;
     }
     
     private function executeRenderingComments(mysqli_result $result): void{
-        while ($fetched = $result->fetch_array(MYSQLI_BOTH))
+        $counter = 0;
+        while ($fetched = $result->fetch_array(MYSQLI_BOTH)){
             $this->displayCommentAsHTML($fetched['author'], $fetched['content'], $fetched['additionDate']);
+            $counter++;
+        }
+
+        if ($counter == 0)
+            throw new Exception('Url of article is incorrect or no comments has been added yet!');
     }
     
-    public function renderComments(string $articleUrl): bool{
+    public function renderComments(string $articleUrl): bool {
         try {
             $query = $this->prepareQueryForRenderingComments($articleUrl);
             $result = $this->prepareResultForRenderingComments($query);
@@ -200,7 +200,7 @@ END;
         if(@!$connection = new mysqli(DB_HOST, DB_LOGIN, DB_PASSWORD, DB_NAME)) 
             throw new Exception($connection->connect_error);
 
-        if(@!mysqli_query($connection, "SET CHARSET utf8")) 
+        if(@!$connection->query("SET CHARSET utf8")) 
             throw new Exception($connection->connect_error);
 
         if(@!$result = $connection->query($query)) 

@@ -1,5 +1,5 @@
 <?php
-require '../classes/ClassAutoLoader.php';
+require_once '../classes/ClassAutoLoader.php';
 $autoLoader = new ClassAutoLoader();
 
 

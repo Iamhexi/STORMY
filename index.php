@@ -5,7 +5,7 @@ if (!file_exists('settings/connection.php')){ // autorun installer if not instal
     exit();
 }
 
-require 'classes/ClassAutoLoader.php';
+require_once 'classes/ClassAutoLoader.php';
 $autoLoader = new ClassAutoLoader();
 
     
