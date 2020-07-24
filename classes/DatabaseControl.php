@@ -58,8 +58,10 @@ public static function renderCategorySelector(string $defaultValue, string $html
         echo '<div><label><span>Kategoria</span><select name="'.$htmlAttributeName.'" class="articleEditorInput" required>';
         
         foreach($categoryList as $c){
-            if ($c['categoryTitle'] == $defaultValue) echo "<option selected value=\"{$c['categoryUrl']}\">{$c['categoryTitle']}</option>";
-            else echo "<option value=\"{$c['categoryUrl']}\">{$c['categoryTitle']}</option>";
+            if ($c['categoryUrl'] == $defaultValue) 
+                echo "<option selected value=\"{$c['categoryUrl']}\">{$c['categoryTitle']}</option>";
+            else 
+                echo "<option value=\"{$c['categoryUrl']}\">{$c['categoryTitle']}</option>";
         }
         
         echo '</select></label></div>';
