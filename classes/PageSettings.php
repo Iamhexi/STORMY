@@ -14,50 +14,50 @@ interface Settings {
 
 class PageSettings implements Settings{
     use DatabaseControl;
-    
+
     private string $sourceFile;
     private $settingsObject;
-    
+
     private function loadSettings(string $sourceFile){
         try {
             $this->sourceFile = $sourceFile;
-            
+
             if (@!($data = file_get_contents($sourceFile)))
                 throw new Exception("Couldn't open the file $sourceFile to load settings!");
-            
+
             if (@!($this->settingsObject = json_decode($data)))
                 throw new Exception("Couldn't decode the file $sourceFile to load settings!");
-            
+
             return true;
-            
+
         } catch (Exception $exception){
             $this->reportException($exception);
             return false;
         }
     }
-    
+
     public function __construct(string $sourceFile = "settings/default.json"){
         $this->loadSettings($sourceFile);
     }
-    
+
     public function getAdminPassword(): string {
         return $this->settingsObject->adminPassword;
     }
-    
+
     public function getSettingsFileLocation(): string {
         return $this->sourceFile;
     }
-    
+
     public function __get(string $variable){
         return $this->settingsObject->$variable;
     }
-    
+
     public function __set(string $varName, $value): void{
         if ($varName === 'twoFactorAuth')
             $value = (bool)$value;
         $this->settingsObject->$varName = $value;
     }
-    
+
     private function saveSettingsToFileAsJSON(): void{
         if (@!($data = json_encode($this->settingsObject)))
             throw new Exception("Couldn't encode JSON object to format of JSON data!");
@@ -65,8 +65,8 @@ class PageSettings implements Settings{
         if (@!($data = file_put_contents($this->sourceFile, $data)))
             throw new Exception("Couldn't save the file $sourceFile with settings!");
     }
-    
-    public function saveSettings(): bool{
+
+    public function saveSettings(): bool {
         try {
             $this->saveSettingsToFileAsJSON();
             return true;
@@ -80,11 +80,9 @@ class PageSettings implements Settings{
     private function render2FASelector(): void {
         if ($this->settingsObject->twoFactorAuth === false)
             $selected1 = 'selected';
-        
+
         else
             $selected2 = 'selected';
-        
-            
 
          echo<<<END
             <div>
@@ -99,8 +97,6 @@ END;
 
     }
 
-    
-
     public function renderEditor(string $destination): void{
         echo<<<END
             <form action="$destination" method="POST" class="settingsEditor" enctype="multipart/form-data">
@@ -108,7 +104,7 @@ END;
                 <div><label><span>Tytuł strony</span><input type="text" name="title" value="{$this->settingsObject->title}" class="settingsInput" required></label></div>
                 <div title="Na przykład: https://mojastrona.pl"><label><span>Adres URL strony</span><input type="url" name="url" value="{$this->settingsObject->url}" class="settingsInput" maxlength="54" required></label></div>
 END;
-            
+
         $this->renderThemeChoice();
         echo<<<END
             <div><label><span>Hasło administratora</span><input type="password" name="adminPassword" placeholder="Wpisz tylko, jeśli chcesz zmienić obecne hasło" class="settingsInput"></label></div>
@@ -123,33 +119,33 @@ END;
         echo<<<END
             <div><input type="submit" name="pageSettingsSavingButton" class="button" value="Zapisz ustawienia"></div>
         </form>
-        
+
 END;
     }
-    
+
     private function isItThemeDirectory(string $object): bool{
         if ($object != '.' && $object != '..' && $object != $this->theme && is_dir('../themes/'.$object))
             return true;
         else
             return false;
     }
-    
+
     private function renderThemeChoice(): void{
         echo '<div><label><span>Motyw graficzny</span><select name="theme" class="themeSelectInput">';
-        
+
         $themes = scandir('../themes/');
         foreach ($themes as $theme){
             if ($this->isItThemeDirectory($theme))
                 echo "<option value=\"$theme\">$theme</option>";
             else if ($theme === $this->settingsObject->theme)
                 echo "<option value=\"$theme\" selected>$theme</option>";
-        } 
-            
+        }
+
         echo '</select></label></div>';
     }
-    
+
     private function renderCommentPolicySelector(){
-        
+
         switch ($this->settingsObject->commentsPolicy){
             case 'safetyPolicy':
                 $s1 = 'selected';
@@ -162,7 +158,7 @@ END;
             default:
             case 'smartFilter':
                 $s3 = 'selected';
-                break; 
+                break;
 
         }
 
@@ -176,9 +172,9 @@ END;
                     </select>
                 </label>
             </div>
-            
-        
+
+
 END;
     }
-    
+
 }

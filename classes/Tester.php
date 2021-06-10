@@ -34,6 +34,12 @@ class Tester {
             $this->getInfo($expected, $received, "!=");
     }
 
+    public function assertSame($expected, $received): void {
+        $this->initRecentMethodName();
+        if ($expected !== $received)
+            $this->getInfo($expected, $received, "===");
+    }
+
     protected function replaceEmpty(): string {
         return '(empty)';
     }

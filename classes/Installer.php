@@ -8,18 +8,18 @@ interface iInstaller {
     static function removeInstallDirectory(): bool;
 }
 
-class Installer implements iInstaller{
+class Installer implements iInstaller {
     private string $dbUsername;
     private ?string $dbPassword;
     private string $dbName;
     private string $dbServerAddress;
-    
+
     private string $adminEmail;
 
     protected function sanitizeInput(string $input): ?string{
         return filter_var($input, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
-    
+
     public function __construct(
         string $databaseServerAddress,
         string $databaseUsername,
@@ -33,12 +33,12 @@ class Installer implements iInstaller{
             $this->dbPassword = $this->sanitizeInput($databasePassword);
             $this->dbName = $this->sanitizeInput($databaseName);
             $this->adminEmail = $this->sanitizeInput($adminEmail);
-            
+
             $this->runInstallation();
-            
+
             header('location: ../admin/login.php?firstTime=1');
             exit();
-            
+
         } catch (Exception $e){
             echo 'Instalacja nie powiodła się: ';
             echo $e->getMessage().'<br>';
@@ -46,7 +46,7 @@ class Installer implements iInstaller{
             echo 'Jeśli już to robiłeś, napisz do autora: <a href="mailto:igor.sosnowicz@gmail.com">[kliknij tutaj]</a>';
         }
     }
-    
+
     private function runInstallation(): void {
         if (!$this->setAdminEmail())
             throw new Exception("Cannot set admin e-mail to configuration file. Insert correct e-mail or try later.");
@@ -57,28 +57,28 @@ class Installer implements iInstaller{
         if (!($this->importData()))
             throw new Exception("Couldn't import SQL data to database. Check whether the file exits. ");
         if (!($this->createDatabaseConnectionFile()))
-            throw new Exception("Coldn't create the database configuration file! Try again using another database name.");
+            throw new Exception("Couldn't create the database configuration file! Try again using another database name.");
     }
-    
+
     private function setAdminEmail(): bool{
         $settings = new PageSettings('../settings/default.json');
         $settings->__set('adminEmail', $this->adminEmail);
         return $settings->saveSettings();
     }
-    
+
     private function performQuery(string $query, bool $enterToDb = true, bool $needResponce = false, bool $needResult = false){
         try {
             if ($enterToDb){
                 if(@!$connection = new mysqli($this->dbServerAddress, $this->dbUsername, $this->dbPassword, $this->dbName))
                     throw new Exception($connection->connect_error);
             }
-                
-            else 
+
+            else
                 if(@!$connection = new mysqli($this->dbServerAddress, $this->dbUsername, $this->dbPassword))
                     throw new Exception($connection->connect_error);
-            
-            
-            if(@!mysqli_query($connection, "SET CHARSET utf8")) 
+
+
+            if(@!mysqli_query($connection, "SET CHARSET utf8"))
                 throw new Exception($connection->connect_error);
 
             if(@!$result = $connection->query($query))
@@ -87,7 +87,7 @@ class Installer implements iInstaller{
             if ($needResponce === true){
                 $fetched = $result->fetch_array(MYSQLI_BOTH);
                 return $fetched;
-            } 
+            }
 
             else if ($needResult === true){
                 return $result;
@@ -97,36 +97,36 @@ class Installer implements iInstaller{
             return false;
         }
     }
-    
+
     private function canConnect(): bool{
         $query = "SELECT 1";
-        
+
         if ($this->performQuery($query, false, false, true))
             return true;
         else
             return false;
     }
-    
-    
+
+
     private function createDatabaseIfNotExists(): bool{
         $n = $this->dbName;
         $query = "CREATE DATABASE IF NOT EXISTS $n";
-        
+
         if ($this->performQuery($query, false, false, true))
             return true;
-        
+
         else
             return false;
     }
-    
+
     private function importData(): bool {
         $file = "script.sql";
         $query = file_get_contents($file);
         try {
             if(@!$connection = new mysqli($this->dbServerAddress, $this->dbUsername, $this->dbPassword, $this->dbName))
                 throw new Exception($connection->connect_error);
-            
-            if(@!mysqli_query($connection, "SET CHARSET utf8")) 
+
+            if(@!mysqli_query($connection, "SET CHARSET utf8"))
                 throw new Exception($connection->connect_error);
 
             if(@!$result = $connection->multi_query($query))
@@ -138,7 +138,7 @@ class Installer implements iInstaller{
             return false;
         }
     }
-    
+
     public static function renderInstallationForm(string $destination): void{
         echo<<<END
         <form action="$destination" method="POST" class="installerForm">
@@ -151,7 +151,7 @@ class Installer implements iInstaller{
         </form>
 END;
     }
-    
+
     private function createDatabaseConnectionFile(): bool{
         $content = <<<END
         <?php
@@ -164,33 +164,32 @@ END;
         $fileLocation = '../settings/connection.php';
         if (file_put_contents($fileLocation, $content))
             return true;
-        else 
+        else
             return false;
     }
-    
+
     private static function removeDirectory(string $dir): bool{
         if (!file_exists($dir))
             return true;
-        
+
         if (!is_dir($dir))
             return unlink($dir);
-        
+
         foreach (scandir($dir) as $item) {
             if ($item != '.' && $item != '..'){
-                if (filetype($dir.'/'.$item) == 'dir') 
+                if (filetype($dir.'/'.$item) == 'dir')
                     @rmdir($dir.'/'.$item);
-                else 
+                else
                     @unlink($dir.'/'.$item);
             }
         }
 
         return rmdir($dir);
     }
-    
+
     public static function removeInstallDirectory(): bool{
         $installDirectory = '../install';
         if (self::removeDirectory($installDirectory)) return true;
         else return false;
     }
 }
-

@@ -10,7 +10,7 @@ class AddingArticle {
 
     private string $title;
     public static string $photoDirectory = "upload/photos/";
-    /// All uploaded photo will be store here
+    // All uploaded photo will be store here
 
     private string $photo;
     private string $content;
@@ -54,7 +54,7 @@ class AddingArticle {
       string $category,
       ?string $additionalCategory = null,
       ?string $publicationDate = null
-    ){
+    ) {
 
         $this->title = $this->sanitizeInput($title);
         $this->photo = $this->sanitizeInput($photo);
@@ -89,7 +89,7 @@ class AddingArticle {
         }
     }
 
-    public static function provideEditor(): void{
+    public static function provideEditor(): void {
         echo<<<END
         <script src="https://cdn.ckeditor.com/ckeditor5/19.1.1/classic/ckeditor.js"></script>
         <script>
