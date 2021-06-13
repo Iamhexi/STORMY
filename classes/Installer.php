@@ -53,7 +53,7 @@ class Installer implements iInstaller{
         if (!($this->canConnect()))
             throw new Exception("Cannot connect with given database credentials! Change access information to the database and try again.");
         if (@!($this->createDatabaseIfNotExists()))
-            throw new Exception("Couldn't create a new database! Admit higher privileges to the given account to solve this problem.");
+            throw new Exception("Couldn't create a new database! Admit higher privileges to the given account to solve this problem OR check whether the database name you have given is correct [only small letters without special chars, digits and underscores.");
         if (!($this->importData()))
             throw new Exception("Couldn't import SQL data to database. Check whether the file exits. ");
         if (!($this->createDatabaseConnectionFile()))
@@ -142,7 +142,7 @@ class Installer implements iInstaller{
     public static function renderInstallationForm(string $destination): void{
         echo<<<END
         <form action="$destination" method="POST" class="installerForm">
-            <div><label>Sewer bazy danych SQL: <input type="text" name="dbServer" class="installerInput" required></label></div>
+            <div><label>Sewer bazy danych SQL: <input type="text" name="dbServer" title="Dozwolone są tylko litery bez polskich znaków, cyfry oraz znak podkreślenia. Ponadto, nazwa bazy danych nie może się rozpoczynać cyfrą." class="installerInput" pattern="[a-zA-z_]{1}[a-zA-Z0-9_@]{1,}" required></label></div>
             <div><label>Nazwa użytkownika bazy danych: <input type="text" name="dbUser" class="installerInput" required></label></div>
             <div><label>Hasło użytkownika bazy danych: <input type="password" name="dbPassword" class="installerInput"></label></div>
             <div><label>Nazwa bazy danych: <input type="name" name="dbName" class="installerInput" required></label></div>
