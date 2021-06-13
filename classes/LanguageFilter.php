@@ -9,10 +9,6 @@ class LanguageFilter {
 	private string $wordlistLocation = 'settings/bannedWords.txt';
 	private array $bannedWords;
 
-	public function __construct(){
-
-	}
-
 	public function isVulgar(string $toCheck): bool {
 		try {
 
